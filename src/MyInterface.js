@@ -16,8 +16,10 @@ class MyInterface extends CGFinterface {
         
         var obj = this;
 
-        //Checkbox element in GUI
+        // Checkbox element in GUI
         this.gui.add(this.scene, 'displayAxis').name('Display Axis');
+        // Dropbox of object
+        this.gui.add(this.scene, 'selectedObject', this.scene.objectList).name('Object Type');
 
         return true;
     }

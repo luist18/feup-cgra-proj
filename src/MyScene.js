@@ -25,7 +25,18 @@ class MyScene extends CGFscene {
 
         //Initialize scene objects
         this.axis = new CGFaxis(this);
-        this.incompleteSphere = new MySphere(this, 16, 8);
+        this.objects = [
+			new MySphere(this, 16, 8),
+			new MyCylinder(this, 6)
+		];
+
+		// Object interface variables
+		this.objectList = {
+			'Sphere': 0,
+			'Cylinder': 1
+        };
+
+        this.selectedObject = 0;
 
         //Objects connected to MyInterface
         this.displayAxis = true;
@@ -45,6 +56,7 @@ class MyScene extends CGFscene {
         this.setSpecular(0.2, 0.4, 0.8, 1.0);
         this.setShininess(10.0);
     }
+
     // called periodically (as per setUpdatePeriod() in init())
     update(t){
         //To be done...
@@ -69,8 +81,7 @@ class MyScene extends CGFscene {
 
         // ---- BEGIN Primitive drawing section
 
-        //This sphere does not have defined texture coordinates
-        this.incompleteSphere.display();
+        this.objects[this.selectedObject].display();
 
         // ---- END Primitive drawing section
     }
