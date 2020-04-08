@@ -20,20 +20,20 @@ class MyScene extends CGFscene {
         this.gl.depthFunc(this.gl.LEQUAL);
 
         this.setUpdatePeriod(50);
-        
+
         this.enableTextures(true);
 
         //Initialize scene objects
         this.axis = new CGFaxis(this);
         this.objects = [
-			new MySphere(this, 16, 8),
-			new MyCylinder(this, 6)
-		];
+            new MySphere(this, 16, 8),
+            new MyCylinder(this, 6)
+        ];
 
-		// Object interface variables
-		this.objectList = {
-			'Sphere': 0,
-			'Cylinder': 1
+        // Object interface variables
+        this.objectList = {
+            'Sphere': 0,
+            'Cylinder': 1
         };
 
         this.selectedObject = 0;
@@ -58,7 +58,7 @@ class MyScene extends CGFscene {
     }
 
     // called periodically (as per setUpdatePeriod() in init())
-    update(t){
+    update(t) {
         //To be done...
     }
 
@@ -72,7 +72,7 @@ class MyScene extends CGFscene {
         this.loadIdentity();
         // Apply transformations corresponding to the camera position relative to the origin
         this.applyViewMatrix();
-        
+
         // Draw axis
         if (this.displayAxis)
             this.axis.display();

@@ -24,16 +24,24 @@ class MySphere extends CGFobject {
     this.normals = [];
     this.texCoords = [];
 
+    this.texture = new CGFtexture(this.scene, "../resources/earth.jpg");
+    this.material = new CGFappearance(this.scene);
+    this.material.setTexture(this.texture);
+    this.material.setTextureWrap('REPEAT', 'REPEAT');
+
     var phi = 0;
     var theta = 0;
     var phiInc = Math.PI / this.latDivs;
     var thetaInc = (2 * Math.PI) / this.longDivs;
     var latVertices = this.longDivs + 1;
 
+    var t = 0;
+
     // build an all-around stack at a time, starting on "north pole" and proceeding "south"
     for (let latitude = 0; latitude <= this.latDivs; latitude++) {
       var sinPhi = Math.sin(phi);
       var cosPhi = Math.cos(phi);
+      var s = 0;
 
       // in each stack, build all the slices around, starting on longitude 0
       theta = 0;
@@ -51,9 +59,9 @@ class MySphere extends CGFobject {
           // pushing two triangles using indices from this round (current, current+1)
           // and the ones directly south (next, next+1)
           // (i.e. one full round of slices ahead)
-          
-          this.indices.push( current + 1, current, next);
-          this.indices.push( current + 1, next, next +1);
+
+          this.indices.push(current + 1, current, next);
+          this.indices.push(current + 1, next, next + 1);
         }
 
         //--- Normals
@@ -67,13 +75,21 @@ class MySphere extends CGFobject {
         //--- Texture Coordinates
         // To be done... 
         // May need some additional code also in the beginning of the function.
-        
+        s += 1 / this.longDivs;
+        this.texCoords.push(s, t);
       }
       phi += phiInc;
+      t += 1 / this.latDivs;
     }
-
 
     this.primitiveType = this.scene.gl.TRIANGLES;
     this.initGLBuffers();
   }
+
+  display() {
+    this.material.apply();
+    super.display();
+    this.scene.setDefaultAppearance();
+  }
+
 }
