@@ -27,13 +27,15 @@ class MyScene extends CGFscene {
         this.axis = new CGFaxis(this);
         this.objects = [
             new MySphere(this, 16, 8),
-            new MyCylinder(this, 6)
+            new MyCylinder(this, 6),
+            new MyCubeMap(this, 50)
         ];
 
         // Object interface variables
         this.objectList = {
             'Sphere': 0,
-            'Cylinder': 1
+            'Cylinder': 1,
+            'Cube map': 2
         };
 
         this.selectedObject = 0;
