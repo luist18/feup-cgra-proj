@@ -41,7 +41,7 @@ class MySphere extends CGFobject {
     for (let latitude = 0; latitude <= this.latDivs; latitude++) {
       var sinPhi = Math.sin(phi);
       var cosPhi = Math.cos(phi);
-      var s = 0;
+      var s = 0.5;
 
       // in each stack, build all the slices around, starting on longitude 0
       theta = 0;
