@@ -20,6 +20,8 @@ class MyInterface extends CGFinterface {
         this.gui.add(this.scene, 'displayAxis').name('Display Axis');
         // Dropbox of object
         this.gui.add(this.scene, 'selectedObject', this.scene.objectList).name('Object Type');
+        // Dropbox of cubemap
+        this.gui.add(this.scene, 'selectedCubeMap', this.scene.cubeMapList).name('Cube Map').onChange(this.scene.onCubeMapChanged.bind(this.scene));
 
         return true;
     }

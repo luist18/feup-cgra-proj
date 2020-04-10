@@ -23,12 +23,29 @@ class MyScene extends CGFscene {
 
         this.enableTextures(true);
 
+        this.cubeMaps = [
+            '../resources/cubemapgiven.png',
+            '../resources/otherplanet.png',
+            '../resources/vintagecar.jpg',
+            '../resources/givenedited.png'
+        ];
+
+        // Cubemap interface variables
+        this.cubeMapList = {
+            'Sky (given)': 0,
+            'Other planet': 1,
+            'Vintage car': 2,
+            'Fields (given, edited)': 3
+        };
+
+        this.selectedCubeMap = 0;
+
         //Initialize scene objects
         this.axis = new CGFaxis(this);
         this.objects = [
             new MySphere(this, 16, 8),
             new MyCylinder(this, 6),
-            new MyCubeMap(this, 50),
+            new MyCubeMap(this, 50, new CGFtexture(this, this.cubeMaps[this.selectedCubeMap])),
             new MyPyramid(this, 4, 16)
         ];
 
@@ -64,6 +81,11 @@ class MyScene extends CGFscene {
     // called periodically (as per setUpdatePeriod() in init())
     update(t) {
         //To be done...
+    }
+
+    onCubeMapChanged() {
+        this.objects[2].texture = new CGFtexture(this, this.cubeMaps[this.selectedCubeMap]);
+        this.objects[2].updateBuffers();
     }
 
     display() {
