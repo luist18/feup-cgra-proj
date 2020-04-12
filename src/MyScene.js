@@ -6,6 +6,7 @@ class MyScene extends CGFscene {
     constructor() {
         super();
     }
+
     init(application) {
         super.init(application);
         this.initCameras();
@@ -62,15 +63,18 @@ class MyScene extends CGFscene {
         //Objects connected to MyInterface
         this.displayAxis = true;
     }
+
     initLights() {
         this.lights[0].setPosition(15, 2, 5, 1);
         this.lights[0].setDiffuse(1.0, 1.0, 1.0, 1.0);
         this.lights[0].enable();
         this.lights[0].update();
     }
+
     initCameras() {
         this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(15, 15, 15), vec3.fromValues(0, 0, 0));
     }
+
     setDefaultAppearance() {
         this.setAmbient(0.2, 0.4, 0.8, 1.0);
         this.setDiffuse(0.2, 0.4, 0.8, 1.0);
@@ -86,6 +90,24 @@ class MyScene extends CGFscene {
     onCubeMapChanged() {
         this.objects[2].texture = new CGFtexture(this, this.cubeMaps[this.selectedCubeMap]);
         this.objects[2].updateBuffers();
+    }
+
+    checkKeys() {
+        // Check for key codes e.g. in https://keycode.info/
+
+        if (this.objects[this.selectedObject] instanceof MyPyramid) {
+            var vehicle = this.objects[this.selectedObject];
+            if (this.gui.isKeyPressed("KeyW"))
+                vehicle.accelerate(0.02);
+            if (this.gui.isKeyPressed("KeyS"))
+                vehicle.accelerate(-0.02);
+            if (this.gui.isKeyPressed("KeyA"))
+                vehicle.turn(0.05);
+            if (this.gui.isKeyPressed("KeyD"))
+                vehicle.turn(-0.05);
+            if (this.gui.isKeyPressed("Space"))
+                vehicle.brake();
+        }
     }
 
     display() {
@@ -104,6 +126,9 @@ class MyScene extends CGFscene {
             this.axis.display();
 
         this.setDefaultAppearance();
+
+        // Key listening
+        this.checkKeys();
 
         // ---- BEGIN Primitive drawing section
 

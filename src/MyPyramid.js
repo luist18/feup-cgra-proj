@@ -7,8 +7,11 @@ class MyPyramid extends CGFobject {
         super(scene);
         this.slices = slices;
         this.stacks = stacks;
+
         this.initBuffers();
+        this.initMovement();
     }
+
     initBuffers() {
         this.vertices = [];
         this.indices = [];
@@ -118,6 +121,60 @@ class MyPyramid extends CGFobject {
         // reinitialize buffers
         this.initBuffers();
         this.initNormalVizBuffers();
+    }
+
+    // Movement methods
+
+    initMovement() {
+        this.yyangle = 0;
+
+        this.positionX = 0;
+        this.positionZ = 0;
+
+        this.velocityX = 0;
+        this.velocityZ = 0;
+    }
+
+    accelerate(value) {
+        this.velocityX += Math.sin(this.yyangle) * value;
+        this.velocityZ += Math.cos(this.yyangle) * value;
+
+        if (this.velocityX > 1)
+            this.velocityX = 1;
+        else if (this.velocityX < -1)
+            this.velocityX = -1;
+
+        if (this.velocityZ > 1)
+            this.velocityZ = 1;
+        else if (this.velocityZ < -1)
+            this.velocityZ = -1;
+    }
+
+    turn(value) {
+        this.yyangle += value;
+    }
+
+    brake() {
+        this.velocityX += this.velocityX * -0.15;
+        this.velocityZ += this.velocityZ * -0.15;
+    }
+
+    update() {
+        this.velocityX += this.velocityX * -0.08;
+        this.velocityZ += this.velocityZ * -0.08;
+        this.positionX += this.velocityX;
+        this.positionZ += this.velocityZ;
+    }
+
+    display() {
+        this.update();
+        this.scene.pushMatrix();
+
+        this.scene.translate(this.positionX, 0, this.positionZ);
+        this.scene.rotate(this.yyangle, 0, 1, 0);
+        super.display();
+
+        this.scene.popMatrix();
     }
 }
 

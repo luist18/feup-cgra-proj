@@ -23,6 +23,35 @@ class MyInterface extends CGFinterface {
         // Dropbox of cubemap
         this.gui.add(this.scene, 'selectedCubeMap', this.scene.cubeMapList).name('Cube Map').onChange(this.scene.onCubeMapChanged.bind(this.scene));
 
+        this.initKeys();
+
         return true;
     }
+
+    initKeys() {
+        // create reference from the scene to the GUI
+        this.scene.gui = this;
+        // disable the processKeyboard function
+        this.processKeyboard = function () { };
+        // create a named array to store which keys are being pressed
+        this.activeKeys = {};
+    }
+
+    processKeyDown(event) {
+        // called when a key is pressed down
+        // mark it as active in the array
+        this.activeKeys[event.code] = true;
+    };
+
+    processKeyUp(event) {
+        // called when a key is released, mark it as inactive in the array
+        this.activeKeys[event.code] = false;
+    };
+
+    isKeyPressed(keyCode) {
+        // returns true if a key is marked as pressed, false otherwise
+        return this.activeKeys[keyCode] || false;
+    }
+
+
 }
