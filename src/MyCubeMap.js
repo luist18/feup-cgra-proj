@@ -9,7 +9,7 @@ class MyCubeMap extends CGFobject {
         super(scene);
 
         this.texture = texture;
-        this.haldSide = side / 2;
+        this.halfSide = side / 2;
 
         this.initBuffers();
     }
@@ -21,6 +21,7 @@ class MyCubeMap extends CGFobject {
         this.appearance.setSpecular(0, 0, 0, 1);
         this.appearance.setShininess(0);
         this.appearance.setTexture(this.texture);
+        this.appearance.setTextureWrap('CLAMP_TO_EDGE', 'CLAMP_TO_EDGE');
 
         this.vertices = [];
         this.indices = [];
@@ -31,10 +32,10 @@ class MyCubeMap extends CGFobject {
         var tunit = 1/3;
 
         // -y face
-        this.vertices.push(this.haldSide, -this.haldSide, this.haldSide,
-            this.haldSide, -this.haldSide, -this.haldSide,
-            -this.haldSide, -this.haldSide, -this.haldSide,
-            -this.haldSide, -this.haldSide, this.haldSide);
+        this.vertices.push(this.halfSide, -this.halfSide, this.halfSide,
+            this.halfSide, -this.halfSide, -this.halfSide,
+            -this.halfSide, -this.halfSide, -this.halfSide,
+            -this.halfSide, -this.halfSide, this.halfSide);
         this.indices.push(0, 1, 2,
             2, 3, 0);
         this.texCoords.push(2*sunit, 3*tunit,
@@ -43,10 +44,10 @@ class MyCubeMap extends CGFobject {
             1*sunit, 3*tunit);
 
         // side +x face
-        this.vertices.push(this.haldSide, -this.haldSide, this.haldSide,
-            this.haldSide, -this.haldSide, -this.haldSide,
-            this.haldSide, this.haldSide, -this.haldSide,
-            this.haldSide, this.haldSide, this.haldSide);
+        this.vertices.push(this.halfSide, -this.halfSide, this.halfSide,
+            this.halfSide, -this.halfSide, -this.halfSide,
+            this.halfSide, this.halfSide, -this.halfSide,
+            this.halfSide, this.halfSide, this.halfSide);
         this.indices.push(6, 5, 4,
             4, 7, 6);
         this.texCoords.push(3*sunit, 2*tunit,
@@ -55,10 +56,10 @@ class MyCubeMap extends CGFobject {
             3*sunit, 1*tunit);
 
         // side -z face
-        this.vertices.push(this.haldSide, -this.haldSide, -this.haldSide,
-            -this.haldSide, -this.haldSide, -this.haldSide,
-            -this.haldSide, this.haldSide, -this.haldSide,
-            this.haldSide, this.haldSide, -this.haldSide);
+        this.vertices.push(this.halfSide, -this.halfSide, -this.halfSide,
+            -this.halfSide, -this.halfSide, -this.halfSide,
+            -this.halfSide, this.halfSide, -this.halfSide,
+            this.halfSide, this.halfSide, -this.halfSide);
         this.indices.push(10, 9, 8,
             8, 11, 10);
         this.texCoords.push(2*sunit, 2*tunit,
@@ -67,10 +68,10 @@ class MyCubeMap extends CGFobject {
             2*sunit, 1*tunit);
 
         // side -x face
-        this.vertices.push(-this.haldSide, -this.haldSide, -this.haldSide,
-            -this.haldSide, -this.haldSide, this.haldSide,
-            -this.haldSide, this.haldSide, this.haldSide,
-            -this.haldSide, this.haldSide, -this.haldSide);
+        this.vertices.push(-this.halfSide, -this.halfSide, -this.halfSide,
+            -this.halfSide, -this.halfSide, this.halfSide,
+            -this.halfSide, this.halfSide, this.halfSide,
+            -this.halfSide, this.halfSide, -this.halfSide);
         this.indices.push(14, 13, 12,
             12, 15, 14);
         this.texCoords.push(1*sunit, 2*tunit,
@@ -79,10 +80,10 @@ class MyCubeMap extends CGFobject {
             1*sunit, 1*tunit);
 
         // side +z face
-        this.vertices.push(this.haldSide, -this.haldSide, this.haldSide,
-            this.haldSide, this.haldSide, this.haldSide,
-            -this.haldSide, this.haldSide, this.haldSide,
-            -this.haldSide, -this.haldSide, this.haldSide);
+        this.vertices.push(this.halfSide, -this.halfSide, this.halfSide,
+            this.halfSide, this.halfSide, this.halfSide,
+            -this.halfSide, this.halfSide, this.halfSide,
+            -this.halfSide, -this.halfSide, this.halfSide);
         this.indices.push(18, 17, 16,
             16, 19, 18);
         this.texCoords.push(3*sunit, 2*tunit,
@@ -91,10 +92,10 @@ class MyCubeMap extends CGFobject {
             4*sunit, 2*tunit);
 
         // +y face
-        this.vertices.push(this.haldSide, this.haldSide, this.haldSide,
-            this.haldSide, this.haldSide, -this.haldSide,
-            -this.haldSide, this.haldSide, -this.haldSide,
-            -this.haldSide, this.haldSide, this.haldSide);
+        this.vertices.push(this.halfSide, this.halfSide, this.halfSide,
+            this.halfSide, this.halfSide, -this.halfSide,
+            -this.halfSide, this.halfSide, -this.halfSide,
+            -this.halfSide, this.halfSide, this.halfSide);
         this.indices.push(22, 21, 20,
             20, 23, 22);
         this.texCoords.push(2*sunit, 0*tunit,

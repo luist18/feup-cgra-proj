@@ -24,29 +24,13 @@ class MyScene extends CGFscene {
 
         this.enableTextures(true);
 
-        this.cubeMaps = [
-            '../resources/cubemapgiven.png',
-            '../resources/otherplanet.png',
-            '../resources/vintagecar.jpg',
-            '../resources/givenedited.png'
-        ];
-
-        // Cubemap interface variables
-        this.cubeMapList = {
-            'Sky (given)': 0,
-            'Other planet': 1,
-            'Vintage car': 2,
-            'Fields (given, edited)': 3
-        };
-
-        this.selectedCubeMap = 0;
+        this.initCubeMap();
 
         //Initialize scene objects
         this.axis = new CGFaxis(this);
         this.objects = [
             new MySphere(this, 16, 8),
             new MyCylinder(this, 6),
-            new MyCubeMap(this, 50, new CGFtexture(this, this.cubeMaps[this.selectedCubeMap])),
             new MyPyramid(this, 4, 16)
         ];
 
@@ -54,8 +38,7 @@ class MyScene extends CGFscene {
         this.objectList = {
             'Sphere': 0,
             'Cylinder': 1,
-            'Cube map': 2,
-            'Vehicle': 3
+            'Vehicle': 2
         };
 
         this.selectedObject = 0;
@@ -69,10 +52,37 @@ class MyScene extends CGFscene {
         this.lights[0].setDiffuse(1.0, 1.0, 1.0, 1.0);
         this.lights[0].enable();
         this.lights[0].update();
+
+        // cube map light
+        this.lights[1].setPosition(15, 2, 5, 1);
+        this.lights[1].setAmbient(1.0, 1.0, 1.0, 1.0);
+        this.lights[1].setDiffuse(0.0, 0.0, 0.0, 0.0);
+        this.lights[1].setSpecular(0.0, 0.0, 0.0, 0.0);
     }
 
     initCameras() {
         this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(15, 15, 15), vec3.fromValues(0, 0, 0));
+    }
+
+    initCubeMap() {
+        this.cubeMaps = [
+            '../resources/cubemapgiven.png',
+            '../resources/otherplanet.png',
+            '../resources/vintagecar.jpg',
+            '../resources/givenedited.png'
+        ];
+
+        // cube map interface variables
+        this.cubeMapList = {
+            'Sky (given)': 0,
+            'Other planet': 1,
+            'Vintage car': 2,
+            'Fields (given, edited)': 3
+        };
+
+        this.selectedCubeMap = 0;
+
+        this.cubeMap = new MyCubeMap(this, 50, new CGFtexture(this, this.cubeMaps[this.selectedCubeMap]));
     }
 
     setDefaultAppearance() {
@@ -88,8 +98,8 @@ class MyScene extends CGFscene {
     }
 
     onCubeMapChanged() {
-        this.objects[2].texture = new CGFtexture(this, this.cubeMaps[this.selectedCubeMap]);
-        this.objects[2].updateBuffers();
+        this.cubeMap.texture = new CGFtexture(this, this.cubeMaps[this.selectedCubeMap]);
+        this.cubeMap.updateBuffers();
     }
 
     checkKeys() {
@@ -133,6 +143,14 @@ class MyScene extends CGFscene {
         // ---- BEGIN Primitive drawing section
 
         this.objects[this.selectedObject].display();
+
+        // displays the cube map
+
+        this.lights[1].enable();
+        this.lights[1].update();
+        this.cubeMap.display();
+        this.lights[1].disable();
+        this.lights[1].update();
 
         // ---- END Primitive drawing section
     }
