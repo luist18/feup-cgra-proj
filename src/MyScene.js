@@ -67,17 +67,13 @@ class MyScene extends CGFscene {
     initCubeMap() {
         this.cubeMaps = [
             '../resources/cubemapgiven.png',
-            '../resources/otherplanet.png',
-            '../resources/vintagecar.jpg',
             '../resources/givenedited.png'
         ];
 
         // cube map interface variables
         this.cubeMapList = {
             'Sky (given)': 0,
-            'Other planet': 1,
-            'Vintage car': 2,
-            'Fields (given, edited)': 3
+            'Fields (given, edited)': 1
         };
 
         this.selectedCubeMap = 0;
