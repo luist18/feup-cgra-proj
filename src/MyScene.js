@@ -107,12 +107,16 @@ class MyScene extends CGFscene {
                 vehicle.accelerate(0.02);
             if (this.gui.isKeyPressed("KeyS"))
                 vehicle.accelerate(-0.02);
+            if (!this.gui.isKeyPressed("KeyW") && !this.gui.isKeyPressed("KeyS"))
+                vehicle.accelerate(0.0);
             if (this.gui.isKeyPressed("KeyA"))
-                vehicle.turn(0.05);
+                vehicle.turn(0.25);
             if (this.gui.isKeyPressed("KeyD"))
-                vehicle.turn(-0.05);
+                vehicle.turn(-0.25);
             if (this.gui.isKeyPressed("Space"))
-                vehicle.brake();
+                vehicle.brake(0.15);
+            if (this.gui.isKeyPressed("ShiftLeft"))
+                vehicle.brake(-1)
         }
     }
 

@@ -126,6 +126,8 @@ class MyPyramid extends CGFobject {
     // Movement methods
 
     initMovement() {
+        this.speed = 0;
+        this.acceleration = 0;
         this.yyangle = 0;
 
         this.positionX = 0;
@@ -136,34 +138,32 @@ class MyPyramid extends CGFobject {
     }
 
     accelerate(value) {
-        this.velocityX += Math.sin(this.yyangle) * value;
-        this.velocityZ += Math.cos(this.yyangle) * value;
+        this.acceleration = value;
+        this.speed += this.acceleration;
 
-        if (this.velocityX > 1)
-            this.velocityX = 1;
-        else if (this.velocityX < -1)
-            this.velocityX = -1;
-
-        if (this.velocityZ > 1)
-            this.velocityZ = 1;
-        else if (this.velocityZ < -1)
-            this.velocityZ = -1;
+        if (this.speed > 1)
+            this.speed = 1;
+        if (this.speed < -1)
+            this.speed = -1;
     }
 
     turn(value) {
-        this.yyangle += value;
+        this.yyangle += value * this.speed; 
     }
 
-    brake() {
-        this.velocityX += this.velocityX * -0.15;
-        this.velocityZ += this.velocityZ * -0.15;
+    brake(amount) {
+        this.speed += this.speed * -amount;
+        this.velocityX += this.velocityX * -amount;
+        this.velocityZ += this.velocityZ * -amount;
     }
 
     update() {
-        this.velocityX += this.velocityX * -0.08;
-        this.velocityZ += this.velocityZ * -0.08;
-        this.positionX += this.velocityX;
-        this.positionZ += this.velocityZ;
+        this.friction = this.speed * -0.08;
+
+        this.speed += this.friction;
+
+        this.positionX += this.speed*Math.sin(this.yyangle);
+        this.positionZ += this.speed*Math.cos(this.yyangle);
     }
 
     display() {
@@ -175,6 +175,8 @@ class MyPyramid extends CGFobject {
         super.display();
 
         this.scene.popMatrix();
+
+        console.log("v: " + this.speed + ", a: " + this.acceleration + ", ang: " + this.yyangle);
     }
 }
 
