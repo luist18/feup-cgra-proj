@@ -181,8 +181,6 @@ class MyPyramid extends CGFobject {
         super.display();
 
         this.scene.popMatrix();
-
-        console.log("v: " + this.speed + ", a: " + this.acceleration + ", ang: " + this.yyangle);
     }
 }
 

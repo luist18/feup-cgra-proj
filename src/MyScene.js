@@ -56,12 +56,6 @@ class MyScene extends CGFscene {
         this.lights[0].setDiffuse(1.0, 1.0, 1.0, 1.0);
         this.lights[0].enable();
         this.lights[0].update();
-
-        // cube map light
-        this.lights[1].setPosition(15, 2, 5, 1);
-        this.lights[1].setAmbient(1.0, 1.0, 1.0, 1.0);
-        this.lights[1].setDiffuse(0.0, 0.0, 0.0, 0.0);
-        this.lights[1].setSpecular(0.0, 0.0, 0.0, 0.0);
     }
 
     initCameras() {
@@ -70,14 +64,14 @@ class MyScene extends CGFscene {
 
     initCubeMap() {
         this.cubeMaps = [
-            '../resources/cubemapgiven.png',
-            '../resources/givenedited.png'
+            '../resources/givenedited.png',
+            '../resources/cubemapgiven.png'
         ];
 
         // cube map interface variables
         this.cubeMapList = {
-            'Sky (given)': 0,
-            'Fields (given, edited)': 1
+            'Fields (given, edited)': 0,
+            'Sky (given)': 1
         };
 
         this.selectedCubeMap = 0;
@@ -89,6 +83,7 @@ class MyScene extends CGFscene {
         this.setAmbient(0.2, 0.4, 0.8, 1.0);
         this.setDiffuse(0.2, 0.4, 0.8, 1.0);
         this.setSpecular(0.2, 0.4, 0.8, 1.0);
+        this.setEmission(0, 0, 0, 0);
         this.setShininess(10.0);
     }
 
@@ -152,11 +147,7 @@ class MyScene extends CGFscene {
 
         // displays the cube map
 
-        this.lights[1].enable();
-        this.lights[1].update();
         this.cubeMap.display();
-        this.lights[1].disable();
-        this.lights[1].update();
 
         // ---- END Primitive drawing section
     }

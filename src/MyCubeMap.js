@@ -17,9 +17,7 @@ class MyCubeMap extends CGFobject {
     initBuffers() {
         this.appearance = new CGFappearance(this.scene);
         this.appearance.setAmbient(1, 1, 1, 1);
-        this.appearance.setDiffuse(0, 0, 0, 1);
-        this.appearance.setSpecular(0, 0, 0, 1);
-        this.appearance.setShininess(0);
+        this.appearance.setEmission(1, 1, 1, 1);
         this.appearance.setTexture(this.texture);
         this.appearance.setTextureWrap('CLAMP_TO_EDGE', 'CLAMP_TO_EDGE');
 
@@ -27,7 +25,7 @@ class MyCubeMap extends CGFobject {
         this.indices = [];
         this.texCoords = [];
 
-        // related with the compostion of the texture
+        // related with the composition of the texture
         var sunit = 1/4;
         var tunit = 1/3;
         var x = (1/1025)/2;
@@ -118,5 +116,6 @@ class MyCubeMap extends CGFobject {
     display() {
         this.appearance.apply();
         super.display();
+        this.scene.setDefaultAppearance();
     }
 }
