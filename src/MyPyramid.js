@@ -127,17 +127,17 @@ class MyPyramid extends CGFobject {
 
     initMovement() {
         this.speed = 0;
-        this.acceleration = 0;
+        this.acceleration = 0; // not counting friction
         this.yyangle = 0;
+        this.accelerationMultiplier = 1; // speed factor slider
 
         this.positionX = 0;
         this.positionZ = 0;
-
-        this.velocityX = 0;
-        this.velocityZ = 0;
     }
 
     accelerate(value) {
+        value *= this.accelerationMultiplier;
+        
         this.acceleration = value;
         this.speed += this.acceleration;
 
@@ -153,8 +153,14 @@ class MyPyramid extends CGFobject {
 
     brake(amount) {
         this.speed += this.speed * -amount;
-        this.velocityX += this.velocityX * -amount;
-        this.velocityZ += this.velocityZ * -amount;
+    }
+
+    reset() {
+        this.speed = 0;
+        this.acceleration = 0;
+        this.yyangle = 0;
+        this.positionX = 0;
+        this.positionZ = 0;
     }
 
     update() {

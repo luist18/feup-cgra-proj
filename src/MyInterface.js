@@ -22,6 +22,10 @@ class MyInterface extends CGFinterface {
         this.gui.add(this.scene, 'selectedObject', this.scene.objectList).name('Object Type');
         // Dropbox of cube map
         this.gui.add(this.scene, 'selectedCubeMap', this.scene.cubeMapList).name('Cube Map').onChange(this.scene.onCubeMapChanged.bind(this.scene));
+        // Speed factor slider
+        this.gui.add(this.scene, 'speedFactor', 0.1, 3.0).name('Speed');
+        // Scale factor slider
+        this.gui.add(this.scene, 'scaleFactor', 0.5, 3.0).name('Scale');
 
         this.initKeys();
 
@@ -52,6 +56,4 @@ class MyInterface extends CGFinterface {
         // returns true if a key is marked as pressed, false otherwise
         return this.activeKeys[keyCode] || false;
     }
-
-
 }

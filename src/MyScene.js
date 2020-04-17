@@ -29,22 +29,26 @@ class MyScene extends CGFscene {
         //Initialize scene objects
         this.axis = new CGFaxis(this);
         this.objects = [
+            new MyPyramid(this, 4, 16),
             new MySphere(this, 16, 8),
-            new MyCylinder(this, 6),
-            new MyPyramid(this, 4, 16)
+            new MyCylinder(this, 6)
         ];
 
         // Object interface variables
         this.objectList = {
-            'Sphere': 0,
-            'Cylinder': 1,
-            'Vehicle': 2
+            'Vehicle': 0,
+            'Sphere': 1,
+            'Cylinder': 2
         };
 
         this.selectedObject = 0;
 
         //Objects connected to MyInterface
         this.displayAxis = true;
+
+        // Interface sliders
+        this.speedFactor = 1;
+        this.scaleFactor = 1;
     }
 
     initLights() {
@@ -90,7 +94,7 @@ class MyScene extends CGFscene {
 
     // called periodically (as per setUpdatePeriod() in init())
     update(t) {
-        //To be done...
+        this.objects[0].accelerationMultiplier = this.speedFactor;
     }
 
     onCubeMapChanged() {
@@ -100,7 +104,6 @@ class MyScene extends CGFscene {
 
     checkKeys() {
         // Check for key codes e.g. in https://keycode.info/
-
         if (this.objects[this.selectedObject] instanceof MyPyramid) {
             var vehicle = this.objects[this.selectedObject];
             if (this.gui.isKeyPressed("KeyW"))
@@ -115,8 +118,8 @@ class MyScene extends CGFscene {
                 vehicle.turn(-0.25);
             if (this.gui.isKeyPressed("Space"))
                 vehicle.brake(0.15);
-            if (this.gui.isKeyPressed("ShiftLeft"))
-                vehicle.brake(-1)
+            if (this.gui.isKeyPressed("KeyR"))
+                vehicle.reset();
         }
     }
 
@@ -142,7 +145,10 @@ class MyScene extends CGFscene {
 
         // ---- BEGIN Primitive drawing section
 
+        this.pushMatrix();
+        this.scale(this.scaleFactor, this.scaleFactor, this.scaleFactor);
         this.objects[this.selectedObject].display();
+        this.popMatrix();
 
         // displays the cube map
 
