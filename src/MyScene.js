@@ -20,7 +20,9 @@ class MyScene extends CGFscene {
         this.gl.enable(this.gl.CULL_FACE);
         this.gl.depthFunc(this.gl.LEQUAL);
 
-        this.setUpdatePeriod(50);
+        this.setUpdatePeriod(1);
+
+        this.last = performance.now();
 
         this.enableTextures(true);
 
@@ -32,6 +34,10 @@ class MyScene extends CGFscene {
             new MyPyramid(this, 4, 16),
             new MySphere(this, 16, 8),
             new MyCylinder(this, 6)
+        ];
+
+        this.updateObjects = [
+            this.objects[0]
         ];
 
         // Object interface variables
@@ -53,7 +59,7 @@ class MyScene extends CGFscene {
 
     initLights() {
         this.lights[0].setPosition(15, 2, 5, 1);
-        this.lights[0].setDiffuse(1.0, 1.0, 1.0, 1.0);
+        this.lights[0].setDiffuse(1, 1, 1, 1);
         this.lights[0].enable();
         this.lights[0].update();
     }
@@ -89,6 +95,7 @@ class MyScene extends CGFscene {
 
     // called periodically (as per setUpdatePeriod() in init())
     update(t) {
+        this.updateObjects.forEach(element => { element.update(t); });
         this.objects[0].accelerationMultiplier = this.speedFactor;
     }
 
@@ -119,6 +126,13 @@ class MyScene extends CGFscene {
     }
 
     display() {
+        // Update fps in the html page
+        this.now = performance.now();
+        var fps = 1000/(this.now - this.last);
+        this.last = this.now;
+
+        document.getElementById("fps-counter").firstElementChild.innerHTML = "FPS: " + Math.round(fps);
+
         // ---- BEGIN Background, camera and axis setup
         // Clear image and depth buffer everytime we update the scene
         this.gl.viewport(0, 0, this.gl.canvas.width, this.gl.canvas.height);
@@ -128,6 +142,8 @@ class MyScene extends CGFscene {
         this.loadIdentity();
         // Apply transformations corresponding to the camera position relative to the origin
         this.applyViewMatrix();
+
+        //this.lights[0].update();
 
         // Draw axis
         if (this.displayAxis)
@@ -139,14 +155,12 @@ class MyScene extends CGFscene {
         this.checkKeys();
 
         // ---- BEGIN Primitive drawing section
-
         this.pushMatrix();
         this.scale(this.scaleFactor, this.scaleFactor, this.scaleFactor);
         this.objects[this.selectedObject].display();
         this.popMatrix();
 
-        // displays the cube map
-
+        // Displays the cube map
         this.cubeMap.display();
 
         // ---- END Primitive drawing section

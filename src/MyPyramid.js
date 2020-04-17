@@ -131,13 +131,17 @@ class MyPyramid extends CGFobject {
         this.yyangle = 0;
         this.accelerationMultiplier = 1; // speed factor slider
 
+        this.turningValue = 0;
+
         this.positionX = 0;
         this.positionZ = 0;
+
+        this.lastTime = 0;
     }
 
     accelerate(value) {
         value *= this.accelerationMultiplier;
-        
+
         this.acceleration = value;
         this.speed += this.acceleration;
 
@@ -148,7 +152,7 @@ class MyPyramid extends CGFobject {
     }
 
     turn(value) {
-        this.yyangle += value * this.speed; 
+        this.turningValue = value;
     }
 
     brake(amount) {
@@ -163,17 +167,22 @@ class MyPyramid extends CGFobject {
         this.positionZ = 0;
     }
 
-    update() {
+    update(t) {
+        var elapsed = t - this.lastTime;
+        this.lastTime = t;
+
+        this.yyangle += this.turningValue * this.speed;
+        this.turningValue = 0;
+
         this.friction = this.speed * -0.08;
 
         this.speed += this.friction;
 
-        this.positionX += this.speed*Math.sin(this.yyangle);
-        this.positionZ += this.speed*Math.cos(this.yyangle);
+        this.positionX += this.speed * Math.sin(this.yyangle) * 15/elapsed;
+        this.positionZ += this.speed * Math.cos(this.yyangle) * 15/elapsed;
     }
 
     display() {
-        this.update();
         this.scene.pushMatrix();
 
         this.scene.translate(this.positionX, 0, this.positionZ);
