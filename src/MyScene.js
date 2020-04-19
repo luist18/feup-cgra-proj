@@ -55,6 +55,9 @@ class MyScene extends CGFscene {
         // Interface sliders
         this.speedFactor = 1;
         this.scaleFactor = 1;
+
+        // Interface button
+        this.customMovement = false;
     }
 
     initLights() {
@@ -110,8 +113,13 @@ class MyScene extends CGFscene {
             var vehicle = this.objects[this.selectedObject];
             if (this.gui.isKeyPressed("KeyW"))
                 vehicle.accelerate(0.02);
-            if (this.gui.isKeyPressed("KeyS"))
-                vehicle.accelerate(-0.02);
+            if (!this.customMovement) {
+                if (this.gui.isKeyPressed("KeyS"))
+                    vehicle.brake(0.15);   
+            } else {
+                if (this.gui.isKeyPressed("KeyS"))
+                    vehicle.accelerate(-0.02);  
+            }
             if (!this.gui.isKeyPressed("KeyW") && !this.gui.isKeyPressed("KeyS"))
                 vehicle.accelerate(0.0);
             if (this.gui.isKeyPressed("KeyA"))

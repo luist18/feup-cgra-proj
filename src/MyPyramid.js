@@ -145,10 +145,10 @@ class MyPyramid extends CGFobject {
         this.acceleration = value;
         this.speed += this.acceleration;
 
-        if (this.speed > 1)
-            this.speed = 1;
-        if (this.speed < -1)
-            this.speed = -1;
+        if (this.speed > 0.5)
+            this.speed = 0.5;
+        if (this.speed < -0.5)
+            this.speed = -0.5;
     }
 
     turn(value) {
@@ -174,9 +174,10 @@ class MyPyramid extends CGFobject {
         this.yyangle += this.turningValue * this.speed;
         this.turningValue = 0;
 
-        this.friction = this.speed * -0.08;
-
-        this.speed += this.friction;
+        if (this.scene.customMovement) {
+            this.friction = this.speed * -0.08;
+            this.speed += this.friction;
+        }
 
         this.positionX += this.speed * Math.sin(this.yyangle) * 15/elapsed;
         this.positionZ += this.speed * Math.cos(this.yyangle) * 15/elapsed;
