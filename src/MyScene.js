@@ -40,6 +40,9 @@ class MyScene extends CGFscene {
             this.objects[0]
         ];
 
+        // Terrain
+        this.terrain = new MyTerrain(this);
+
         // Object interface variables
         this.objectList = {
             'Vehicle': 0,
@@ -151,7 +154,7 @@ class MyScene extends CGFscene {
         // Apply transformations corresponding to the camera position relative to the origin
         this.applyViewMatrix();
 
-        //this.lights[0].update();
+        this.lights[0].update();
 
         // Draw axis
         if (this.displayAxis)
@@ -166,6 +169,7 @@ class MyScene extends CGFscene {
         this.pushMatrix();
         this.scale(this.scaleFactor, this.scaleFactor, this.scaleFactor);
         this.objects[this.selectedObject].display();
+        this.terrain.display();
         this.popMatrix();
 
         // Displays the cube map
