@@ -8,8 +8,16 @@ class MyPyramid extends CGFobject {
         this.slices = slices;
         this.stacks = stacks;
 
-        this.initBuffers();
+        this.init();
+        //this.initBuffers();
         this.initMovement();
+    }
+
+    init() {
+        this.balloon = new MySphere(this.scene, 20, 10);
+        this.mainCockpit = new MyCylinder(this.scene, 20);
+        this.cockpitSide = new MySphere(this.scene, 10, 10);
+        this.wing = new Wing(this.scene);
     }
 
     initBuffers() {
@@ -184,11 +192,75 @@ class MyPyramid extends CGFobject {
     }
 
     display() {
+        this.scene.setDefaultAppearance();
+
+        /* movement */
         this.scene.pushMatrix();
 
         this.scene.translate(this.positionX, 0, this.positionZ);
         this.scene.rotate(this.yyangle, 0, 1, 0);
-        super.display();
+
+        /* cockpit */
+        this.scene.pushMatrix();
+        this.scene.translate(0, -0.5, 0);
+        this.scene.rotate(Math.PI/2, 1, 0, 0);
+        this.scene.scale(0.1, 0.45, 0.1);
+        this.scene.translate(0, -0.5, 0);
+        this.mainCockpit.display();
+        this.scene.popMatrix();
+
+        this.scene.pushMatrix();
+        this.scene.translate(0, -0.5, 0.225);
+        this.scene.scale(0.1, 0.1, 0.1);
+        this.cockpitSide.display();
+        this.scene.popMatrix();
+
+        this.scene.pushMatrix();
+        this.scene.translate(0, -0.5, -0.225);
+        this.scene.scale(0.1, 0.1, 0.1);
+        this.cockpitSide.display();
+        this.scene.popMatrix();
+
+        /* wings */
+        // top
+        this.scene.pushMatrix();
+        this.scene.translate(0, 0.4, -0.8);
+        this.scene.rotate(Math.PI/2, 1, 0, 0);
+        this.scene.rotate(Math.PI/2, 0, 1, 0);
+        this.scene.scale(0.4, 0.4, 0.4);
+        this.wing.display();
+        this.scene.popMatrix();
+
+        // down
+        this.scene.pushMatrix();
+        this.scene.translate(0, -0.4, -0.8);
+        this.scene.rotate(Math.PI/2, 1, 0, 0);
+        this.scene.rotate(Math.PI/2, 0, 1, 0);
+        this.scene.scale(0.4, 0.4, 0.4);
+        this.wing.display();
+        this.scene.popMatrix();
+
+        // left
+        this.scene.pushMatrix();
+        this.scene.translate(0.4, 0, -0.8);
+        this.scene.rotate(Math.PI/2, 1, 0, 0);
+        this.scene.scale(0.4, 0.4, 0.4);
+        this.wing.display();
+        this.scene.popMatrix();
+             
+        // right
+        this.scene.pushMatrix();
+        this.scene.translate(-0.4, 0, -0.8);
+        this.scene.rotate(Math.PI/2, 1, 0, 0);
+        this.scene.scale(0.4, 0.4, 0.4);
+        this.wing.display();
+        this.scene.popMatrix(); 
+
+        /* central balloon */
+        this.scene.pushMatrix();
+        this.scene.scale(0.5, 0.5, 1);
+        this.balloon.display();
+        this.scene.popMatrix();
 
         this.scene.popMatrix();
     }
