@@ -31,7 +31,7 @@ class MyScene extends CGFscene {
         //Initialize scene objects
         this.axis = new CGFaxis(this);
         this.objects = [
-            new MyPyramid(this, 4, 16),
+            new MyVehicle(this),
             new MySphere(this, 16, 8),
             new MyCylinder(this, 6)
         ];
@@ -112,7 +112,7 @@ class MyScene extends CGFscene {
 
     checkKeys() {
         // Check for key codes e.g. in https://keycode.info/
-        if (this.objects[this.selectedObject] instanceof MyPyramid) {
+        if (this.objects[this.selectedObject] instanceof MyVehicle) {
             var vehicle = this.objects[this.selectedObject];
             if (this.gui.isKeyPressed("KeyW"))
                 vehicle.accelerate(0.02);
