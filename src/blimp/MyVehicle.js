@@ -1,18 +1,24 @@
 class MyVehicle extends CGFobject {
-    constructor(scene) {
+    constructor(scene, positionY = 10) {
         super(scene);
-
         this.init();
         this.initMovement();
+        
+        this.positionY = positionY;
     }
 
     init() {
-        this.balloon = new MySphere(this.scene, 20, 10);
+        this.texture = new CGFtexture(this.scene, "../resources/blimp/ussr_blimp.png");
+        this.material = new CGFappearance(this.scene);
+        this.material.setTexture(this.texture);
+        this.material.setTextureWrap('REPEAT', 'REPEAT');
+
+        this.balloon = new MySphere(this.scene, 20, 10, this.material);
         this.mainCockpit = new MyCylinder(this.scene, 20);
         this.cockpitSide = new MySphere(this.scene, 10, 10);
-        this.wing = new Wing(this.scene);
+        this.wing = new MyWing(this.scene);
         this.turbineHolder = new MySphere(this.scene, 10, 10);
-        this.turbine = new Turbine(this.scene, 10, 10);
+        this.turbine = new MyTurbine(this.scene, 10, 10);
     }
 
     // Movement method
@@ -66,7 +72,7 @@ class MyVehicle extends CGFobject {
         this.turningValue = 0;
 
         if (this.scene.customMovement) {
-            this.friction = this.speed * -0.08;
+            this.friction = this.speed * -0.009;
             this.speed += this.friction;
         }
 
@@ -80,7 +86,7 @@ class MyVehicle extends CGFobject {
         /* movement */
         this.scene.pushMatrix();
 
-        this.scene.translate(this.positionX, 0, this.positionZ);
+        this.scene.translate(this.positionX, this.positionY, this.positionZ);
         this.scene.rotate(this.yyangle, 0, 1, 0);
 
         this.displayObject();

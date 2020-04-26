@@ -1,4 +1,4 @@
-class Turbine extends CGFobject {
+class MyTurbine extends CGFobject {
     constructor(scene, slices, stacks) {
         super(scene);
 

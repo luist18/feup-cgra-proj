@@ -9,7 +9,7 @@ class MyTerrain extends CGFobject {
         this.size = size;
         this.maxHeight = maxHeight;
 
-        this.terrainTex = new CGFtexture(this.scene, "../resources/terrain.jpg");
+        this.terrainTex = new CGFtexture(this.scene, "../resources/terrain.png");
         this.terrainMap = new CGFtexture(this.scene, "../resources/heightmap.jpg");
         this.material = new CGFappearance(this.scene);
         this.material.setTexture(this.terrainTex);
@@ -36,7 +36,6 @@ class MyTerrain extends CGFobject {
         this.terrainTex.bind(1);
         this.terrainMap.bind(2);
 
-        this.scene.translate(0, -10, 0);
         this.scene.scale(this.size, 1, this.size);
         this.scene.rotate(-Math.PI/2, 1, 0, 0);
 

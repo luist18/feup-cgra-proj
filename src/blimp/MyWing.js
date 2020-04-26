@@ -1,7 +1,7 @@
 /**
  * It's similar to a kid's home
  */
-class Wing extends CGFobject {
+class MyWing extends CGFobject {
     constructor(scene) {
         super(scene);
         this.initBuffers();

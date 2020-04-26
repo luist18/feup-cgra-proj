@@ -154,7 +154,7 @@ class MyScene extends CGFscene {
         // Apply transformations corresponding to the camera position relative to the origin
         this.applyViewMatrix();
 
-        this.lights[0].update();
+        //this.lights[0].update();
 
         // Draw axis
         if (this.displayAxis)
