@@ -8,12 +8,18 @@ class MyVehicle extends CGFobject {
     }
 
     init() {
-        this.texture = new CGFtexture(this.scene, "../resources/blimp/ussr_blimp.png");
+        this.google = new CGFtexture(this.scene, "../resources/blimp/google_texture.png");
+        this.cockpitFront = new CGFtexture(this.scene, "../resources/blimp/cockpit_front_texture.png");
+        this.wing_texture = new CGFtexture(this.scene, "../resources/blimp/wing_texture.png");
+        this.yellow = new CGFtexture(this.scene, "../resources/blimp/yellow.png");
+        this.green = new CGFtexture(this.scene, "../resources/blimp/green.png");
+        this.red = new CGFtexture(this.scene, "../resources/blimp/red.png");
         this.material = new CGFappearance(this.scene);
-        this.material.setTexture(this.texture);
-        this.material.setTextureWrap('REPEAT', 'REPEAT');
+        this.material.setDiffuse(1, 1, 1, 1);
+        this.material.setSpecular(1, 1, 1, 1);
+        this.material.setAmbient(0.5, 0.5, 0.5, 1);
 
-        this.balloon = new MySphere(this.scene, 20, 10, this.material);
+        this.balloon = new MySphere(this.scene, 20, 10);
         this.mainCockpit = new MyCylinder(this.scene, 20);
         this.cockpitSide = new MySphere(this.scene, 10, 10);
         this.wing = new MyWing(this.scene);
@@ -97,12 +103,16 @@ class MyVehicle extends CGFobject {
     displayObject() {
 
         /* central balloon */
+        this.material.setTexture(this.google);
+        this.material.apply();
         this.scene.pushMatrix();
         this.scene.scale(0.5, 0.5, 1);
         this.balloon.display();
         this.scene.popMatrix();
 
         /* cockpit */
+        this.material.setTexture(this.wing_texture);
+        this.material.apply();
         this.scene.pushMatrix();
         this.scene.translate(0, -0.5, 0);
         this.scene.rotate(Math.PI/2, 1, 0, 0);
@@ -111,12 +121,16 @@ class MyVehicle extends CGFobject {
         this.mainCockpit.display();
         this.scene.popMatrix();
 
+        this.material.setTexture(this.cockpitFront);
+        this.material.apply();
         this.scene.pushMatrix();
         this.scene.translate(0, -0.5, 0.225);
         this.scene.scale(0.1, 0.1, 0.1);
         this.cockpitSide.display();
         this.scene.popMatrix();
 
+        this.material.setTexture(this.cockpitFront);
+        this.material.apply();
         this.scene.pushMatrix();
         this.scene.translate(0, -0.5, -0.225);
         this.scene.scale(0.1, 0.1, 0.1);
@@ -125,6 +139,8 @@ class MyVehicle extends CGFobject {
 
         /* wings */
         // top
+        this.material.setTexture(this.wing_texture);
+        this.material.apply();
         this.scene.pushMatrix();
         this.scene.translate(0, 0.4, -0.8);
         this.scene.rotate(Math.PI/2, 1, 0, 0);
@@ -134,6 +150,8 @@ class MyVehicle extends CGFobject {
         this.scene.popMatrix();
 
         // down
+        this.material.setTexture(this.green);
+        this.material.apply();
         this.scene.pushMatrix();
         this.scene.translate(0, -0.4, -0.8);
         this.scene.rotate(Math.PI/2, 1, 0, 0);
@@ -143,6 +161,8 @@ class MyVehicle extends CGFobject {
         this.scene.popMatrix();
 
         // left
+        this.material.setTexture(this.red);
+        this.material.apply();
         this.scene.pushMatrix();
         this.scene.translate(0.4, 0, -0.8);
         this.scene.rotate(Math.PI/2, 1, 0, 0);
@@ -151,6 +171,8 @@ class MyVehicle extends CGFobject {
         this.scene.popMatrix();
              
         // right
+        this.material.setTexture(this.yellow);
+        this.material.apply();
         this.scene.pushMatrix();
         this.scene.translate(-0.4, 0, -0.8);
         this.scene.rotate(Math.PI/2, 1, 0, 0);
@@ -159,6 +181,8 @@ class MyVehicle extends CGFobject {
         this.scene.popMatrix(); 
 
         /* turbine holders */
+        this.material.setTexture(this.google);
+        this.material.apply();
         // left
         this.scene.pushMatrix();
         this.scene.translate(0.11, -0.54, -0.25);
@@ -173,7 +197,9 @@ class MyVehicle extends CGFobject {
         this.turbineHolder.display();
         this.scene.popMatrix(); 
 
-        /* turbine holders */
+        /* turbines */
+        this.material.setTexture(this.wing_texture);
+        this.material.apply();
         // left
         this.scene.pushMatrix();
         this.scene.translate(0.11, -0.54, -0.30);

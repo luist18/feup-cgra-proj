@@ -3,14 +3,14 @@
 * @constructor
 */
 class MyTerrain extends CGFobject {
-    constructor(scene, divs = 20, size = 50, maxHeight = 8) {
+    constructor(scene, divs = 100, size = 50, maxHeight = 8) {
         super(scene);
         this.divs = divs;
         this.size = size;
         this.maxHeight = maxHeight;
 
-        this.terrainTex = new CGFtexture(this.scene, "../resources/terrain.png");
-        this.terrainMap = new CGFtexture(this.scene, "../resources/heightmap.jpg");
+        this.terrainTex = new CGFtexture(this.scene, "../resources/terrain2.png");
+        this.terrainMap = new CGFtexture(this.scene, "../resources/heightmap2.png");
         this.material = new CGFappearance(this.scene);
         this.material.setTexture(this.terrainTex);
         this.material.setTextureWrap('REPEAT', 'REPEAT');
