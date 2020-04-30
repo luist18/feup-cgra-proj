@@ -18,7 +18,7 @@ class MyInterface extends CGFinterface {
 
         // Checkbox element in GUI
         this.gui.add(this.scene, 'displayAxis').name('Display Axis');
-        this.gui.add(this.scene, 'customMovement').name('Custom movement');
+        this.gui.add(this.scene.objects[0], 'customMovement').name('Custom movement');
         // Dropbox of object
         this.gui.add(this.scene, 'selectedObject', this.scene.objectList).name('Object Type');
         // Dropbox of cube map

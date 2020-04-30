@@ -29,10 +29,17 @@ class MyScene extends CGFscene {
         this.initCubeMap();
 
         //Initialize scene objects
+        let earthTexture = new CGFtexture(this, "../resources/earth.jpg");
+        let earthMaterial = new CGFappearance(this);
+        earthMaterial.setTexture(earthTexture);
+        earthMaterial.setDiffuse(1, 1, 1, 1);
+        earthMaterial.setSpecular(1, 1, 1, 1);
+        earthMaterial.setAmbient(0.8, 0.8, 0.8, 1);
+
         this.axis = new CGFaxis(this);
         this.objects = [
             new MyVehicle(this),
-            new MySphere(this, 16, 8),
+            new MySphere(this, 16, 8, earthMaterial),
             new MyCylinder(this, 6)
         ];
 
@@ -53,20 +60,17 @@ class MyScene extends CGFscene {
         this.selectedObject = 0;
 
         //Objects connected to MyInterface
-        this.displayAxis = true;
+        this.displayAxis = false;
 
         // Interface sliders
         this.speedFactor = 1;
         this.scaleFactor = 1;
-
-        // Interface button
-        this.customMovement = false;
     }
 
     initLights() {
-        this.lights[0].setPosition(15, 2, 5, 1);
+        this.lights[0].setPosition(15, 15, 5, 1);
         this.lights[0].setDiffuse(1, 1, 1, 1);
-        this.lights[0].setConstantAttenuation(0.9);
+        this.lights[0].setConstantAttenuation(0.8);
         this.lights[0].enable();
         this.lights[0].update();
     }
@@ -155,7 +159,7 @@ class MyScene extends CGFscene {
         // Apply transformations corresponding to the camera position relative to the origin
         this.applyViewMatrix();
 
-        //this.lights[0].update();
+        this.lights[0].update();
 
         // Draw axis
         if (this.displayAxis)

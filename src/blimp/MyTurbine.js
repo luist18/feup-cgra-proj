@@ -1,3 +1,8 @@
+/**
+ * Turbine faced up with the middle between the arms
+ * --^--
+ *  / \
+ */
 class MyTurbine extends CGFobject {
     constructor(scene, slices, stacks) {
         super(scene);
@@ -13,16 +18,36 @@ class MyTurbine extends CGFobject {
 
     // Movement method
     initMovement() {
-        // TODO
+        this.angularSpeed = 0;
+        this.angle = 0;
+
+        this.lastTime = 0;
     }
 
-    update(t) {
-        // TODO
+    /**
+     * Updates the movement of the turbine.
+     * @param {*} t     The current timestamp
+     * @param {*} speed The speed of the vehicle
+     */
+    update(t, speed) {
+        var elapsed = t - this.lastTime;
+        this.lastTime = t;
+
+        this.angularSpeed = speed;
+
+        this.angle += this.angularSpeed * elapsed/10; // elapsed divided by 10 to be more smooth
+        this.angle %= Math.PI; // the angle doesn't get to high
+    }
+
+    reset() {
+        this.angularSpeed = 0;
+        this.angle = 0;
     }
 
     display() {
         this.scene.pushMatrix();
-        // TODO movement
+        
+        this.scene.rotate(-this.angle, 0, 1, 0); // negative to rotate clockwise
 
         this.scene.pushMatrix();
         this.scene.translate(0, -0.5, 0);
