@@ -18,9 +18,7 @@ class MyInterface extends CGFinterface {
 
         // Checkbox element in GUI
         this.gui.add(this.scene, 'displayAxis').name('Display Axis');
-        this.gui.add(this.scene.objects[0], 'customMovement').name('Custom movement');
-        // Dropbox of object
-        this.gui.add(this.scene, 'selectedObject', this.scene.objectList).name('Object Type');
+        this.gui.add(this.scene.vehicle, 'customMovement').name('Custom movement');
         // Dropbox of cube map
         this.gui.add(this.scene, 'selectedCubeMap', this.scene.cubeMapList).name('Cube Map').onChange(this.scene.onCubeMapChanged.bind(this.scene));
         // Speed factor slider

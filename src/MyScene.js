@@ -26,38 +26,13 @@ class MyScene extends CGFscene {
 
         this.enableTextures(true);
 
+        // Vehicle
+        this.vehicle = new MyVehicle(this);
+
         this.initCubeMap();
-
-        //Initialize scene objects
-        let earthTexture = new CGFtexture(this, "../resources/earth.jpg");
-        let earthMaterial = new CGFappearance(this);
-        earthMaterial.setTexture(earthTexture);
-        earthMaterial.setDiffuse(1, 1, 1, 1);
-        earthMaterial.setSpecular(1, 1, 1, 1);
-        earthMaterial.setAmbient(0.8, 0.8, 0.8, 1);
-
-        this.axis = new CGFaxis(this);
-        this.objects = [
-            new MyVehicle(this),
-            new MySphere(this, 16, 8, earthMaterial),
-            new MyCylinder(this, 6)
-        ];
-
-        this.updateObjects = [
-            this.objects[0]
-        ];
 
         // Terrain
         this.terrain = new MyTerrain(this);
-
-        // Object interface variables
-        this.objectList = {
-            'Vehicle': 0,
-            'Sphere': 1,
-            'Cylinder': 2
-        };
-
-        this.selectedObject = 0;
 
         //Objects connected to MyInterface
         this.displayAxis = false;
@@ -106,8 +81,9 @@ class MyScene extends CGFscene {
 
     // called periodically (as per setUpdatePeriod() in init())
     update(t) {
-        this.updateObjects.forEach(element => { element.update(t); });
-        this.objects[0].accelerationMultiplier = this.speedFactor;
+        this.vehicle.update(t);
+        this.vehicle.accelerationMultiplier = this.speedFactor;
+        this.vehicle.scale = this.scaleFactor;
     }
 
     onCubeMapChanged() {
@@ -117,28 +93,23 @@ class MyScene extends CGFscene {
 
     checkKeys() {
         // Check for key codes e.g. in https://keycode.info/
-        if (this.objects[this.selectedObject] instanceof MyVehicle) {
-            var vehicle = this.objects[this.selectedObject];
-            if (this.gui.isKeyPressed("KeyW"))
-                vehicle.accelerate(0.02);
-            if (!this.customMovement) {
-                if (this.gui.isKeyPressed("KeyS"))
-                    vehicle.brake(0.15);   
-            } else {
-                if (this.gui.isKeyPressed("KeyS"))
-                    vehicle.accelerate(-0.02);  
-            }
-            if (!this.gui.isKeyPressed("KeyW") && !this.gui.isKeyPressed("KeyS"))
-                vehicle.accelerate(0.0);
-            if (this.gui.isKeyPressed("KeyA"))
-                vehicle.turn(0.25);
-            if (this.gui.isKeyPressed("KeyD"))
-                vehicle.turn(-0.25);
-            if (this.gui.isKeyPressed("Space"))
-                vehicle.brake(0.15);
-            if (this.gui.isKeyPressed("KeyR"))
-                vehicle.reset();
-        }
+        if (this.gui.isKeyPressed("KeyW"))
+                this.vehicle.accelerate(0.02);
+        if (this.gui.isKeyPressed("KeyS"))
+            if (!this.vehicle.customMovement)
+                this.vehicle.brake(0.15);
+            else
+                this.vehicle.accelerate(-0.02); 
+        if (!this.gui.isKeyPressed("KeyW") && !this.gui.isKeyPressed("KeyS"))
+            this.vehicle.accelerate(0.0);
+        if (this.gui.isKeyPressed("KeyA"))
+            this.vehicle.turn(0.25);
+        if (this.gui.isKeyPressed("KeyD"))
+            this.vehicle.turn(-0.25);
+        if (this.gui.isKeyPressed("Space"))
+            this.vehicle.brake(0.15);
+        if (this.gui.isKeyPressed("KeyR"))
+            this.vehicle.reset();
     }
 
     display() {
@@ -172,8 +143,7 @@ class MyScene extends CGFscene {
 
         // ---- BEGIN Primitive drawing section
         this.pushMatrix();
-        this.scale(this.scaleFactor, this.scaleFactor, this.scaleFactor);
-        this.objects[this.selectedObject].display();
+        this.vehicle.display();
         this.terrain.display();
         this.popMatrix();
 

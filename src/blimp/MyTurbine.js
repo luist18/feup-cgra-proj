@@ -26,16 +26,13 @@ class MyTurbine extends CGFobject {
 
     /**
      * Updates the movement of the turbine.
-     * @param {*} t     The current timestamp
-     * @param {*} speed The speed of the vehicle
+     * @param {*} elapsed   The elapsed time
+     * @param {*} speed     The speed of the vehicle
      */
-    update(t, speed) {
-        var elapsed = t - this.lastTime;
-        this.lastTime = t;
-
+    update(elapsed, speed) {
         this.angularSpeed = speed;
 
-        this.angle += this.angularSpeed * elapsed/10; // elapsed divided by 10 to be more smooth
+        this.angle += this.angularSpeed * elapsed/5; // elapsed divided to be more smooth
         this.angle %= Math.PI; // the angle doesn't get to high
     }
 
