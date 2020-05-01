@@ -68,6 +68,8 @@ class MyScene extends CGFscene {
 
         this.selectedCubeMap = 0;
 
+        this.supply = new MySupply(this);
+
         this.cubeMap = new MyCubeMap(this, 50, new CGFtexture(this, this.cubeMaps[this.selectedCubeMap]));
     }
 
@@ -94,12 +96,12 @@ class MyScene extends CGFscene {
     checkKeys() {
         // Check for key codes e.g. in https://keycode.info/
         if (this.gui.isKeyPressed("KeyW"))
-                this.vehicle.accelerate(0.02);
+            this.vehicle.accelerate(0.02);
         if (this.gui.isKeyPressed("KeyS"))
             if (!this.vehicle.customMovement)
                 this.vehicle.brake(0.15);
             else
-                this.vehicle.accelerate(-0.02); 
+                this.vehicle.accelerate(-0.02);
         if (!this.gui.isKeyPressed("KeyW") && !this.gui.isKeyPressed("KeyS"))
             this.vehicle.accelerate(0.0);
         if (this.gui.isKeyPressed("KeyA"))
@@ -115,7 +117,7 @@ class MyScene extends CGFscene {
     display() {
         // Update fps in the html page
         this.now = performance.now();
-        var fps = 1000/(this.now - this.last);
+        var fps = 1000 / (this.now - this.last);
         this.last = this.now;
 
         document.getElementById("fps-counter").firstElementChild.innerHTML = "FPS: " + Math.round(fps);
@@ -146,6 +148,8 @@ class MyScene extends CGFscene {
         this.vehicle.display();
         this.terrain.display();
         this.popMatrix();
+
+        this.supply.display();
 
         // Displays the cube map
         this.cubeMap.display();

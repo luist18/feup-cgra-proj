@@ -3,7 +3,7 @@ class MyVehicle extends CGFobject {
         super(scene);
         this.init();
         this.initMovement();
-        
+
         this.positionY = positionY;
     }
 
@@ -44,7 +44,6 @@ class MyVehicle extends CGFobject {
     }
 
     accelerate(value) {
-        console.log(value);
         value *= this.accelerationMultiplier;
 
         this.acceleration = value;
@@ -85,14 +84,14 @@ class MyVehicle extends CGFobject {
 
         // this.yyangle += this.turningValue * this.speed * 15 / elapsed;
         this.yyangle -= this.wings.angle * this.speed * 15 / elapsed; // TEST use this one instead of the one before for a more realistic movement, this depends on the wings, the one before does not
-        
+
         if (this.customMovement) {
             this.friction = this.speed * -0.009;
             this.speed += this.friction;
         }
         this.positionX += this.speed * Math.sin(this.yyangle) * 15 / elapsed;
         this.positionZ += this.speed * Math.cos(this.yyangle) * 15 / elapsed;
-        
+
         this.turningValue = 0;
     }
 
@@ -125,7 +124,7 @@ class MyVehicle extends CGFobject {
         this.material.apply();
         this.scene.pushMatrix();
         this.scene.translate(0, -0.5, 0);
-        this.scene.rotate(Math.PI/2, 1, 0, 0);
+        this.scene.rotate(Math.PI / 2, 1, 0, 0);
         this.scene.scale(0.1, 0.45, 0.1);
         this.scene.translate(0, -0.5, 0);
         this.mainCockpit.display();
@@ -158,7 +157,7 @@ class MyVehicle extends CGFobject {
         this.scene.translate(0.11, -0.54, -0.25);
         this.scene.scale(0.04, 0.02, 0.07);
         this.turbineHolder.display();
-        this.scene.popMatrix(); 
+        this.scene.popMatrix();
 
         // right
         this.material.setTexture(this.google);
@@ -167,7 +166,7 @@ class MyVehicle extends CGFobject {
         this.scene.translate(-0.11, -0.54, -0.25);
         this.scene.scale(0.04, 0.02, 0.07);
         this.turbineHolder.display();
-        this.scene.popMatrix(); 
+        this.scene.popMatrix();
 
         /* turbines */
         this.material.setTexture(this.blue);
@@ -175,18 +174,18 @@ class MyVehicle extends CGFobject {
         // left
         this.scene.pushMatrix();
         this.scene.translate(0.11, -0.54, -0.30);
-        this.scene.rotate(-Math.PI/2, 1, 0, 0);
+        this.scene.rotate(-Math.PI / 2, 1, 0, 0);
         this.scene.scale(0.02, 0.02, 0.01);
         this.turbine.display();
-        this.scene.popMatrix(); 
+        this.scene.popMatrix();
 
         // right
         this.scene.pushMatrix();
         this.scene.translate(-0.11, -0.54, -0.3);
-        this.scene.rotate(-Math.PI/2, 1, 0, 0);
+        this.scene.rotate(-Math.PI / 2, 1, 0, 0);
         this.scene.scale(0.02, 0.02, 0.01);
         this.turbine.display();
-        this.scene.popMatrix(); 
+        this.scene.popMatrix();
 
         this.scene.popMatrix();
     }
