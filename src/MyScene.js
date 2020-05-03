@@ -34,6 +34,9 @@ class MyScene extends CGFscene {
         // Terrain
         this.terrain = new MyTerrain(this);
 
+        // Supply FIXME temporary
+        this.supply = new MySupply(this, 0, 0, 0);
+
         //Objects connected to MyInterface
         this.displayAxis = false;
 
@@ -67,8 +70,6 @@ class MyScene extends CGFscene {
         };
 
         this.selectedCubeMap = 0;
-
-        this.supply = new MySupply(this);
 
         this.cubeMap = new MyCubeMap(this, 50, new CGFtexture(this, this.cubeMaps[this.selectedCubeMap]));
     }
@@ -144,12 +145,12 @@ class MyScene extends CGFscene {
         this.checkKeys();
 
         // ---- BEGIN Primitive drawing section
+        this.supply.display();
+
         this.pushMatrix();
         this.vehicle.display();
         this.terrain.display();
         this.popMatrix();
-
-        this.supply.display();
 
         // Displays the cube map
         this.cubeMap.display();
