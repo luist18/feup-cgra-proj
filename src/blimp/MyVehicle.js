@@ -24,16 +24,17 @@ class MyVehicle extends CGFobject {
         this.turbine = new MyTurbine(this.scene, 10, 10);
 
         this.scale = 1;
+        this.autoPilot = false;
     }
 
     // Movement method
     initMovement() {
         this.customMovement = false;
 
-        this.speed = 0;
+        this.speed = 0; // units/second
         this.acceleration = 0; // not counting friction
         this.yyangle = 0;
-        this.accelerationMultiplier = 1; // speed factor slider
+        this.accelerationMultiplier = 1; // speed factor slider, units/second
 
         this.turningValue = 0;
 
@@ -44,12 +45,12 @@ class MyVehicle extends CGFobject {
     }
 
     accelerate(value) {
-        value *= this.accelerationMultiplier;
+        value *= this.accelerationMultiplier * 5; // default max speed 5 units/second
 
         this.acceleration = value;
         this.speed += this.acceleration;
 
-        let maxSpeed = 0.2 * this.accelerationMultiplier;
+        let maxSpeed = this.accelerationMultiplier * 5; // default max speed 5 units/second
         if (this.speed > maxSpeed)
             this.speed = maxSpeed;
         if (this.speed < -maxSpeed)
@@ -62,6 +63,18 @@ class MyVehicle extends CGFobject {
 
     brake(amount) {
         this.speed += this.speed * -amount;
+    }
+
+    /**
+     * Makes rotations automatically. :(
+     * @param {*} radius        the radius of the rotation 
+     * @param {*} time          the time the rotation takes
+     * @param {*} timeElapsed   the elapsed time
+     */
+    applyAutoPilot(radius, time, timeElapsed) {
+        this.speed = radius*2*Math.PI / time; // perimeter / time <=> 2 * PI * radius / time
+        this.apangle = 2*Math.PI*timeElapsed / time;
+        this.turningValue = this.apangle / (Math.PI / 2);
     }
 
     reset() {
@@ -79,18 +92,26 @@ class MyVehicle extends CGFobject {
         var elapsed = t - this.lastTime;
         this.lastTime = t;
 
+        elapsed /= 1000; // seconds
+
+        if (this.autoPilot)
+            this.applyAutoPilot(5, 5, elapsed);
+
         this.wings.update(elapsed, this.turningValue);
         this.turbine.update(elapsed, this.speed);
 
-        // this.yyangle += this.turningValue * this.speed * 15 / elapsed;
-        this.yyangle -= this.wings.angle * this.speed * 15 / elapsed; // TEST use this one instead of the one before for a more realistic movement, this depends on the wings, the one before does not
+        if (this.autoPilot) // completely ignore wing input
+            this.yyangle += this.apangle;
+        else
+            this.yyangle -= this.wings.angle * this.speed / 50; // 50 smooths
+        // this.yyangle += this.turningValue * this.speed * 15 / elapsed; // deprecated
 
         if (this.customMovement) {
             this.friction = this.speed * -0.009;
             this.speed += this.friction;
         }
-        this.positionX += this.speed * Math.sin(this.yyangle) * 15 / elapsed;
-        this.positionZ += this.speed * Math.cos(this.yyangle) * 15 / elapsed;
+        this.positionX += this.speed * Math.sin(this.yyangle) * elapsed;
+        this.positionZ += this.speed * Math.cos(this.yyangle) * elapsed;
 
         this.turningValue = 0;
     }

@@ -32,7 +32,7 @@ class MyTurbine extends CGFobject {
     update(elapsed, speed) {
         this.angularSpeed = speed;
 
-        this.angle += this.angularSpeed * elapsed/5; // elapsed divided to be more smooth
+        this.angle += this.angularSpeed * elapsed * 4 + 0.05;
         this.angle %= Math.PI; // the angle doesn't get to high
     }
 

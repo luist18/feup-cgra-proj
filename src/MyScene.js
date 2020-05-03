@@ -43,6 +43,9 @@ class MyScene extends CGFscene {
         // Interface sliders
         this.speedFactor = 1;
         this.scaleFactor = 1;
+
+        this.autoPilot = false;
+        this.customMovement = false;
     }
 
     initLights() {
@@ -87,6 +90,8 @@ class MyScene extends CGFscene {
         this.vehicle.update(t);
         this.vehicle.accelerationMultiplier = this.speedFactor;
         this.vehicle.scale = this.scaleFactor;
+        this.vehicle.customMovement = this.customMovement;
+        this.vehicle.autoPilot = this.autoPilot;
     }
 
     onCubeMapChanged() {
@@ -96,11 +101,22 @@ class MyScene extends CGFscene {
 
     checkKeys() {
         // Check for key codes e.g. in https://keycode.info/
+        if (this.gui.isContinuousKeyPressed("KeyP"))
+            this.autoPilot = true;
+        else
+            this.autoPilot = false;
+        
+        if (this.gui.isKeyPressed("KeyR"))
+            this.vehicle.reset();
+
+        if (this.autoPilot)
+            return;
+            
         if (this.gui.isKeyPressed("KeyW"))
-            this.vehicle.accelerate(0.02);
+            this.vehicle.accelerate(0.01);
         if (this.gui.isKeyPressed("KeyS"))
             if (!this.vehicle.customMovement)
-                this.vehicle.brake(0.15);
+                this.vehicle.brake(0.08);
             else
                 this.vehicle.accelerate(-0.02);
         if (!this.gui.isKeyPressed("KeyW") && !this.gui.isKeyPressed("KeyS"))
@@ -111,8 +127,6 @@ class MyScene extends CGFscene {
             this.vehicle.turn(-0.25);
         if (this.gui.isKeyPressed("Space"))
             this.vehicle.brake(0.15);
-        if (this.gui.isKeyPressed("KeyR"))
-            this.vehicle.reset();
     }
 
     display() {

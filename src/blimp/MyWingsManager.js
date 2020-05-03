@@ -22,11 +22,9 @@ class MyWingsManager extends CGFobject {
     }
 
     initMovement() {
+        this.anglePerSecond = Math.PI/4; // in rads
         this.angle = 0;
         this.turningValue = 0;
-        this.angleAddition = Math.PI/180; // smooth turning
-
-        this.lastTime = 0;
     }
 
     reset() {
@@ -41,8 +39,8 @@ class MyWingsManager extends CGFobject {
         if (Math.abs(maxAngle - this.angle) < Math.PI/180) // no need to turn
             return
 
-        var angleAddition = (maxAngle > this.angle) ? (this.angleAddition) : (-this.angleAddition); // smooth turning
-        this.angle += angleAddition * elapsed / 25;
+        var angleAddition = (maxAngle > this.angle) ? (this.anglePerSecond) : (-this.anglePerSecond); // smooth turning
+        this.angle += elapsed * angleAddition;
     }
 
     display() {
