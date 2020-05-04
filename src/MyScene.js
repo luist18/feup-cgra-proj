@@ -99,6 +99,12 @@ class MyScene extends CGFscene {
         this.cubeMap.updateBuffers();
     }
 
+    resetAll() {
+        this.gui.continuousActiveKeys["KeyP"] = false;
+        this.autoPilot = false;
+        this.vehicle.reset();
+    }
+
     checkKeys() {
         // Check for key codes e.g. in https://keycode.info/
         if (this.gui.isContinuousKeyPressed("KeyP"))
@@ -106,8 +112,10 @@ class MyScene extends CGFscene {
         else
             this.autoPilot = false;
         
-        if (this.gui.isKeyPressed("KeyR"))
-            this.vehicle.reset();
+        console.log(this.autoPilot);
+
+        if (this.gui.isKeyPressed("KeyR")) 
+            this.resetAll();
 
         if (this.autoPilot)
             return;
