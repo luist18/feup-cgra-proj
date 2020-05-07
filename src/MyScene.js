@@ -29,6 +29,9 @@ class MyScene extends CGFscene {
         // Vehicle
         this.vehicle = new MyVehicle(this);
 
+        // Billboard
+        this.billboard = new MyBillboard(this);
+
         this.initCubeMap();
 
         // Terrain
@@ -111,8 +114,6 @@ class MyScene extends CGFscene {
             this.autoPilot = true;
         else
             this.autoPilot = false;
-        
-        console.log(this.autoPilot);
 
         if (this.gui.isKeyPressed("KeyR")) 
             this.resetAll();
@@ -170,8 +171,9 @@ class MyScene extends CGFscene {
         this.supply.display();
 
         this.pushMatrix();
-        this.vehicle.display();
         this.terrain.display();
+        this.vehicle.display();
+        this.billboard.display();
         this.popMatrix();
 
         // Displays the cube map
