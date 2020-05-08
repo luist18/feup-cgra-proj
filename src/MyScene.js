@@ -11,6 +11,7 @@ class MyScene extends CGFscene {
         super.init(application);
         this.initCameras();
         this.initLights();
+        this.initMaterials();
 
         //Background color
         this.gl.clearColor(0.0, 0.0, 0.0, 1.0);
@@ -37,8 +38,10 @@ class MyScene extends CGFscene {
         // Terrain
         this.terrain = new MyTerrain(this);
 
-        // Supply FIXME temporary
-        this.supply = new MySupply(this, 0, 0, 0);
+        // Supply
+        this.numberOfSupplies = 1000;
+
+        this.resetSupplies();
 
         //Objects connected to MyInterface
         this.displayAxis = false;
@@ -60,7 +63,25 @@ class MyScene extends CGFscene {
     }
 
     initCameras() {
-        this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(15, 15, 15), vec3.fromValues(0, 0, 0));
+        this.camera = new CGFcamera(0.7, 0.1, 500, vec3.fromValues(26, 20, 26), vec3.fromValues(0, 5, 0));
+    }
+
+    initMaterials() {
+        // Supply materials
+        this.supplyMaterial = new CGFappearance(this);
+        this.supplyMaterial.setDiffuse(1, 1, 1, 1);
+        this.supplyMaterial.setSpecular(1, 1, 1, 1);
+        this.supplyMaterial.setAmbient(0.8, 0.8, 0.8, 1);
+        this.supplyMaterial.setTexture(this.supplyFaceTexture);
+        this.supplyMaterial.setTextureWrap('REPEAT', 'REPEAT');
+
+        this.supplyTextures = [new CGFtexture(this, "../resources/supply/pig/pig_f.png"),
+        new CGFtexture(this, "../resources/supply/pig/pig_r.png"),
+        new CGFtexture(this, "../resources/supply/pig/pig_b.png"),
+        new CGFtexture(this, "../resources/supply/pig/pig_l.png"),
+        new CGFtexture(this, "../resources/supply/pig/pig_t.png"),
+        new CGFtexture(this, "../resources/supply/pig/pig_bt.png")];
+
     }
 
     initCubeMap() {
@@ -95,6 +116,8 @@ class MyScene extends CGFscene {
         this.vehicle.scale = this.scaleFactor;
         this.vehicle.customMovement = this.customMovement;
         this.vehicle.autoPilot = this.autoPilot;
+
+        this.supplies.forEach(supply => supply.update(t));
     }
 
     onCubeMapChanged() {
@@ -106,6 +129,16 @@ class MyScene extends CGFscene {
         this.gui.continuousActiveKeys["KeyP"] = false;
         this.autoPilot = false;
         this.vehicle.reset();
+        this.resetSupplies();
+    }
+
+    resetSupplies() {
+        this.supplies = [];
+
+        for (var i = 0; i < this.numberOfSupplies; ++i)
+            this.supplies.push(new MySupply(this, this.supplyMaterial, this.supplyTextures));
+
+        this.numberOfSuppliesDelivered = 0;
     }
 
     checkKeys() {
@@ -115,12 +148,12 @@ class MyScene extends CGFscene {
         else
             this.autoPilot = false;
 
-        if (this.gui.isKeyPressed("KeyR")) 
+        if (this.gui.isKeyPressed("KeyR"))
             this.resetAll();
 
         if (this.autoPilot)
             return;
-            
+
         if (this.gui.isKeyPressed("KeyW"))
             this.vehicle.accelerate(0.01);
         if (this.gui.isKeyPressed("KeyS"))
@@ -136,6 +169,12 @@ class MyScene extends CGFscene {
             this.vehicle.turn(-0.25);
         if (this.gui.isKeyPressed("Space"))
             this.vehicle.brake(0.15);
+        if (this.gui.isSingleKeyPressed("KeyL")) {
+            if (this.numberOfSuppliesDelivered == this.numberOfSupplies) return;
+            this.supplies[this.numberOfSuppliesDelivered++].drop([this.vehicle.positionX, this.vehicle.positionY - 0.9,
+            this.vehicle.positionZ, this.vehicle.yyangle,
+            this.vehicle.speed]);
+        }
     }
 
     display() {
@@ -168,13 +207,10 @@ class MyScene extends CGFscene {
         this.checkKeys();
 
         // ---- BEGIN Primitive drawing section
-        this.supply.display();
-
-        this.pushMatrix();
         this.terrain.display();
         this.vehicle.display();
         this.billboard.display();
-        this.popMatrix();
+        this.supplies.forEach(supply => supply.display());
 
         // Displays the cube map
         this.cubeMap.display();

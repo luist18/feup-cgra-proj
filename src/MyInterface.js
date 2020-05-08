@@ -15,7 +15,7 @@ class MyInterface extends CGFinterface {
         this.gui = new dat.GUI();
 
         var obj = this;
-        
+
         // Checkbox element in GUI
         this.gui.add(this.scene, 'displayAxis').name('Display Axis');
 
@@ -45,12 +45,15 @@ class MyInterface extends CGFinterface {
         this.activeKeys = {};
         // create a named array to store one time click keys
         this.continuousActiveKeys = {};
+
+        this.singleActiveKeys = {};
     }
 
     processKeyDown(event) {
         // called when a key is pressed down
         // mark it as active in the array
         this.continuousActiveKeys[event.code] = !this.continuousActiveKeys[event.code];
+        this.singleActiveKeys[event.code] = !this.singleActiveKeys[event.code];
         this.activeKeys[event.code] = true;
     }
 
@@ -66,5 +69,14 @@ class MyInterface extends CGFinterface {
 
     isContinuousKeyPressed(keyCode) {
         return this.continuousActiveKeys[keyCode] || false;
+    }
+
+    isSingleKeyPressed(keyCode) {
+        if (this.singleActiveKeys[keyCode]) {
+            this.singleActiveKeys[keyCode] = false;
+            return true;
+        }
+        
+        return this.singleActiveKeys[keyCode] || false;
     }
 }

@@ -1,7 +1,7 @@
 
 /** Represents a plane with nrDivs divisions along both axis, with center at (0,0) */
-class MyPlane extends CGFobject{
-	constructor(scene, nrDivs, minS, maxS, minT, maxT) {
+class MyPlane extends CGFobject {
+	constructor(scene, nrDivs, doubleSided = false, minS, maxS, minT, maxT) {
 		super(scene);
 		// nrDivs = 1 if not provided
 		nrDivs = typeof nrDivs !== 'undefined' ? nrDivs : 1;
@@ -11,10 +11,12 @@ class MyPlane extends CGFobject{
 		this.maxS = maxS || 1;
 		this.minT = minT || 0;
 		this.maxT = maxT || 1;
+		this.doubleSided = doubleSided;
 		this.q = (this.maxS - this.minS) / this.nrDivs;
 		this.w = (this.maxT - this.minT) / this.nrDivs;
 		this.initBuffers();
 	}
+
 	initBuffers() {
 		// Generate vertices, normals, and texCoords
 		this.vertices = [];
@@ -26,6 +28,10 @@ class MyPlane extends CGFobject{
 			for (var i = 0; i <= this.nrDivs; i++) {
 				this.vertices.push(xCoord, yCoord, 0);
 				this.normals.push(0, 0, 1);
+
+				if (this.doubleSided)
+					this.normals.push(0, 0, -1);
+
 				this.texCoords.push(this.minS + i * this.q, this.minT + j * this.w);
 				xCoord += this.patchLength;
 			}
@@ -46,17 +52,31 @@ class MyPlane extends CGFobject{
 				this.indices.push(ind);
 			}
 		}
+
+		if (this.doubleSided) {
+			var ind = 0;
+			for (var j = 0; j < this.nrDivs; j++) {
+				for (var i = 0; i <= this.nrDivs; i++) {
+					this.indices.push(ind + this.nrDivs + 1);
+					this.indices.push(ind);
+					ind++;
+				}
+				if (j + 1 < this.nrDivs) {
+					this.indices.push(ind);
+					this.indices.push(ind + this.nrDivs);
+				}
+			}
+		}
 		this.primitiveType = this.scene.gl.TRIANGLE_STRIP;
 		this.initGLBuffers();
 	}
 
-	setFillMode() { 
-		this.primitiveType=this.scene.gl.TRIANGLE_STRIP;
+	setFillMode() {
+		this.primitiveType = this.scene.gl.TRIANGLE_STRIP;
 	}
 
-	setLineMode() 
-	{ 
-		this.primitiveType=this.scene.gl.LINES;
+	setLineMode() {
+		this.primitiveType = this.scene.gl.LINES;
 	};
 
 }

@@ -11,118 +11,208 @@ const SupplyStates = {
  */
 class MySupply extends CGFobject {
 
-    constructor(scene, positionX = 0, positionY = 0, positionZ = 0) {
+    constructor(scene, material, texts, scaleFactor = 0.4, positionX = 0, positionY = 0, positionZ = 0) {
         super(scene);
-        // todo replace state with inactive
-        this.state = SupplyStates.LANDED;
+        this.state = SupplyStates.INACTIVE;
 
         this.positionX = positionX;
         this.positionY = positionY;
         this.positionZ = positionZ;
-
-        this.faceTexture = new CGFtexture(this.scene, "../resources/box.png");
-        this.material = new CGFappearance(this.scene);
-        this.material.setDiffuse(1, 1, 1, 1);
-        this.material.setSpecular(1, 1, 1, 1);
-        this.material.setAmbient(0.8, 0.8, 0.8, 1);
-        this.material.setTexture(this.faceTexture);
+        this.texts = texts;
+        this.scaleFactor = scaleFactor;
 
         this.plane = new MyPlane(this.scene, 8);
+
+        this.material = material;
+        this.texts = texts;
+        this.velocity = 0;
+
+        this.airResistance = -0.02;
     }
 
     drop(dropPosition) {
+        this.positionX = dropPosition[0];
+        this.positionY = dropPosition[1];
+        this.positionZ = dropPosition[2];
 
+        this.yyangle = dropPosition[3];
+
+        this.vehicleVelocity = dropPosition[4];
+
+        this.constAcceleration = -2 * dropPosition[1] / 9;
+
+        this.state = SupplyStates.FALLING;
     }
 
     land() {
-
+        this.state = SupplyStates.LANDED;
+        this.positionY = 0;
+        playSound("pigdeath");
     }
 
     update(t) {
+        if (this.state == SupplyStates.LANDED) return;
+        else if (this.state == SupplyStates.INACTIVE) {
+            this.lastTime = t;
+            return;
+        }
 
+        var elapsed = t - this.lastTime;
+        this.lastTime = t;
+
+        elapsed /= 1000;
+
+        this.velocity += this.constAcceleration * elapsed;
+
+        this.positionY += this.velocity * elapsed;
+
+        this.vehicleVelocity += this.airResistance * this.vehicleVelocity;
+
+        this.positionX += this.vehicleVelocity * Math.sin(this.yyangle) * elapsed;
+        this.positionZ += this.vehicleVelocity * Math.cos(this.yyangle) * elapsed;
+
+        if (this.positionY <= 0) {
+            this.land();
+            return;
+        }
     }
 
     display() {
         if (this.state == SupplyStates.INACTIVE) return;
 
-        if (this.state == SupplyStates.FALLING) {
-            this.material.apply();
-            this.scene.pushMatrix();
-            this.scene.translate(this.positionX + 0, this.positionY + 0.5, this.positionZ + 0.5);
-            this.plane.display();
-            this.scene.popMatrix();
+        this.material.apply();
 
-            this.scene.pushMatrix();
-            this.scene.translate(this.positionX + 0.5, + this.positionY + 0.5, this.positionZ + 0);
-            this.scene.rotate(Math.PI / 2, 0, 1, 0);
-            this.plane.display();
-            this.scene.popMatrix();
+        this.scene.gl.texParameteri(this.scene.gl.TEXTURE_2D, this.scene.gl.TEXTURE_MAG_FILTER, this.scene.gl.NEAREST);
 
-            this.scene.pushMatrix();
-            this.scene.translate(this.positionX + 0, this.positionY + 0.5, this.positionZ + -0.5);
-            this.scene.rotate(Math.PI, 0, 1, 0);
-            this.plane.display();
-            this.scene.popMatrix();
+        this.scene.pushMatrix();
 
-            this.scene.pushMatrix();
-            this.scene.translate(this.positionX + -0.5, this.positionY + 0.5, this.positionZ + 0);
-            this.scene.rotate(3 * Math.PI / 2, 0, 1, 0);
-            this.plane.display();
-            this.scene.popMatrix();
 
-            this.scene.pushMatrix();
-            this.scene.translate(this.positionX + 0, this.positionY + 1, this.positionZ + 0);
-            this.scene.rotate(-Math.PI / 2, 1, 0, 0);
-            this.plane.display();
-            this.scene.popMatrix();
+        this.scene.translate(this.positionX, this.positionY, this.positionZ);
+        this.scene.scale(this.scaleFactor, this.scaleFactor, this.scaleFactor);
 
-            this.scene.pushMatrix();
-            this.scene.translate(this.positionX, this.positionY, this.positionZ);
-            this.scene.rotate(Math.PI / 2, 1, 0, 0);
-            this.plane.display();
-            this.scene.popMatrix();
-        } else if (this.state == SupplyStates.LANDED) {
-            this.material.apply();
-            this.scene.pushMatrix();
-            this.scene.translate(this.positionX, this.positionY + 0.03, this.positionZ + 0.5);
-            this.scene.rotate(-Math.PI / 2, 1, 0, 0)
-            this.plane.display();
-            this.scene.popMatrix();
+        if (this.state == SupplyStates.FALLING)
+            this.displayFalling();
+        else if (this.state == SupplyStates.LANDED)
+            this.displayLanded();
 
-            this.scene.pushMatrix();
-            this.scene.translate(this.positionX + 0.9, this.positionY + 0.02, this.positionZ + 0.5);
-            this.scene.rotate(-Math.PI / 9, 0, 1, 0);
-            this.scene.rotate(-Math.PI / 2, 1, 0, 0)
-            this.plane.display();
-            this.scene.popMatrix();
+        //this.scene.gl.texParameteri(this.scene.gl.TEXTURE_2D, this.scene.gl.TEXTURE_MAG_FILTER, this.scene.gl.NEAREST);
 
-            this.scene.pushMatrix();
-            this.scene.translate(this.positionX + 0.9, this.positionY + 0.03, this.positionZ - 0.5);
-            this.scene.rotate(-Math.PI / 3, 0, 1, 0);
-            this.scene.rotate(-Math.PI / 2, 1, 0, 0)
-            this.plane.display();
-            this.scene.popMatrix();
+        this.scene.popMatrix();
+    }
 
-            this.scene.pushMatrix();
-            this.scene.translate(this.positionX - 0.9, this.positionY + 0.03, this.positionZ - 0.5);
-            this.scene.rotate(Math.PI / 9, 0, 1, 0);
-            this.scene.rotate(-Math.PI / 2, 1, 0, 0)
-            this.plane.display();
-            this.scene.popMatrix();
+    displayFalling() {
+        this.material.setTexture(this.texts[0]);
+        this.material.apply();
+        this.scene.gl.texParameteri(this.scene.gl.TEXTURE_2D, this.scene.gl.TEXTURE_MAG_FILTER, this.scene.gl.NEAREST);
+        this.scene.pushMatrix();
+        this.scene.translate(0, 0.5, 0.5);
+        this.plane.display();
+        this.scene.popMatrix();
 
-            this.scene.pushMatrix();
-            this.scene.translate(this.positionX - 0.9, this.positionY + 0.02, this.positionZ + 0.5);
-            this.scene.rotate(Math.PI / 3, 0, 1, 0);
-            this.scene.rotate(-Math.PI / 2, 1, 0, 0)
-            this.plane.display();
-            this.scene.popMatrix();
+        this.material.setTexture(this.texts[1]);
+        this.material.apply();
+        this.scene.gl.texParameteri(this.scene.gl.TEXTURE_2D, this.scene.gl.TEXTURE_MAG_FILTER, this.scene.gl.NEAREST);
+        this.scene.pushMatrix();
+        this.scene.translate(0.5, 0.5, 0);
+        this.scene.rotate(Math.PI / 2, 0, 1, 0);
+        this.plane.display();
+        this.scene.popMatrix();
 
-            this.scene.pushMatrix();
-            this.scene.translate(this.positionX - 0.8, this.positionY + 0.03, this.positionZ + 1.5);
-            this.scene.rotate(Math.PI / 6, 0, 1, 0);
-            this.scene.rotate(-Math.PI / 2, 1, 0, 0)
-            this.plane.display();
-            this.scene.popMatrix();
-        }
+        this.material.setTexture(this.texts[2]);
+        this.material.apply();
+        this.scene.gl.texParameteri(this.scene.gl.TEXTURE_2D, this.scene.gl.TEXTURE_MAG_FILTER, this.scene.gl.NEAREST);
+        this.scene.pushMatrix();
+        this.scene.translate(0, 0.5, -0.5);
+        this.scene.rotate(Math.PI, 0, 1, 0);
+        this.plane.display();
+        this.scene.popMatrix();
+
+        this.material.setTexture(this.texts[3]);
+        this.material.apply();
+        this.scene.gl.texParameteri(this.scene.gl.TEXTURE_2D, this.scene.gl.TEXTURE_MAG_FILTER, this.scene.gl.NEAREST);
+        this.scene.pushMatrix();
+        this.scene.translate(-0.5, + 0.5, 0);
+        this.scene.rotate(3 * Math.PI / 2, 0, 1, 0);
+        this.plane.display();
+        this.scene.popMatrix();
+
+        this.material.setTexture(this.texts[4]);
+        this.material.apply();
+        this.scene.gl.texParameteri(this.scene.gl.TEXTURE_2D, this.scene.gl.TEXTURE_MAG_FILTER, this.scene.gl.NEAREST);
+        this.scene.pushMatrix();
+        this.scene.translate(0, 1, 0);
+        this.scene.rotate(-Math.PI / 2, 1, 0, 0);
+        this.plane.display();
+        this.scene.popMatrix();
+
+        this.material.setTexture(this.texts[5]);
+        this.material.apply();
+        this.scene.gl.texParameteri(this.scene.gl.TEXTURE_2D, this.scene.gl.TEXTURE_MAG_FILTER, this.scene.gl.NEAREST);
+        this.scene.pushMatrix();
+        this.scene.translate(0, 0, 0);
+        this.scene.rotate(Math.PI / 2, 1, 0, 0);
+        this.plane.display();
+        this.scene.popMatrix();
+    }
+
+    displayLanded() {
+        this.material.setTexture(this.texts[0]);
+        this.material.apply();
+        this.scene.gl.texParameteri(this.scene.gl.TEXTURE_2D, this.scene.gl.TEXTURE_MAG_FILTER, this.scene.gl.NEAREST);
+        this.scene.pushMatrix();
+        this.scene.translate(0, 0.03, 0.5);
+        this.scene.rotate(-Math.PI / 2, 1, 0, 0);
+        this.plane.display();
+        this.scene.popMatrix();
+
+        this.material.setTexture(this.texts[1]);
+        this.material.apply();
+        this.scene.gl.texParameteri(this.scene.gl.TEXTURE_2D, this.scene.gl.TEXTURE_MAG_FILTER, this.scene.gl.NEAREST);
+        this.scene.pushMatrix();
+        this.scene.translate(0.9, 0.02, 0.5);
+        this.scene.rotate(-Math.PI / 9, 0, 1, 0);
+        this.scene.rotate(-Math.PI / 2, 1, 0, 0);
+        this.plane.display();
+        this.scene.popMatrix();
+
+        this.material.setTexture(this.texts[2]);
+        this.material.apply();
+        this.scene.gl.texParameteri(this.scene.gl.TEXTURE_2D, this.scene.gl.TEXTURE_MAG_FILTER, this.scene.gl.NEAREST);
+        this.scene.pushMatrix();
+        this.scene.translate(0.9, 0.03, - 0.5);
+        this.scene.rotate(-Math.PI / 3, 0, 1, 0);
+        this.scene.rotate(-Math.PI / 2, 1, 0, 0);
+        this.plane.display();
+        this.scene.popMatrix();
+
+        this.material.setTexture(this.texts[3]);
+        this.material.apply();
+        this.scene.gl.texParameteri(this.scene.gl.TEXTURE_2D, this.scene.gl.TEXTURE_MAG_FILTER, this.scene.gl.NEAREST);
+        this.scene.pushMatrix();
+        this.scene.translate(- 0.9, 0.03, - 0.5);
+        this.scene.rotate(Math.PI / 9, 0, 1, 0);
+        this.scene.rotate(-Math.PI / 2, 1, 0, 0);
+        this.plane.display();
+        this.scene.popMatrix();
+
+        this.material.setTexture(this.texts[4]);
+        this.material.apply();
+        this.scene.gl.texParameteri(this.scene.gl.TEXTURE_2D, this.scene.gl.TEXTURE_MAG_FILTER, this.scene.gl.NEAREST);
+        this.scene.pushMatrix();
+        this.scene.translate(- 0.9, 0.02, 0.5);
+        this.scene.rotate(Math.PI / 3, 0, 1, 0);
+        this.scene.rotate(-Math.PI / 2, 1, 0, 0);
+        this.plane.display();
+        this.scene.popMatrix();
+
+        this.material.setTexture(this.texts[5]);
+        this.material.apply();
+        this.scene.gl.texParameteri(this.scene.gl.TEXTURE_2D, this.scene.gl.TEXTURE_MAG_FILTER, this.scene.gl.NEAREST);
+        this.scene.pushMatrix();
+        this.scene.translate(- 0.8, 0.03, 1.5);
+        this.scene.rotate(Math.PI / 6, 0, 1, 0);
+        this.scene.rotate(-Math.PI / 2, 1, 0, 0);
+        this.plane.display();
+        this.scene.popMatrix();
     }
 }
