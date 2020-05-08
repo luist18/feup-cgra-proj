@@ -9,8 +9,8 @@ class MyTerrain extends CGFobject {
         this.size = size;
         this.maxHeight = maxHeight;
 
-        this.terrainTex = new CGFtexture(this.scene, "../resources/terrain2.png");
-        this.terrainMap = new CGFtexture(this.scene, "../resources/heightmap2.png");
+        this.terrainTex = new CGFtexture(this.scene, "../resources/t-min.png");
+        this.terrainMap = new CGFtexture(this.scene, "../resources/h-min.png");
         this.material = new CGFappearance(this.scene);
         this.material.setTexture(this.terrainTex);
         this.material.setTextureWrap('REPEAT', 'REPEAT');

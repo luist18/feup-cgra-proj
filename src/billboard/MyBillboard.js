@@ -5,13 +5,12 @@ class MyBillboard extends CGFobject {
 	}
 
 	init() {
-        this.canvas = new MyUnitCube(this.scene);
-        this.leg = new MyUnitCube(this.scene);
+        this.cube = new MyUnitCube(this.scene);
         this.counter = new MyPlane(this.scene, 10);
 
         this.whiteTex = new CGFtexture(this.scene, "../resources/billboard/white.png");
         this.greyTex = new CGFtexture(this.scene, "../resources/billboard/grey.png");
-        this.gradient = new CGFtexture(this.scene)
+        this.gradient = new CGFtexture(this.scene, "../resources/billboard/gradient_fill.png");
 
         this.material = new CGFappearance(this.scene);
         this.material.setDiffuse(1, 1, 1, 1);
@@ -32,7 +31,7 @@ class MyBillboard extends CGFobject {
         this.scene.pushMatrix();
         this.scene.translate(0, 1.5, 0);
         this.scene.scale(2, 1, 0.1);
-        this.canvas.display();
+        this.cube.display();
         this.scene.popMatrix();
 
         // draw legs
@@ -42,14 +41,23 @@ class MyBillboard extends CGFobject {
         this.scene.pushMatrix();
         this.scene.translate(0.9, 0.5, 0);
         this.scene.scale(0.05, 1, 0.05);
-        this.canvas.display();
+        this.cube.display();
         this.scene.popMatrix();
 
         // right
         this.scene.pushMatrix();
         this.scene.translate(-0.9, 0.5, 0);
         this.scene.scale(0.05, 1, 0.05);
-        this.canvas.display();
+        this.cube.display();
+        this.scene.popMatrix();
+
+        // draw counter
+        this.material.setTexture(this.gradient);
+        this.material.apply();
+        this.scene.pushMatrix();
+        this.scene.translate(0, 1.2, 0.06);
+        this.scene.scale(1.5, 0.2, 1);
+        this.counter.display();
         this.scene.popMatrix();
 
         this.scene.popMatrix();
