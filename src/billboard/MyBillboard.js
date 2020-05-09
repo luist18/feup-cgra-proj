@@ -8,9 +8,9 @@ class MyBillboard extends CGFobject {
         this.cube = new MyUnitCube(this.scene);
         this.counter = new MyPlane(this.scene, 10);
 
-        this.whiteTex = new CGFtexture(this.scene, "../resources/billboard/white.png");
-        this.greyTex = new CGFtexture(this.scene, "../resources/billboard/grey.png");
-        this.gradient = new CGFtexture(this.scene, "../resources/billboard/gradient_fill.png");
+        this.whiteTex = new CGFtexture(this.scene, "../resources/textures/billboard/white.png");
+        this.greyTex = new CGFtexture(this.scene, "../resources/textures/billboard/grey.png");
+        this.gradient = new CGFtexture(this.scene, "../resources/textures/billboard/gradient_fill.png");
 
         this.material = new CGFappearance(this.scene);
         this.material.setDiffuse(1, 1, 1, 1);

@@ -43,6 +43,8 @@ class MyScene extends CGFscene {
 
         this.resetSupplies();
 
+        this.plane2 = new MyPlane(this, 20, true);
+
         //Objects connected to MyInterface
         this.displayAxis = false;
 
@@ -75,12 +77,12 @@ class MyScene extends CGFscene {
         this.supplyMaterial.setTexture(this.supplyFaceTexture);
         this.supplyMaterial.setTextureWrap('REPEAT', 'REPEAT');
 
-        this.supplyTextures = [new CGFtexture(this, "../resources/supply/pig/pig_f.png"),
-        new CGFtexture(this, "../resources/supply/pig/pig_r.png"),
-        new CGFtexture(this, "../resources/supply/pig/pig_b.png"),
-        new CGFtexture(this, "../resources/supply/pig/pig_l.png"),
-        new CGFtexture(this, "../resources/supply/pig/pig_t.png"),
-        new CGFtexture(this, "../resources/supply/pig/pig_bt.png")];
+        this.supplyTextures = [new CGFtexture(this, "../resources/textures/supply/pig/pig_f.png"),
+        new CGFtexture(this, "../resources/textures/supply/pig/pig_r.png"),
+        new CGFtexture(this, "../resources/textures/supply/pig/pig_b.png"),
+        new CGFtexture(this, "../resources/textures/supply/pig/pig_l.png"),
+        new CGFtexture(this, "../resources/textures/supply/pig/pig_t.png"),
+        new CGFtexture(this, "../resources/textures/supply/pig/pig_bt.png")];
 
     }
 
@@ -171,7 +173,7 @@ class MyScene extends CGFscene {
             this.vehicle.brake(0.15);
         if (this.gui.isSingleKeyPressed("KeyL")) {
             if (this.numberOfSuppliesDelivered == this.numberOfSupplies) return;
-            this.supplies[this.numberOfSuppliesDelivered++].drop([this.vehicle.positionX, this.vehicle.positionY - 0.9,
+            this.supplies[this.numberOfSuppliesDelivered++].drop([this.vehicle.positionX, this.vehicle.positionY - 0.55,
             this.vehicle.positionZ, this.vehicle.yyangle,
             this.vehicle.speed]);
         }
@@ -205,16 +207,20 @@ class MyScene extends CGFscene {
 
         // Key listening
         this.checkKeys();
-
+        
         // ---- BEGIN Primitive drawing section
         this.terrain.display();
         this.vehicle.display();
         this.billboard.display();
         this.supplies.forEach(supply => supply.display());
-
+        this.pushMatrix();
+        this.translate(0, 6, 0);
+        this.plane2.display();
+        this.popMatrix();
+        
         // Displays the cube map
         this.cubeMap.display();
-
+        
         // ---- END Primitive drawing section
     }
 }

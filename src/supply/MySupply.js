@@ -11,7 +11,7 @@ const SupplyStates = {
  */
 class MySupply extends CGFobject {
 
-    constructor(scene, material, texts, scaleFactor = 0.4, positionX = 0, positionY = 0, positionZ = 0) {
+    constructor(scene, material, texts, scaleFactor = 0.18, positionX = 0, positionY = 0, positionZ = 0) {
         super(scene);
         this.state = SupplyStates.INACTIVE;
 

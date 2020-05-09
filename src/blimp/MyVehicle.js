@@ -8,9 +8,9 @@ class MyVehicle extends CGFobject {
     }
 
     init() {
-        this.google = new CGFtexture(this.scene, "../resources/blimp/google_texture.png");
-        this.cockpitFront = new CGFtexture(this.scene, "../resources/blimp/cockpit_front_texture.png");
-        this.blue = new CGFtexture(this.scene, "../resources/blimp/wing_texture.png");
+        this.google = new CGFtexture(this.scene, "../resources/textures/github/blimp/blimp.png");
+        this.cockpitFront = new CGFtexture(this.scene, "../resources/textures/github/blimp/cockpit_front_texture.png");
+        this.blue = new CGFtexture(this.scene, "../resources/textures/github/blimp/cockpit.png");
         this.material = new CGFappearance(this.scene);
         this.material.setDiffuse(1, 1, 1, 1);
         this.material.setSpecular(1, 1, 1, 1);
