@@ -50,34 +50,6 @@ class MyPlane extends CGFobject {
 			}
 		}
 
-		if (this.doubleSided) {
-			var yCoord = 0.5;
-			for (var j = 0; j <= this.nrDivs; j++) {
-				var xCoord = -0.5;
-				for (var i = 0; i <= this.nrDivs; i++) {
-					this.vertices.push(xCoord, yCoord, 0);
-					this.normals.push(0, 0, -1);
-
-					this.texCoords.push(this.minS + i * this.q, this.minT + j * this.w);
-					xCoord += this.patchLength;
-				}
-				yCoord -= this.patchLength;
-			}
-
-			var ind = 0;
-			for (var j = 0; j < this.nrDivs; j++) {
-				for (var i = 0; i <= this.nrDivs; i++) {
-					this.indices.push(ind + this.nrDivs + 1);
-					this.indices.push(ind);
-					ind++;
-				}
-				if (j + 1 < this.nrDivs) {
-					this.indices.push(ind);
-					this.indices.push(ind + this.nrDivs);
-				}
-			}
-		}
-
 		this.primitiveType = this.scene.gl.TRIANGLE_STRIP;
 		this.initGLBuffers();
 	}

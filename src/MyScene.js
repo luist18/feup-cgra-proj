@@ -189,6 +189,7 @@ class MyScene extends CGFscene {
         // Clear image and depth buffer everytime we update the scene
         this.gl.viewport(0, 0, this.gl.canvas.width, this.gl.canvas.height);
         this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
+
         // Initialize Model-View matrix as identity (no transformation
         this.updateProjectionMatrix();
         this.loadIdentity();
@@ -207,14 +208,18 @@ class MyScene extends CGFscene {
         this.checkKeys();
         
         // ---- BEGIN Primitive drawing section
-        this.terrain.display();
-        this.vehicle.display();
-        this.billboard.display();
-        this.supplies.forEach(supply => supply.display());
-        
-        // Displays the cube map
         this.cubeMap.display();
+        this.supplies.forEach(supply => supply.display());
+        this.billboard.display();
+        this.vehicle.display();
         
+        // ---- BEGIN Shader drawing section
+        this.vehicle.displayWithShaders();
+        this.terrain.display();
+        this.billboard.displayWithShaders();
+        
+        this.setActiveShader(this.defaultShader);
+
         // ---- END Primitive drawing section
     }
 }

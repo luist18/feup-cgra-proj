@@ -1,10 +1,10 @@
 class MyBillboard extends CGFobject {
-	constructor(scene) {
+    constructor(scene) {
         super(scene);
         this.init();
-	}
+    }
 
-	init() {
+    init() {
         this.cube = new MyUnitCube(this.scene);
         this.counter = new MyPlane(this.scene, 10);
 
@@ -18,12 +18,12 @@ class MyBillboard extends CGFobject {
         this.material.setAmbient(0.8, 0.8, 0.8, 1);
     }
 
-	display() {
+    display() {
         this.scene.pushMatrix();
-        
+
         // move to the right place
         this.scene.translate(0, 7.5, 18);
-        this.scene.rotate(2*Math.PI/5, 0, 1, 0);
+        this.scene.rotate(2 * Math.PI / 5, 0, 1, 0);
 
         // draw canvas
         this.material.setTexture(this.whiteTex);
@@ -61,5 +61,9 @@ class MyBillboard extends CGFobject {
         this.scene.popMatrix();
 
         this.scene.popMatrix();
+    }
+
+    displayWithShaders() {
+
     }
 }
