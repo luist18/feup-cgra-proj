@@ -43,8 +43,6 @@ class MyScene extends CGFscene {
 
         this.resetSupplies();
 
-        this.plane2 = new MyPlane(this, 20, true);
-
         //Objects connected to MyInterface
         this.displayAxis = false;
 
@@ -213,10 +211,6 @@ class MyScene extends CGFscene {
         this.vehicle.display();
         this.billboard.display();
         this.supplies.forEach(supply => supply.display());
-        this.pushMatrix();
-        this.translate(0, 6, 0);
-        this.plane2.display();
-        this.popMatrix();
         
         // Displays the cube map
         this.cubeMap.display();

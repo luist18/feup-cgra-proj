@@ -22,6 +22,7 @@ class MyVehicle extends CGFobject {
         this.wings = new MyWingsManager(this.scene, this.material);
         this.turbineHolder = new MySphere(this.scene, 10, 10);
         this.turbine = new MyTurbine(this.scene, 10, 10);
+        this.flag = new MyFlag(this.scene, 5);
 
         this.scale = 1;
         this.autoPilot = false;
@@ -99,6 +100,7 @@ class MyVehicle extends CGFobject {
 
         this.wings.update(elapsed, this.turningValue);
         this.turbine.update(elapsed, this.speed);
+        this.flag.update(elapsed, this.turningValue, this.speed);
 
         if (this.autoPilot) // completely ignore wing input
             this.yyangle += this.apangle;
@@ -206,6 +208,13 @@ class MyVehicle extends CGFobject {
         this.scene.rotate(-Math.PI / 2, 1, 0, 0);
         this.scene.scale(0.02, 0.02, 0.01);
         this.turbine.display();
+        this.scene.popMatrix();
+
+        // flag
+        this.scene.pushMatrix();
+        this.scene.translate(0, 0, -2.5);
+        this.scene.rotate(Math.PI/2, 0, 1, 0);
+        this.flag.display();
         this.scene.popMatrix();
 
         this.scene.popMatrix();
