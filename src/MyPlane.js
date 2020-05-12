@@ -5,6 +5,7 @@ class MyPlane extends CGFobject {
 		super(scene);
 		// nrDivs = 1 if not provided
 		nrDivs = typeof nrDivs !== 'undefined' ? nrDivs : 1;
+		this.doubleSided = doubleSided;
 		this.nrDivs = nrDivs;
 		this.patchLength = 1.0 / nrDivs;
 		this.minS = minS || 0;

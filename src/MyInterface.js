@@ -20,7 +20,10 @@ class MyInterface extends CGFinterface {
         this.gui.add(this.scene, 'displayAxis').name('Display Axis');
 
         // Dropbox of cube map
-        this.gui.add(this.scene, 'selectedCubeMap', this.scene.cubeMapList).name('Cube Map').onChange(this.scene.onCubeMapChanged.bind(this.scene));
+        this.gui.add(this.scene, 'selectedCubeMap', this.scene.cubeMapList).name('Cube map').onChange(this.scene.onCubeMapChanged.bind(this.scene));
+
+        // Skin
+        this.gui.add(this.scene, 'selectedSkin', this.scene.skinList).name('Skin').onChange(this.scene.onSkinChanged.bind(this.scene));
 
         // a folder for grouping parameters related to the vehicle
         var f0 = this.gui.addFolder('Vehicle');

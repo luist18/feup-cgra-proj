@@ -26,7 +26,7 @@ class MyTerrain extends CGFobject {
         //this.shader.setUniformsValues({maxHeight: this.maxHeight});
     }
 
-    display() {
+    displayWithShaders() {
         this.scene.setActiveShader(this.shader);
 
         this.material.apply();

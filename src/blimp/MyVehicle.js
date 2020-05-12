@@ -1,6 +1,7 @@
 class MyVehicle extends CGFobject {
     constructor(scene, positionY = 10) {
         super(scene);
+        this.initTextures();
         this.init();
         this.initMovement();
 
@@ -8,14 +9,6 @@ class MyVehicle extends CGFobject {
     }
 
     init() {
-        this.google = new CGFtexture(this.scene, "../resources/textures/github/blimp/blimp.png");
-        this.cockpitFront = new CGFtexture(this.scene, "../resources/textures/github/blimp/cockpit_front_texture.png");
-        this.blue = new CGFtexture(this.scene, "../resources/textures/github/blimp/cockpit.png");
-        this.material = new CGFappearance(this.scene);
-        this.material.setDiffuse(1, 1, 1, 1);
-        this.material.setSpecular(1, 1, 1, 1);
-        this.material.setAmbient(0.8, 0.8, 0.8, 1);
-
         this.balloon = new MySphere(this.scene, 20, 10);
         this.mainCockpit = new MyCylinder(this.scene, 20);
         this.cockpitSide = new MySphere(this.scene, 10, 10);
@@ -23,9 +16,23 @@ class MyVehicle extends CGFobject {
         this.turbineHolder = new MySphere(this.scene, 10, 10);
         this.turbine = new MyTurbine(this.scene, 10, 10);
         this.flag = new MyFlag(this.scene, 20);
+        this.flagHolder = new MyCylinder(this.scene, 8);
 
         this.scale = 1;
         this.autoPilot = false;
+    }
+
+    initTextures() {
+        var path = this.scene.skins[this.scene.selectedSkin];
+
+        this.blimp = new CGFtexture(this.scene, path.concat("blimp/blimp.png"));
+        this.cockpitFront = new CGFtexture(this.scene, path.concat("blimp/cockpit_front_texture.png"));
+        this.cockpit = new CGFtexture(this.scene, path.concat("blimp/cockpit.png"));
+        this.rope = new CGFtexture(this.scene, "../resources/textures/rope.png");
+        this.material = new CGFappearance(this.scene);
+        this.material.setDiffuse(1, 1, 1, 1);
+        this.material.setSpecular(1, 1, 1, 1);
+        this.material.setAmbient(0.8, 0.8, 0.8, 1);
     }
 
     // Movement method
@@ -100,7 +107,7 @@ class MyVehicle extends CGFobject {
 
         this.wings.update(elapsed, this.turningValue);
         this.turbine.update(elapsed, this.speed);
-        this.flag.update(elapsed, this.turningValue, this.speed, this.wings.angle * this.speed / 50);
+        this.flag.update(elapsed, this.turningValue, this.speed, this.wings.angle * this.speed / 50, this.accelerationMultiplier);
 
         if (this.autoPilot) // completely ignore wing input
             this.yyangle += this.apangle;
@@ -136,11 +143,12 @@ class MyVehicle extends CGFobject {
 
         this.scene.translate(this.positionX, this.positionY, this.positionZ);
         this.scene.rotate(this.yyangle, 0, 1, 0);
+        this.scene.scale(this.scale, this.scale, this.scale);
 
         this.scene.pushMatrix();
         this.scene.translate(0, 0, -2.5);
         this.scene.rotate(Math.PI / 2, 0, 1, 0);
-        this.flag.display();
+        this.flag.displayWithShaders();
         this.scene.popMatrix();
 
         this.scene.popMatrix();
@@ -151,7 +159,7 @@ class MyVehicle extends CGFobject {
         this.scene.scale(this.scale, this.scale, this.scale);
 
         /* central balloon */
-        this.material.setTexture(this.google);
+        this.material.setTexture(this.blimp);
         this.material.apply();
         this.scene.pushMatrix();
         this.scene.scale(0.5, 0.5, 1);
@@ -159,7 +167,7 @@ class MyVehicle extends CGFobject {
         this.scene.popMatrix();
 
         /* cockpit */
-        this.material.setTexture(this.blue);
+        this.material.setTexture(this.cockpit);
         this.material.apply();
         this.scene.pushMatrix();
         this.scene.translate(0, -0.5, 0);
@@ -190,7 +198,7 @@ class MyVehicle extends CGFobject {
 
         /* turbine holders */
         // left
-        this.material.setTexture(this.google);
+        this.material.setTexture(this.blimp);
         this.material.apply();
         this.scene.pushMatrix();
         this.scene.translate(0.11, -0.54, -0.25);
@@ -199,7 +207,7 @@ class MyVehicle extends CGFobject {
         this.scene.popMatrix();
 
         // right
-        this.material.setTexture(this.google);
+        this.material.setTexture(this.blimp);
         this.material.apply();
         this.scene.pushMatrix();
         this.scene.translate(-0.11, -0.54, -0.25);
@@ -208,7 +216,7 @@ class MyVehicle extends CGFobject {
         this.scene.popMatrix();
 
         /* turbines */
-        this.material.setTexture(this.blue);
+        this.material.setTexture(this.cockpit);
         this.material.apply();
         // left
         this.scene.pushMatrix();
@@ -224,6 +232,32 @@ class MyVehicle extends CGFobject {
         this.scene.rotate(-Math.PI / 2, 1, 0, 0);
         this.scene.scale(0.02, 0.02, 0.01);
         this.turbine.display();
+        this.scene.popMatrix();
+
+        // flag holders
+        this.scene.pushMatrix();
+        this.scene.translate(0, 0, -1.75);
+        this.scene.scale(0.02, 0.8, 0.02);
+        this.scene.translate(0, -0.5, 0);
+        this.flagHolder.display();
+        this.scene.popMatrix();
+
+        this.material.setTexture(this.rope);
+        this.material.apply();
+        this.scene.pushMatrix();
+        this.scene.translate(0, 0.2, -1.35);
+        this.scene.rotate(Math.PI / 2 + 0.38995733, 1, 0, 0);
+        this.scene.scale(0.0075, 0.85, 0.0075);
+        this.scene.translate(0, -0.5, 0);
+        this.flagHolder.display();
+        this.scene.popMatrix();
+
+        this.scene.pushMatrix();
+        this.scene.translate(0, -0.2, -1.35);
+        this.scene.rotate(Math.PI / 2 - 0.38995733, 1, 0, 0);
+        this.scene.scale(0.0075, 0.85, 0.0075);
+        this.scene.translate(0, -0.5, 0);
+        this.flagHolder.display();
         this.scene.popMatrix();
 
         this.scene.popMatrix();

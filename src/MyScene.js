@@ -12,6 +12,7 @@ class MyScene extends CGFscene {
         this.initCameras();
         this.initLights();
         this.initMaterials();
+        this.initSkins();
 
         //Background color
         this.gl.clearColor(0.0, 0.0, 0.0, 1.0);
@@ -26,6 +27,9 @@ class MyScene extends CGFscene {
         this.last = performance.now();
 
         this.enableTextures(true);
+
+        // Axis
+        this.axis = new CGFaxis(this);
 
         // Vehicle
         this.vehicle = new MyVehicle(this);
@@ -81,7 +85,6 @@ class MyScene extends CGFscene {
         new CGFtexture(this, "../resources/textures/supply/pig/pig_l.png"),
         new CGFtexture(this, "../resources/textures/supply/pig/pig_t.png"),
         new CGFtexture(this, "../resources/textures/supply/pig/pig_bt.png")];
-
     }
 
     initCubeMap() {
@@ -92,13 +95,29 @@ class MyScene extends CGFscene {
 
         // cube map interface variables
         this.cubeMapList = {
-            'Fields (given, edited)': 0,
+            'Fields (given)': 0,
             'Sky (given)': 1
         };
 
         this.selectedCubeMap = 0;
 
         this.cubeMap = new MyCubeMap(this, 50, new CGFtexture(this, this.cubeMaps[this.selectedCubeMap]));
+    }
+
+    initSkins() {
+        this.selectedSkin = 0;
+
+        this.skins = [
+            '../resources/textures/github/',
+            '../resources/textures/google/',
+            '../resources/textures/up/'
+        ];
+
+        this.skinList = {
+            'GitHub': 0,
+            'Google': 1,
+            'U.P.': 2
+        };
     }
 
     setDefaultAppearance() {
@@ -123,6 +142,12 @@ class MyScene extends CGFscene {
     onCubeMapChanged() {
         this.cubeMap.texture = new CGFtexture(this, this.cubeMaps[this.selectedCubeMap]);
         this.cubeMap.updateBuffers();
+    }
+
+    onSkinChanged() {
+        this.vehicle.initTextures();
+        this.vehicle.wings.initTextures();
+        this.vehicle.flag.initTextures();
     }
 
     resetAll() {
@@ -206,18 +231,18 @@ class MyScene extends CGFscene {
 
         // Key listening
         this.checkKeys();
-        
+
         // ---- BEGIN Primitive drawing section
         this.cubeMap.display();
         this.supplies.forEach(supply => supply.display());
         this.billboard.display();
         this.vehicle.display();
-        
+
         // ---- BEGIN Shader drawing section
         this.vehicle.displayWithShaders();
-        this.terrain.display();
+        this.terrain.displayWithShaders();
         this.billboard.displayWithShaders();
-        
+
         this.setActiveShader(this.defaultShader);
 
         // ---- END Primitive drawing section

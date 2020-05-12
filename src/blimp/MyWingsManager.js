@@ -11,14 +11,20 @@ class MyWingsManager extends CGFobject {
     }
 
     init() {
-        // textures
-        this.blue = new CGFtexture(this.scene, "../resources/textures/github/blimp/top_wing.png");
-        this.yellow = new CGFtexture(this.scene, "../resources/textures/github/blimp/right_wing.png");
-        this.green = new CGFtexture(this.scene, "../resources/textures/github/blimp/bottom_wing.png");
-        this.red = new CGFtexture(this.scene, "../resources/textures/github/blimp/left_wing.png");
+        this.initTextures();
 
         // objects
         this.wing = new MyWing(this.scene);
+    }
+
+    initTextures() {
+        var path = this.scene.skins[this.scene.selectedSkin];
+
+        // textures
+        this.blue = new CGFtexture(this.scene, path.concat("blimp/top_wing.png"));
+        this.yellow = new CGFtexture(this.scene, path.concat("blimp/right_wing.png"));
+        this.green = new CGFtexture(this.scene, path.concat("blimp/bottom_wing.png"));
+        this.red = new CGFtexture(this.scene, path.concat("blimp/left_wing.png"));
     }
 
     initMovement() {

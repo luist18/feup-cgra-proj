@@ -12,6 +12,7 @@ uniform sampler2D uSampler;
 uniform float timeFactor;
 uniform float speed;
 uniform float angle;
+uniform float speedMultiplier;
 
 #define M_PI 3.1415926535897932384626433832795
 
@@ -20,9 +21,9 @@ void main() {
 
 	vTextureCoord = aTextureCoord;
 
-	float a = aTextureCoord.x * aTextureCoord.x * -angle;
+	float a = aTextureCoord.x * aTextureCoord.x * (speed / speedMultiplier / 4.0) * -(angle / speedMultiplier);
 
-	offset.z = 0.3 * aTextureCoord.s * ((speed / 10.0) + 0.2) * cos(-timeFactor * 1.5 + aVertexPosition.x);
+	offset.z = 0.3 * aTextureCoord.s * ((speed / 20.0) + 0.2) * cos(-timeFactor * 1.5 + aVertexPosition.x);
 
 	offset.z += a;
 
