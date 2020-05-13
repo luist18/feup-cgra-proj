@@ -137,6 +137,7 @@ class MyScene extends CGFscene {
         this.vehicle.autoPilot = this.autoPilot;
 
         this.supplies.forEach(supply => supply.update(t));
+        this.billboard.update(t, this.numberOfSuppliesDelivered);
     }
 
     onCubeMapChanged() {
