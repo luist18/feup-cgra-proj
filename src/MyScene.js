@@ -11,7 +11,6 @@ class MyScene extends CGFscene {
         super.init(application);
         this.initCameras();
         this.initLights();
-        this.initMaterials();
         this.initSkins();
 
         //Background color
@@ -23,37 +22,24 @@ class MyScene extends CGFscene {
         this.gl.depthFunc(this.gl.LEQUAL);
 
         this.setUpdatePeriod(1);
-
         this.last = performance.now();
 
         this.enableTextures(true);
 
-        // Axis
         this.axis = new CGFaxis(this);
-
-        // Vehicle
         this.vehicle = new MyVehicle(this);
-
-        // Billboard
         this.billboard = new MyBillboard(this);
 
         this.initCubeMap();
 
-        // Terrain
         this.terrain = new MyTerrain(this);
 
-        // Supply
-        this.numberOfSupplies = 1000;
+        this.supplyManager = new MySupplyManager(this);
 
-        this.resetSupplies();
-
-        //Objects connected to MyInterface
+        // Interface
         this.displayAxis = false;
-
-        // Interface sliders
         this.speedFactor = 1;
         this.scaleFactor = 1;
-
         this.autoPilot = false;
         this.customMovement = false;
     }
@@ -68,23 +54,6 @@ class MyScene extends CGFscene {
 
     initCameras() {
         this.camera = new CGFcamera(0.7, 0.1, 500, vec3.fromValues(26, 20, 26), vec3.fromValues(0, 5, 0));
-    }
-
-    initMaterials() {
-        // Supply materials
-        this.supplyMaterial = new CGFappearance(this);
-        this.supplyMaterial.setDiffuse(1, 1, 1, 1);
-        this.supplyMaterial.setSpecular(1, 1, 1, 1);
-        this.supplyMaterial.setAmbient(0.8, 0.8, 0.8, 1);
-        this.supplyMaterial.setTexture(this.supplyFaceTexture);
-        this.supplyMaterial.setTextureWrap('REPEAT', 'REPEAT');
-
-        this.supplyTextures = [new CGFtexture(this, "../resources/textures/supply/pig/pig_f.png"),
-        new CGFtexture(this, "../resources/textures/supply/pig/pig_r.png"),
-        new CGFtexture(this, "../resources/textures/supply/pig/pig_b.png"),
-        new CGFtexture(this, "../resources/textures/supply/pig/pig_l.png"),
-        new CGFtexture(this, "../resources/textures/supply/pig/pig_t.png"),
-        new CGFtexture(this, "../resources/textures/supply/pig/pig_bt.png")];
     }
 
     initCubeMap() {
@@ -136,8 +105,8 @@ class MyScene extends CGFscene {
         this.vehicle.customMovement = this.customMovement;
         this.vehicle.autoPilot = this.autoPilot;
 
-        this.supplies.forEach(supply => supply.update(t));
-        this.billboard.update(t, this.numberOfSuppliesDelivered);
+        this.supplyManager.update(t);
+        this.billboard.update(t, this.supplyManager.numberOfSuppliesDelivered);
     }
 
     onCubeMapChanged() {
@@ -155,16 +124,7 @@ class MyScene extends CGFscene {
         this.gui.continuousActiveKeys["KeyP"] = false;
         this.autoPilot = false;
         this.vehicle.reset();
-        this.resetSupplies();
-    }
-
-    resetSupplies() {
-        this.supplies = [];
-
-        for (var i = 0; i < this.numberOfSupplies; ++i)
-            this.supplies.push(new MySupply(this, this.supplyMaterial, this.supplyTextures));
-
-        this.numberOfSuppliesDelivered = 0;
+        this.supplyManager.reset();
     }
 
     checkKeys() {
@@ -195,12 +155,8 @@ class MyScene extends CGFscene {
             this.vehicle.turn(-0.25);
         if (this.gui.isKeyPressed("Space"))
             this.vehicle.brake(0.15);
-        if (this.gui.isSingleKeyPressed("KeyL")) {
-            if (this.numberOfSuppliesDelivered == this.numberOfSupplies) return;
-            this.supplies[this.numberOfSuppliesDelivered++].drop([this.vehicle.positionX, this.vehicle.positionY - 0.55,
-            this.vehicle.positionZ, this.vehicle.yyangle,
-            this.vehicle.speed]);
-        }
+        if (this.gui.isSingleKeyPressed("KeyL"))
+            this.supplyManager.drop(this.vehicle);
     }
 
     display() {
@@ -235,7 +191,7 @@ class MyScene extends CGFscene {
 
         // ---- BEGIN Primitive drawing section
         this.cubeMap.display();
-        this.supplies.forEach(supply => supply.display());
+        this.supplyManager.display();
         this.billboard.display();
         this.vehicle.display();
 

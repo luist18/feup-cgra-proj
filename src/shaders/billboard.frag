@@ -16,7 +16,7 @@ void main() {
 		if (position.x <= 0.5)
 			gl_FragColor = vec4(1.0 - position.s + 250.0/255.0, 2.0 * position.s, 0, 1.0);
 		else
-			gl_FragColor = vec4(1.0 - position.s*3.0 + 402.0/255.0, 1.0, 0.0, 0.0);
+			gl_FragColor = vec4(1.0 - position.s * 3.0 + 402.0/255.0, 1.0, 0.0, 1.0);
 	} else {
 		gl_FragColor = vec4(0.5, 0.5, 0.5, 1.0);
 	}
