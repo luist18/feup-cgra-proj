@@ -1,8 +1,8 @@
 class MyBillboard extends CGFobject {
 	constructor(scene, maxSupplies = 5) {
 		super(scene);
+		this.maxSupplies = maxSupplies;
 		this.init();
-        this.maxSupplies = maxSupplies;
 	}
 
 	init() {
@@ -37,16 +37,21 @@ class MyBillboard extends CGFobject {
         this.lastTime = 0;
 
         // positions
-        this.xPos = 10;
-        this.yPos = 8;
-        this.zPos = -15;
-        this.rotation = (2 * Math.PI) / 30; 
+        this.xPos = 14;
+        this.zPos = -17;
+		this.rotation = (2 * Math.PI) / 30;
+		this.updateHeight();
+	}
+
+	updateHeight() {
+		this.yPos = this.scene.terrain.getHeight(this.xPos, this.zPos);
 	}
 
 	update(t, supplies) {
         var elapsed = t - this.lastTime;
         this.lastTime = t;
 
+		// filled bar
         var percentage = supplies / this.maxSupplies;
         
         if (this.percFilled < percentage)

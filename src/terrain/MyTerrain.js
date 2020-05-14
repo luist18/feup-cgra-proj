@@ -23,6 +23,15 @@ class MyTerrain extends CGFobject {
         //this.shader.setUniformsValues({maxHeight: this.maxHeight});
     }
 
+    getHeight(positionX, positionZ) {
+        var i = Math.floor((positionX + this.size/2) * this.scene.canvas[this.scene.selectedTerrain].width / this.size);
+        var j = Math.floor((positionZ + this.size/2) * this.scene.canvas[this.scene.selectedTerrain].height / this.size);
+
+        var pixelData = this.scene.canvas[this.scene.selectedTerrain].getContext('2d').getImageData(i, j, 1, 1).data;
+
+        return this.maxHeight * pixelData[0] / 255;
+    }
+
     displayWithShaders(terrainTex, terrainMap) {
         this.scene.setActiveShader(this.shader);
 

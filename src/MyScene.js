@@ -5,6 +5,7 @@
 class MyScene extends CGFscene {
     constructor() {
         super();
+        this.canvas = []
     }
 
     init(application) {
@@ -29,7 +30,6 @@ class MyScene extends CGFscene {
         this.initSuppliesSkins();
         this.initCubeMap();
         this.initTerrains();
-        this.initImage();
 
         this.axis = new CGFaxis(this);
         this.vehicle = new MyVehicle(this);
@@ -43,8 +43,6 @@ class MyScene extends CGFscene {
         this.autoPilot = false;
         this.customMovement = false;
         this.volume = 20.0;
-
-        setTimeout(() => this.initCanvas(), 500);
     }
 
     initLights() {
@@ -57,10 +55,6 @@ class MyScene extends CGFscene {
 
     initCameras() {
         this.camera = new CGFcamera(0.7, 0.1, 500, vec3.fromValues(26, 20, 26), vec3.fromValues(0, 5, 0));
-    }
-
-    initImage() {
-        document.getElementById('heightmap').src = this.heightMaps[this.selectedTerrain];
     }
 
     initTerrains() {
@@ -104,14 +98,6 @@ class MyScene extends CGFscene {
         this.terrain.material.setTexture(this.terrainsTex[this.selectedTerrain]);
     }
 
-    initCanvas() {
-        var img = document.getElementById('heightmap');
-        this.canvas = document.createElement('canvas');
-        this.canvas.width = img.width;
-        this.canvas.height = img.height;
-        this.canvas.getContext('2d').drawImage(img, 0, 0, img.width, img.height);
-    }
-
     initCubeMap() {
         this.cubeMaps = [
             '../resources/givenedited.png',
@@ -133,15 +119,15 @@ class MyScene extends CGFscene {
         this.selectedSkin = 0;
 
         this.skins = [
+            '../resources/textures/up/',
             '../resources/textures/github/',
-            '../resources/textures/google/',
-            '../resources/textures/up/'
+            '../resources/textures/google/'
         ];
 
         this.skinList = {
-            'GitHub': 0,
-            'Google': 1,
-            'U.P.': 2
+            'U.P.': 0,
+            'GitHub': 1,
+            'Google': 2
         };
     }
 
@@ -182,11 +168,11 @@ class MyScene extends CGFscene {
     }
 
     onTerrainChanged() {
-        document.getElementById('heightmap').src = this.heightMaps[this.selectedTerrain];
+        // document.getElementById('heightmap').src = this.heightMaps[this.selectedTerrain];
         this.terrain.material.setTexture(this.terrainsTex[this.selectedTerrain]);
 
         this.supplyManager.reset();
-        setTimeout(() => this.initCanvas(), 300);
+        this.billboard.updateHeight();
     }
 
     onCubeMapChanged() {

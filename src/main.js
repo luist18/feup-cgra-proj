@@ -25,15 +25,40 @@ serialInclude(['../lib/CGF.js',
         var app = new CGFapplication(document.body);
         var myScene = new MyScene();
         var myInterface = new MyInterface();
+        
+        var img = document.getElementById('lake1');
+        myScene.canvas.push(document.createElement('canvas'));
+        myScene.canvas[0].width = img.width;
+        myScene.canvas[0].height = img.height;
+        myScene.canvas[0].getContext('2d').drawImage(img, 0, 0, img.width, img.height);
 
-        app.init();
+        var img = document.getElementById('lake2');
+        myScene.canvas.push(document.createElement('canvas'));
+        myScene.canvas[1].width = img.width;
+        myScene.canvas[1].height = img.height;
+        myScene.canvas[1].getContext('2d').drawImage(img, 0, 0, img.width, img.height);
 
-        app.setScene(myScene);
-        app.setInterface(myInterface);
+        var img = document.getElementById('canyon');
+        myScene.canvas.push(document.createElement('canvas'));
+        myScene.canvas[2].width = img.width;
+        myScene.canvas[2].height = img.height;
+        myScene.canvas[2].getContext('2d').drawImage(img, 0, 0, img.width, img.height);
 
-        myInterface.setActiveCamera(myScene.camera);
+        var img = document.getElementById('given');
+        myScene.canvas.push(document.createElement('canvas'));
+        myScene.canvas[3].width = img.width;
+        myScene.canvas[3].height = img.height;
+        myScene.canvas[3].getContext('2d').drawImage(img, 0, 0, img.width, img.height);
 
-        app.run();
+        setTimeout(() => {
+            app.init();
+            app.setScene(myScene);
+            app.setInterface(myInterface);
+    
+            myInterface.setActiveCamera(myScene.camera);
+    
+            app.run();
+        }, 300);
     }
 
 ]);

@@ -62,7 +62,7 @@ class MySupplyManager extends CGFobject {
 
     drop(vehicle) {
         if (this.numberOfSuppliesLaunched == this.numberOfSupplies) return;
-        this.supplies[this.numberOfSuppliesLaunched++].drop([vehicle.positionX, vehicle.positionY - 0.55,
+        this.supplies[this.numberOfSuppliesLaunched++].drop([vehicle.positionX, vehicle.positionY - 0.55 * this.scene.scaleFactor,
         vehicle.positionZ, vehicle.yyangle,
         vehicle.speed]);
     }
