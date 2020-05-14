@@ -46,8 +46,7 @@ class MySupply extends CGFobject {
 
     land() {
         this.state = SupplyStates.LANDED;
-        this.positionY = 0;
-        playSound("pigdeath");
+        playSound("fallbig", {volume: this.scene.volume / 100});
     }
 
     update(t) {
@@ -71,7 +70,15 @@ class MySupply extends CGFobject {
         this.positionX += this.vehicleVelocity * Math.sin(this.yyangle) * elapsed;
         this.positionZ += this.vehicleVelocity * Math.cos(this.yyangle) * elapsed;
 
-        if (this.positionY <= 0) {
+        var i = Math.floor((this.positionX + 25) * this.scene.canvas.width / 50);
+        var j = Math.floor((this.positionZ + 25) * this.scene.canvas.height / 50);
+
+        var pixelData = this.scene.canvas.getContext('2d').getImageData(i, j, 1, 1).data;
+
+        var height = 8 * pixelData[0] / 255;
+
+        if (this.positionY <= height || this.positionY == 0) {
+            this.positionY = height || 0;
             this.land();
             return;
         }

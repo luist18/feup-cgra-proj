@@ -26,15 +26,15 @@ class MyScene extends CGFscene {
 
         this.enableTextures(true);
 
+        this.initSuppliesSkins();
+        this.initCubeMap();
+        this.initTerrains();
+        this.initImage();
+
         this.axis = new CGFaxis(this);
         this.vehicle = new MyVehicle(this);
-        this.billboard = new MyBillboard(this);
-
-        this.initCubeMap();
-
-        this.terrain = new MyTerrain(this);
-
-        this.supplyManager = new MySupplyManager(this);
+        this.supplyManager = new MySupplyManager(this, 100);
+        this.billboard = new MyBillboard(this, this.supplyManager.numberOfSupplies);
 
         // Interface
         this.displayAxis = false;
@@ -42,6 +42,9 @@ class MyScene extends CGFscene {
         this.scaleFactor = 1;
         this.autoPilot = false;
         this.customMovement = false;
+        this.volume = 20.0;
+
+        setTimeout(() => this.initCanvas(), 500);
     }
 
     initLights() {
@@ -54,6 +57,59 @@ class MyScene extends CGFscene {
 
     initCameras() {
         this.camera = new CGFcamera(0.7, 0.1, 500, vec3.fromValues(26, 20, 26), vec3.fromValues(0, 5, 0));
+    }
+
+    initImage() {
+        document.getElementById('heightmap').src = this.heightMaps[this.selectedTerrain];
+    }
+
+    initTerrains() {
+        this.terrains = [
+            '../resources/textures/terrain/lake1.png',
+            '../resources/textures/terrain/lake2.png',
+            '../resources/textures/terrain/canyon.png',
+            '../resources/textures/terrain/given.png'
+        ];
+
+        this.heightMaps = [
+            '../resources/textures/terrain/lake1_h.png',
+            '../resources/textures/terrain/lake2_h.png',
+            '../resources/textures/terrain/canyon_h.png',
+            '../resources/textures/terrain/given_h.png'
+        ];
+
+        this.terrainsTex = [];
+        this.heightMapsTex = [];
+
+        for (var value in this.terrains) {
+            this.terrainsTex.push(new CGFtexture(this, this.terrains[value]));
+        }
+
+        for (var value in this.heightMaps) {
+            this.heightMapsTex.push(new CGFtexture(this, this.heightMaps[value]));
+        }
+
+        // cube map interface variables
+        this.terrainList = {
+            'Lake 1': 0,
+            'Lake 2': 1,
+            'Canyon': 2,
+            'Given': 3
+        };
+
+        this.selectedTerrain = 0;
+
+        this.terrain = new MyTerrain(this);
+
+        this.terrain.material.setTexture(this.terrainsTex[this.selectedTerrain]);
+    }
+
+    initCanvas() {
+        var img = document.getElementById('heightmap');
+        this.canvas = document.createElement('canvas');
+        this.canvas.width = img.width;
+        this.canvas.height = img.height;
+        this.canvas.getContext('2d').drawImage(img, 0, 0, img.width, img.height);
     }
 
     initCubeMap() {
@@ -89,6 +145,22 @@ class MyScene extends CGFscene {
         };
     }
 
+    initSuppliesSkins() {
+        this.selectedSupplySkin = 0;
+
+        this.supplySkin = [
+            '../resources/textures/supply/crate1',
+            '../resources/textures/supply/pig',
+            '../resources/textures/supply/steve'
+        ];
+
+        this.supplySkinList = {
+            'Crate 1': 0,
+            'Pig': 1,
+            'Steve': 2
+        };
+    }
+
     setDefaultAppearance() {
         this.setAmbient(0.2, 0.4, 0.8, 1.0);
         this.setDiffuse(0.2, 0.4, 0.8, 1.0);
@@ -109,6 +181,14 @@ class MyScene extends CGFscene {
         this.billboard.update(t, this.supplyManager.numberOfSuppliesDelivered);
     }
 
+    onTerrainChanged() {
+        document.getElementById('heightmap').src = this.heightMaps[this.selectedTerrain];
+        this.terrain.material.setTexture(this.terrainsTex[this.selectedTerrain]);
+
+        this.supplyManager.reset();
+        setTimeout(() => this.initCanvas(), 300);
+    }
+
     onCubeMapChanged() {
         this.cubeMap.texture = new CGFtexture(this, this.cubeMaps[this.selectedCubeMap]);
         this.cubeMap.updateBuffers();
@@ -118,6 +198,11 @@ class MyScene extends CGFscene {
         this.vehicle.initTextures();
         this.vehicle.wings.initTextures();
         this.vehicle.flag.initTextures();
+    }
+
+    onSupplySkinChanged(){
+        this.supplyManager.initTextures();
+        this.supplyManager.reset();
     }
 
     resetAll() {
@@ -197,7 +282,7 @@ class MyScene extends CGFscene {
 
         // ---- BEGIN Shader drawing section
         this.vehicle.displayWithShaders();
-        this.terrain.displayWithShaders();
+        this.terrain.displayWithShaders(this.terrainsTex[this.selectedTerrain], this.heightMapsTex[this.selectedTerrain]);
         this.billboard.displayWithShaders();
 
         this.setActiveShader(this.defaultShader);

@@ -45,9 +45,7 @@ function playSound(name, options) {
         var volume = soundContext.createGain();
 
         if (options) {
-            if (options.volume) {
-                volume.gain.value = soundVolume * options.volume;
-            }
+            volume.gain.value = soundVolume * options.volume;
         } else {
             volume.gain.value = soundVolume;
         }

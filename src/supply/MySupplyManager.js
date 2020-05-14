@@ -26,12 +26,18 @@ class MySupplyManager extends CGFobject {
         this.material.setAmbient(0.8, 0.8, 0.8, 1);
         this.material.setTextureWrap('REPEAT', 'REPEAT');
 
-        this.textures = [new CGFtexture(this.scene, "../../resources/textures/supply/pig/pig_f.png"),
-        new CGFtexture(this.scene, "../../resources/textures/supply/pig/pig_r.png"),
-        new CGFtexture(this.scene, "../../resources/textures/supply/pig/pig_b.png"),
-        new CGFtexture(this.scene, "../../resources/textures/supply/pig/pig_l.png"),
-        new CGFtexture(this.scene, "../../resources/textures/supply/pig/pig_t.png"),
-        new CGFtexture(this.scene, "../../resources/textures/supply/pig/pig_bt.png")];
+        this.initTextures();
+    }
+
+    initTextures(){
+        var path = this.scene.supplySkin[this.scene.selectedSupplySkin];
+
+        this.textures = [new CGFtexture(this.scene, path.concat("/f.png")),
+        new CGFtexture(this.scene, path.concat("/r.png")),
+        new CGFtexture(this.scene, path.concat("/b.png")),
+        new CGFtexture(this.scene, path.concat("/l.png")),
+        new CGFtexture(this.scene, path.concat("/t.png")),
+        new CGFtexture(this.scene, path.concat("/bt.png"))];
     }
 
     reset() {
@@ -45,17 +51,20 @@ class MySupplyManager extends CGFobject {
     }
 
     update(t) {
-        this.supplies.forEach(supply => supply.update(t));
+        var delivered = 0;
+        this.supplies.forEach(supply => {
+            if (supply.state == SupplyStates.LANDED) delivered++
+            supply.update(t);
+        });
+
+        this.numberOfSuppliesDelivered = delivered;
     }
-    
+
     drop(vehicle) {
-        if (this.numberOfSuppliesDelivered == this.numberOfSupplies) return;
+        if (this.numberOfSuppliesLaunched == this.numberOfSupplies) return;
         this.supplies[this.numberOfSuppliesLaunched++].drop([vehicle.positionX, vehicle.positionY - 0.55,
         vehicle.positionZ, vehicle.yyangle,
         vehicle.speed]);
-        setTimeout(() => {
-            this.numberOfSuppliesDelivered++;
-        }, 3000);
     }
 
     display() {

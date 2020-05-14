@@ -19,11 +19,19 @@ class MyInterface extends CGFinterface {
         // Checkbox element in GUI
         this.gui.add(this.scene, 'displayAxis').name('Display Axis');
 
+        // Terrain
+        this.gui.add(this.scene, 'selectedTerrain', this.scene.terrainList).name('Terrain').onChange(this.scene.onTerrainChanged.bind(this.scene));
+
         // Dropbox of cube map
         this.gui.add(this.scene, 'selectedCubeMap', this.scene.cubeMapList).name('Cube map').onChange(this.scene.onCubeMapChanged.bind(this.scene));
 
         // Skin
         this.gui.add(this.scene, 'selectedSkin', this.scene.skinList).name('Skin').onChange(this.scene.onSkinChanged.bind(this.scene));
+        
+        // Supply skin
+        this.gui.add(this.scene, 'selectedSupplySkin', this.scene.supplySkinList).name('Supply skin').onChange(this.scene.onSupplySkinChanged.bind(this.scene));
+
+        this.gui.add(this.scene, 'volume', 0.0, 100.0).name('Volume');
 
         // a folder for grouping parameters related to the vehicle
         var f0 = this.gui.addFolder('Vehicle');
@@ -79,7 +87,7 @@ class MyInterface extends CGFinterface {
             this.singleActiveKeys[keyCode] = false;
             return true;
         }
-        
+
         return this.singleActiveKeys[keyCode] || false;
     }
 }

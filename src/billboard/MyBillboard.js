@@ -7,7 +7,7 @@ class MyBillboard extends CGFobject {
 
 	init() {
 		this.cube = new MyUnitCube(this.scene);
-		this.counter = new MyPlane(this.scene, 50);
+		this.counter = new MyPlane(this.scene, 20);
 
 		this.canvasTex = new CGFtexture(
 			this.scene,
@@ -50,12 +50,11 @@ class MyBillboard extends CGFobject {
         var percentage = supplies / this.maxSupplies;
         
         if (this.percFilled < percentage)
-            this.percFilled += elapsed / 1000;
+            this.percFilled += elapsed / 2000;
 
         if (this.percFilled > percentage && percentage != 1)
-            this.percFilled -= elapsed / 1000;
-
-        console.log(this.percFilled);
+			this.percFilled -= elapsed / 2000;
+			
         this.shader.setUniformsValues({ percentage: this.percFilled });
         this.shader.setUniformsValues({ random: (t / 1000 ) % (2 * Math.PI) });
     }
