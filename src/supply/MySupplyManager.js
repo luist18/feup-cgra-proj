@@ -1,5 +1,12 @@
-
+/**
+ * @class Represents the {@link MySupply} manager, responsible for handling the {@link MyVehicle} supplies.
+ */
 class MySupplyManager extends CGFobject {
+    /**
+     * Instantiates a new supply manager instance.
+     * @param {CGFscene} scene              - the scene
+     * @param {integer} numberOfSupplies    - the number of supplies
+     */
     constructor(scene, numberOfSupplies = 5) {
         super(scene);
         this.numberOfSupplies = numberOfSupplies;
@@ -7,6 +14,9 @@ class MySupplyManager extends CGFobject {
         this.init();
     }
 
+    /**
+     * Initializes the supplies buffers.
+     */
     init() {
         this.initMaterials();
 
@@ -19,6 +29,9 @@ class MySupplyManager extends CGFobject {
         this.numberOfSuppliesDelivered = 0;
     }
 
+    /**
+     * Initializes the supplies materials.
+     */
     initMaterials() {
         this.material = new CGFappearance(this.scene);
         this.material.setDiffuse(1, 1, 1, 1);
@@ -28,7 +41,10 @@ class MySupplyManager extends CGFobject {
 
         this.initTextures();
     }
-
+    
+    /**
+     * Initializes the supplies textures.
+     */
     initTextures(){
         var path = this.scene.supplySkin[this.scene.selectedSupplySkin];
 
@@ -40,6 +56,9 @@ class MySupplyManager extends CGFobject {
         new CGFtexture(this.scene, path.concat("/bt.png"))];
     }
 
+    /**
+     * Resets the supplies.
+     */
     reset() {
         this.supplies = [];
 
@@ -50,6 +69,10 @@ class MySupplyManager extends CGFobject {
         this.numberOfSuppliesDelivered = 0;
     }
 
+    /**
+     * Updates each supply in the array and the number of supplies delivered.
+     * @param {number} t    - the current time
+     */
     update(t) {
         var delivered = 0;
         this.supplies.forEach(supply => {
@@ -60,6 +83,10 @@ class MySupplyManager extends CGFobject {
         this.numberOfSuppliesDelivered = delivered;
     }
 
+    /**
+     * Drops a supply, if possible, in the vehicle position.
+     * @param {MyVehicle} vehicle - the MyVehicle class
+     */
     drop(vehicle) {
         if (this.numberOfSuppliesLaunched == this.numberOfSupplies) return;
         this.supplies[this.numberOfSuppliesLaunched++].drop([vehicle.positionX, vehicle.positionY - 0.55 * this.scene.scaleFactor,
@@ -67,6 +94,9 @@ class MySupplyManager extends CGFobject {
         vehicle.speed]);
     }
 
+    /**
+     * Diplays each supply in the manager.
+     */
     display() {
         this.supplies.forEach(supply => supply.display());
     }

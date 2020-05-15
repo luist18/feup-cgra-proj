@@ -1,12 +1,11 @@
 /**
- * Represents a cylinder
- * @constructor
+ * @class Represents a cylinder.
  */
 class MyCylinder extends CGFobject {
     /**
-     * @method constructor
-     * @param  {CGFscene} scene - MyScene object
-     * @param  {integer} slices - number of slices around Y axis
+     * Instantiates a new cylinder instance.
+     * @param  {CGFscene} scene     - the scene in which the cylinder will be shown 
+     * @param  {integer} slices     - number of slices around Y axis
      */
     constructor(scene, slices) {
         super(scene);
@@ -15,8 +14,7 @@ class MyCylinder extends CGFobject {
     }
 
     /**
-     * @method initBuffers
-     * Inits the vertices, indices, normals and texture coordinates
+     * Inits the vertices, indices, normals and texture coordinates.
      */
     initBuffers() {
         this.vertices = [];
@@ -33,8 +31,7 @@ class MyCylinder extends CGFobject {
     }
 
     /**
-     * @method initSideBuffers
-     * Inits the buffers of the rounded side
+     * Inits the buffers of the rounded side.
      */
     initSideBuffers() {
         let currentAngle = 0;
@@ -71,8 +68,7 @@ class MyCylinder extends CGFobject {
     }
 
     /**
-     * @method initTopBottomBuffers
-     * Inits the top and down faces
+     * Inits the top and down faces.
      */
     initTopBottomBuffers() {
         let firstDown = 2 * (this.slices + 1);

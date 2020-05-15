@@ -1,23 +1,34 @@
-
-/** Represents a plane with nrDivs divisions along both axis, with center at (0,0) */
+/**
+ * @class Represents a plane.
+ */
 class MyPlane extends CGFobject {
-	constructor(scene, nrDivs, doubleSided = false, minS, maxS, minT, maxT) {
+	/**
+	 * Instantiates a new plane instance.
+	 * @param {CGFscene} scene 	- the scene in which the plane is going to be shown
+	 * @param {integer} nrDivs  - the number of divisions of the plane
+	 * @param {number} minS 	- the min s value of the texture (UV-mapping)
+	 * @param {number} maxS		- the max s value of the texture (UV-mapping)
+	 * @param {number} minT 	- the min t value of the texture (UV-mapping)
+	 * @param {number} maxT 	- the max s value of the texture (UV-mapping)
+	 */
+	constructor(scene, nrDivs, minS, maxS, minT, maxT) {
 		super(scene);
 		// nrDivs = 1 if not provided
 		nrDivs = typeof nrDivs !== 'undefined' ? nrDivs : 1;
-		this.doubleSided = doubleSided;
 		this.nrDivs = nrDivs;
 		this.patchLength = 1.0 / nrDivs;
 		this.minS = minS || 0;
 		this.maxS = maxS || 1;
 		this.minT = minT || 0;
 		this.maxT = maxT || 1;
-		this.doubleSided = doubleSided;
 		this.q = (this.maxS - this.minS) / this.nrDivs;
 		this.w = (this.maxT - this.minT) / this.nrDivs;
 		this.initBuffers();
 	}
 
+	/**
+	 * Initializes the plane buffers.
+	 */
 	initBuffers() {
 		// Generate vertices, normals, and texCoords
 		this.vertices = [];
@@ -55,10 +66,16 @@ class MyPlane extends CGFobject {
 		this.initGLBuffers();
 	}
 
+	/**
+	 * Sets the WebGL primitive type fill mode to TRIANGLE_STRIP.
+	 */
 	setFillMode() {
 		this.primitiveType = this.scene.gl.TRIANGLE_STRIP;
 	}
 
+	/**
+ 	* Sets the WebGL primitive type line mode to LINES.
+ 	*/
 	setLineMode() {
 		this.primitiveType = this.scene.gl.LINES;
 	};

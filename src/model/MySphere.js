@@ -1,7 +1,10 @@
+/**
+ * @class Represents a sphere.
+ */
 class MySphere extends CGFobject {
     /**
-     * @method constructor
-     * @param  {CGFscene} scene - MyScene object
+     * Instantiates a new sphere instance.
+     * @param  {CGFscene} scene - the scene in which the sphere is going to be shown
      * @param  {integer} slices - number of slices around Y axis
      * @param  {integer} stacks - number of stacks along Y axis, from the center to the poles (half of sphere)
      */
@@ -15,8 +18,7 @@ class MySphere extends CGFobject {
     }
 
     /**
-     * @method initBuffers
-     * Initializes the sphere buffers
+     * Initializes the sphere buffers.
      */
     initBuffers() {
         this.vertices = [];
@@ -81,6 +83,9 @@ class MySphere extends CGFobject {
         this.initGLBuffers();
     }
 
+    /**
+     * Displays the sphere.
+     */
     display() {
         if (typeof this.material !== 'undefined')
             this.material.apply();

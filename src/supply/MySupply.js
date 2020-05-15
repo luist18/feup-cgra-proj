@@ -1,16 +1,37 @@
+/**
+ * Enum for supply state values.
+ * @readonly
+ * @enum {integer}
+ */
 const SupplyStates = {
+    /**
+     * The value when the supply is inactive.
+     */
     INACTIVE: 0,
+    /**
+     * The value when the supply is falling.
+     */
     FALLING: 1,
+    /**
+     * The value when the supply is landed.
+     */
     LANDED: 2
 };
 
 /**
- * MySupply
- * @constructor
- * @param scene - Reference to MyScene object
+ * @class Represents a supply launched by {@link MyVehicle}
  */
 class MySupply extends CGFobject {
-
+    /**
+     * Instantiates a new supply instance.
+     * @param {CGFscene} scene          - the scene
+     * @param {CGFappearance} material  - the material of the supply
+     * @param {CGFtexture[]} texts      - the textures of the supply
+     * @param {number} scaleFactor      - the scale factor of the supply
+     * @param {number} positionX        - the X position of the supply
+     * @param {number} positionY        - the Y position of the supply 
+     * @param {number} positionZ        - the Z position of the supply
+     */
     constructor(scene, material, texts, scaleFactor = 0.18, positionX = 0, positionY = 0, positionZ = 0) {
         super(scene);
         this.state = SupplyStates.INACTIVE;
@@ -30,6 +51,10 @@ class MySupply extends CGFobject {
         this.airResistance = -0.02;
     }
 
+    /**
+     * Drops the supply in a specific position.
+     * @param {number[]} dropPosition   - the drop position array
+     */
     drop(dropPosition) {
         this.positionX = dropPosition[0];
         this.positionY = dropPosition[1];
@@ -44,11 +69,18 @@ class MySupply extends CGFobject {
         this.state = SupplyStates.FALLING;
     }
 
+    /**
+     * Called when the supply lands, sets the state of the supply to LANDED.
+     */
     land() {
         this.state = SupplyStates.LANDED;
         playSound("fallbig", {volume: this.scene.volume / 100});
     }
 
+    /**
+     * Updates the supply position and state.
+     * @param {number} t    - the current time 
+     */
     update(t) {
         if (this.state == SupplyStates.LANDED) return;
         else if (this.state == SupplyStates.INACTIVE) {
@@ -84,6 +116,9 @@ class MySupply extends CGFobject {
         }
     }
 
+    /**
+     * Displays the supply.
+     */
     display() {
         if (this.state == SupplyStates.INACTIVE) return;
 
@@ -106,6 +141,9 @@ class MySupply extends CGFobject {
         this.scene.popMatrix();
     }
 
+    /**
+     * Displays the supply while it is falling.
+     */
     displayFalling() {
         this.material.setTexture(this.texts[0]);
         this.material.apply();
@@ -161,6 +199,9 @@ class MySupply extends CGFobject {
         this.scene.popMatrix();
     }
 
+    /**
+     * Displays the supply while it is landed.
+     */
     displayLanded() {
         this.material.setTexture(this.texts[0]);
         this.material.apply();

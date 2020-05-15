@@ -1,10 +1,9 @@
 /**
- * Represents a faced up turbine
- * @constructor
+ * @class Represents a faced up turbine of {@link MyVehicle}.
  */
 class MyTurbine extends CGFobject {
     /**
-     * @method constructor
+     * Instantiates a new turbine instance.
      * @param {CGFscene} scene  - the scene 
      * @param {integer} slices  - the number slices of the curved objects 
      * @param {integer} stacks  - the number of stacks of the curved objects
@@ -17,9 +16,7 @@ class MyTurbine extends CGFobject {
     }
 
     /**
-     * @method initObjects
-     * Initializes the objects of the turbine
-     * 
+     * Initializes the objects of the turbine.
      * @param {integer} slices  - the number slices of the curved objects 
      * @param {integer} stacks  - the number of stacks of the curved objects
      */
@@ -29,7 +26,7 @@ class MyTurbine extends CGFobject {
     }
 
     /**
-     * @method initMovement
+     * Initializes the movement of the turbine.
      */
     initMovement() {
         this.angularSpeed = 0;
@@ -39,9 +36,7 @@ class MyTurbine extends CGFobject {
     }
 
     /**
-     * @method update
-     * Updates the movement of the turbine
-     * 
+     * Updates the movement of the turbine.
      * @param {integer} elapsed - the elapsed time since the last update
      * @param {integer} speed   - the speed of the vehicle
      */
@@ -53,8 +48,7 @@ class MyTurbine extends CGFobject {
     }
 
     /**
-     * @method reset
-     * Resets the position of the turbines
+     * Resets the position of the turbines.
      */
     reset() {
         this.angularSpeed = 0;
@@ -62,8 +56,7 @@ class MyTurbine extends CGFobject {
     }
 
     /**
-     * @method dispay
-     * Displays the turbine
+     * Displays the turbine.
      */
     display() {
         this.scene.pushMatrix();

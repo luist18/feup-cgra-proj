@@ -1,15 +1,19 @@
 /**
- * A representation of a unit cube
- * 
- * @constructor
- * @param scene the running MyScene
+ * @class Represents a unit cube.
  */
 class MyUnitCube extends CGFobject {
+    /**
+     * Instantiates a new unit cube instance.
+     * @param {CGFscene} scene - the scene in which the unit cube is going to be shown
+     */
     constructor(scene) {
         super(scene);
         this.initBuffers();
     }
 
+    /**
+     * Initializes the unit cube buffers.
+     */
     initBuffers() {
         let d = 0.5;
 
@@ -106,6 +110,9 @@ class MyUnitCube extends CGFobject {
         this.initGLBuffers();
     }
 
+    /**
+     * Updates the unit cube buffers.
+     */
     updateBuffers() {
         // reinitialize buffers
         this.initBuffers();

@@ -1,11 +1,10 @@
 /**
- * Manages the blimp's wings
- * @constructor
+ * @class Represents the {@link MyVehicle} wing manager [{@link MyWing}].
  */
 class MyWingsManager extends CGFobject {
     /**
-     * @param constructor
-     * @param {CGFscene} scene 
+     * Instantiates a new wings manager class.
+     * @param {CGFscene} scene          - the scene
      * @param {CGFappearance} material  - the material to apply to the wings 
      */
     constructor(scene, material) {
@@ -16,8 +15,7 @@ class MyWingsManager extends CGFobject {
     }
 
     /**
-     * @method init
-     * Initializes the required textures, objects, and important variables
+     * Initializes the required textures, objects, and important variables.
      */
     init() {
         this.wing = new MyWing(this.scene);
@@ -26,8 +24,7 @@ class MyWingsManager extends CGFobject {
     }
 
     /**
-     * @method initTextures
-     * Initializes the required textures
+     * Initializes the required textures.
      */
     initTextures() {
         var path = this.scene.skins[this.scene.selectedSkin];
@@ -40,8 +37,7 @@ class MyWingsManager extends CGFobject {
     }
 
     /**
-     * @method initMovement
-     * Initializes the movement of the wings, defining constants and relevant variables
+     * Initializes the movement of the wings, defining constants and relevant variables.
      */
     initMovement() {
         // constants
@@ -53,8 +49,7 @@ class MyWingsManager extends CGFobject {
     }
 
     /**
-     * @method reset
-     * Resets the movement variables
+     * Resets the movement variables.
      */
     reset() {
         this.angle = 0;
@@ -62,9 +57,7 @@ class MyWingsManager extends CGFobject {
     }
 
     /**
-     * @method update
-     * Updates the movement variables according to the elapsed time
-     * 
+     * Updates the movement variables according to the elapsed time.
      * @param {integer} elapsed         - the elapsed time since the last update 
      * @param {integer} turningValue    - the turning multiplier
      */
@@ -80,8 +73,7 @@ class MyWingsManager extends CGFobject {
     }
 
     /**
-     * @method display
-     * Displays all the wings
+     * Displays all the wings.
      */
     display() {
         // top

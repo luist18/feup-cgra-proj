@@ -1,10 +1,9 @@
 /**
- * Represents a wing
- * @constructor
+ * @class Represents a {@link MyVehicle} wing.
  */
 class MyWing extends CGFobject {
     /**
-     * @method constructor
+     * Instantiates a new wing instance.
      * @param {CGFscene} scene 
      */
     constructor(scene) {
@@ -13,8 +12,7 @@ class MyWing extends CGFobject {
     }
 
     /**
-     * @method initBuffers
-     * Initializes the wing buffers
+     * Initializes the wing buffers.
      */
     initBuffers() {
         this.vertices = [

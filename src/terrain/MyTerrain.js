@@ -1,8 +1,14 @@
 /**
-* MyTerrain
-* @constructor
-*/
+ * @class Represents a terrain, based in {@link MyPlane} class. 
+ */
 class MyTerrain extends CGFobject {
+    /**
+     * Instantiates a new terrain instance.
+     * @param {number} scene        - the scene
+     * @param {integer} divs        - the number of division of the terrain
+     * @param {number} size         - the size of the terrain
+     * @param {number} maxHeight    - the max height of the terrain
+     */
     constructor(scene, divs = 100, size = 50, maxHeight = 8) {
         super(scene);
         this.divs = divs;
@@ -23,15 +29,25 @@ class MyTerrain extends CGFobject {
         //this.shader.setUniformsValues({maxHeight: this.maxHeight});
     }
 
+    /**
+     * Gets the height for a specific position.
+     * @param {number} positionX    - the X position
+     * @param {number} positionZ    - the Y position
+     */
     getHeight(positionX, positionZ) {
-        var i = Math.floor((positionX + this.size/2) * this.scene.canvas[this.scene.selectedTerrain].width / this.size);
-        var j = Math.floor((positionZ + this.size/2) * this.scene.canvas[this.scene.selectedTerrain].height / this.size);
+        var i = Math.floor((positionX + this.size / 2) * this.scene.canvas[this.scene.selectedTerrain].width / this.size);
+        var j = Math.floor((positionZ + this.size / 2) * this.scene.canvas[this.scene.selectedTerrain].height / this.size);
 
         var pixelData = this.scene.canvas[this.scene.selectedTerrain].getContext('2d').getImageData(i, j, 1, 1).data;
 
         return this.maxHeight * pixelData[0] / 255;
     }
 
+    /**
+     * Displays the terrain.
+     * @param {CGFtexture} terrainTex - the texture of the terrain
+     * @param {CGFtexture} terrainMap - the texture of the height map
+     */
     displayWithShaders(terrainTex, terrainMap) {
         this.scene.setActiveShader(this.shader);
 

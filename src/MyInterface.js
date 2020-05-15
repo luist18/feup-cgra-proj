@@ -1,12 +1,18 @@
 /**
-* MyInterface
-* @constructor
-*/
+ * @class Represents the interface of the application.
+ */
 class MyInterface extends CGFinterface {
+    /**
+     * Instantiates a new interface instance.
+     */
     constructor() {
         super();
     }
 
+    /**
+     * Initializes the interface.
+     * @param {CGFapplication} application - the application
+     */
     init(application) {
         // call CGFinterface init
         super.init(application);

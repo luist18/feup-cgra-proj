@@ -1,13 +1,19 @@
 /**
-* MyScene
-* @constructor
-*/
+ * @class Represents the {@link CGFapplication} scene. 
+ */
 class MyScene extends CGFscene {
+    /**
+     * Instantiates a new scene instance.
+     */
     constructor() {
         super();
         this.canvas = []
     }
 
+    /**
+     * Initializes the scene.
+     * @param {CGFapplication} application - the application
+     */
     init(application) {
         super.init(application);
         this.initCameras();
@@ -45,6 +51,9 @@ class MyScene extends CGFscene {
         this.volume = 20.0;
     }
 
+    /**
+     * Initializes the scene lights.
+     */
     initLights() {
         this.lights[0].setPosition(15, 15, 5, 1);
         this.lights[0].setDiffuse(1, 1, 1, 1);
@@ -53,10 +62,16 @@ class MyScene extends CGFscene {
         this.lights[0].update();
     }
 
+    /**
+     * Initializes the scene cameras.
+     */
     initCameras() {
         this.camera = new CGFcamera(0.7, 0.1, 500, vec3.fromValues(26, 20, 26), vec3.fromValues(0, 5, 0));
     }
 
+    /**
+     * Initializes the scene terrains.
+     */
     initTerrains() {
         this.terrains = [
             '../resources/textures/terrain/lake1.png',
@@ -98,6 +113,9 @@ class MyScene extends CGFscene {
         this.terrain.material.setTexture(this.terrainsTex[this.selectedTerrain]);
     }
 
+    /**
+     * Initializes the scene cube maps.
+     */
     initCubeMap() {
         this.cubeMaps = [
             '../resources/givenedited.png',
@@ -115,6 +133,9 @@ class MyScene extends CGFscene {
         this.cubeMap = new MyCubeMap(this, 50, new CGFtexture(this, this.cubeMaps[this.selectedCubeMap]));
     }
 
+    /**
+     * Initializes the scene blimp skins.
+     */
     initSkins() {
         this.selectedSkin = 0;
 
@@ -131,6 +152,9 @@ class MyScene extends CGFscene {
         };
     }
 
+    /**
+     * Initializes the scene supply skins.
+     */
     initSuppliesSkins() {
         this.selectedSupplySkin = 0;
 
@@ -147,6 +171,9 @@ class MyScene extends CGFscene {
         };
     }
 
+    /**
+     * Sets the default scene appearance.
+     */
     setDefaultAppearance() {
         this.setAmbient(0.2, 0.4, 0.8, 1.0);
         this.setDiffuse(0.2, 0.4, 0.8, 1.0);
@@ -155,7 +182,11 @@ class MyScene extends CGFscene {
         this.setShininess(10.0);
     }
 
-    // called periodically (as per setUpdatePeriod() in init())
+    /**
+     * Updates periodically each object in the scene (as per setUpdatePeriod() in init())
+     * 
+     * @param t {number}    - the current time
+     */
     update(t) {
         this.vehicle.update(t);
         this.vehicle.accelerationMultiplier = this.speedFactor;
@@ -167,6 +198,9 @@ class MyScene extends CGFscene {
         this.billboard.update(t, this.supplyManager.numberOfSuppliesDelivered);
     }
 
+    /**
+     * Event called when a terrain is changed in the interface.
+     */
     onTerrainChanged() {
         // document.getElementById('heightmap').src = this.heightMaps[this.selectedTerrain];
         this.terrain.material.setTexture(this.terrainsTex[this.selectedTerrain]);
@@ -175,22 +209,34 @@ class MyScene extends CGFscene {
         this.billboard.updateHeight();
     }
 
+    /**
+     * Event called when a cube map is changed in the interface.
+     */
     onCubeMapChanged() {
         this.cubeMap.texture = new CGFtexture(this, this.cubeMaps[this.selectedCubeMap]);
         this.cubeMap.updateBuffers();
     }
 
+    /**
+     * Event called when a blimp skin is changed in the interface.
+     */
     onSkinChanged() {
         this.vehicle.initTextures();
         this.vehicle.wings.initTextures();
         this.vehicle.flag.initTextures();
     }
 
+    /**
+     * Event called when a supply skin is changed in the interface.
+     */
     onSupplySkinChanged(){
         this.supplyManager.initTextures();
         this.supplyManager.reset();
     }
 
+    /**
+     * Resets all scene objects.
+     */
     resetAll() {
         this.gui.continuousActiveKeys["KeyP"] = false;
         this.autoPilot = false;
@@ -198,6 +244,9 @@ class MyScene extends CGFscene {
         this.supplyManager.reset();
     }
 
+    /**
+     * Method responsible for key handling.
+     */
     checkKeys() {
         // Check for key codes e.g. in https://keycode.info/
         if (this.gui.isContinuousKeyPressed("KeyP"))
@@ -230,6 +279,9 @@ class MyScene extends CGFscene {
             this.supplyManager.drop(this.vehicle);
     }
 
+    /**
+     * Displays the objects in the scene.
+     */
     display() {
         // Update fps in the html page
         this.now = performance.now();

@@ -1,10 +1,9 @@
 /**
-* MyFlag
-* @constructor
+* @class Represents the flag of {@link MyVehicle}.
 */
 class MyFlag extends CGFobject {
     /**
-     * @method constructor
+     * Instantiates a new flag instance.
      * @param {CGFscene} scene  - the scene
      * @param {integer} divs    - the number of divisions of the plane 
      */
@@ -26,8 +25,7 @@ class MyFlag extends CGFobject {
     }
 
     /**
-     * @method initTextures
-     * Initializes the required textures
+     * Initializes the required textures.
      */
     initTextures() {
         var path = this.scene.skins[this.scene.selectedSkin];
@@ -39,8 +37,7 @@ class MyFlag extends CGFobject {
     }
 
     /**
-     * @method initMaterial
-     * Initializes the material
+     * Initializes the material.
      */
     initMaterial() {
         this.material.setTextureWrap('REPEAT', 'REPEAT');
@@ -50,8 +47,7 @@ class MyFlag extends CGFobject {
     }
 
     /**
-     * @method initShader
-     * Initializes the shader
+     * Initializes the shader.
      */
     initShader() {
         this.shader = new CGFshader(this.scene.gl, "shaders/flag.vert", "shaders/flag.frag");
@@ -61,8 +57,7 @@ class MyFlag extends CGFobject {
     }
 
     /**
-     * @method initMovement
-     * Initializes the movement of the wings, defining constants and relevant variables
+     * Initializes the movement of the wings, defining constants and relevant variables.
      */
     initMovement() {
         this.anglePerSecond = Math.PI / 8; // in rads
@@ -71,9 +66,7 @@ class MyFlag extends CGFobject {
     }
 
     /**
-     * @method update
-     * Updates the flag in terms of movement and shaders
-     * 
+     * Updates the flag in terms of movement and shaders.
      * @param {integer} t               - the current time 
      * @param {number} turningValue     - turning multiplier
      * @param {number} speed            - the speed of the flag
@@ -102,8 +95,7 @@ class MyFlag extends CGFobject {
     }
 
 	/**
-	 * @method displayWithShaders
-	 * Displays the flag
+	 * Displays the flag.
 	 */
     displayWithShaders() {
         this.scene.setActiveShader(this.shader);

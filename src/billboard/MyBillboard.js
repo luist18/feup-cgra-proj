@@ -1,10 +1,10 @@
 /**
- * Shows the percentage of supplies delivered
- * @constructor
+ * @class Represents the billboard which shows the percentage of supplies delivered.
  */
 class MyBillboard extends CGFobject {
 	/**
-	 * @method constructor
+	 * Instantiates a new billboard instance.
+	 * @constructor
 	 * @param {CGFscene} scene		- the scene 
 	 * @param {integer} maxSupplies	- the max supplies
 	 */
@@ -15,8 +15,7 @@ class MyBillboard extends CGFobject {
 	}
 
 	/**
-	 * @method init
-	 * Initializes the objects, shaders and positions
+	 * Initializes the objects, shaders and positions.
 	 */
 	init() {
 		this.cube = new MyUnitCube(this.scene);
@@ -57,16 +56,14 @@ class MyBillboard extends CGFobject {
 	}
 
 	/**
-	 * @method updateHeight
-	 * Updates the height of the billboard given the height of the terrain
+	 * Updates the height of the billboard given the height of the terrain.
 	 */
 	updateHeight() {
 		this.yPos = this.scene.terrain.getHeight(this.xPos, this.zPos);
 	}
 
 	/**
-	 * @method update
-	 * Updates the percentage filler shader
+	 * Updates the percentage filler shader.
 	 * 
 	 * @param {integer} t	- the current time
 	 * @param {*} supplies	- the number of supplies delivered
@@ -89,8 +86,7 @@ class MyBillboard extends CGFobject {
     }
 
 	/**
-	 * @method display
-	 * Displays the static part of billboard
+	 * Displays the static part of billboard.
 	 */
 	display() {
 		this.scene.pushMatrix();
@@ -129,8 +125,7 @@ class MyBillboard extends CGFobject {
 	}
 
 	/**
-	 * @method displayWithShaders
-	 * Displays the part of the billboard that requires shaders
+	 * Displays the part of the billboard that requires shaders.
 	 */
 	displayWithShaders() {
 		this.scene.setActiveShader(this.shader);

@@ -1,10 +1,9 @@
 /**
- * Represents a blimp vehicle
- * @constructor
+ * @class Represents a blimp vehicle.
  */
 class MyVehicle extends CGFobject {
     /**
-     * @method constructor
+     * Initializes a new vehicle instance.
      * @param {CGFscene} scene      - the scene 
      * @param {number} positionY    - the height/y position of the vehicle
      */
@@ -18,8 +17,7 @@ class MyVehicle extends CGFobject {
     }
 
     /**
-     * @method initObjects
-     * Initializes the required objects
+     * Initializes the required objects.
      */
     initObjects() {
         this.balloon = new MySphere(this.scene, 20, 10);
@@ -35,8 +33,7 @@ class MyVehicle extends CGFobject {
     }
 
     /**
-     * @method initTextures
-     * Initializes the required textures
+     * Initializes the required textures.
      */
     initTextures() {
         var path = this.scene.skins[this.scene.selectedSkin];
@@ -52,8 +49,7 @@ class MyVehicle extends CGFobject {
     }
 
     /**
-     * @method initMovement
-     * Initializes the movement of the wings, defining constants and relevant variables
+     * Initializes the movement of the wings, defining constants and relevant variables.
      */
     initMovement() {
         this.customMovement = false;
@@ -74,8 +70,8 @@ class MyVehicle extends CGFobject {
     }
 
     /**
-     * @method accelerate
-     * @param {number} value
+     * Increases or decreases the speed of the vehicle.
+     * @param {number} value - the increase/decrease value
      */
     accelerate(value) {
         value *= this.accelerationMultiplier * 5
@@ -92,7 +88,7 @@ class MyVehicle extends CGFobject {
     }
 
     /**
-     * @method turn
+     * Turns the vehicle.
      * @param {number} value - the turn multiplier
      */
     turn(value) {
@@ -100,7 +96,7 @@ class MyVehicle extends CGFobject {
     }
 
     /**
-     * @method break
+     * Breaks the vehicle.
      * @param {number} amount   - the break multiplier
      */
     brake(amount) {
@@ -108,7 +104,7 @@ class MyVehicle extends CGFobject {
     }
 
     /**
-     * @method applyAutoPilot 
+     * Turns on the vehicle auto-pilot.
      * @param {number} radius       - the radius of the rotation 
      * @param {integer} time        - the time the rotation takes
      * @param {integer} timeElapsed - the elapsed time
@@ -120,8 +116,7 @@ class MyVehicle extends CGFobject {
     }
 
     /**
-     * @method reset
-     * Resets the position of the vehicle
+     * Resets the position of the vehicle.
      */
     reset() {
         this.speed = 0;
@@ -135,9 +130,7 @@ class MyVehicle extends CGFobject {
     }
 
     /**
-     * @method update
-     * Updates the movement of the vehicle
-     * 
+     * Updates the movement of the vehicle.
      * @param {integer} t   - the current time in milliseconds
      */
     update(t) {
@@ -171,8 +164,7 @@ class MyVehicle extends CGFobject {
     }
 
     /**
-     * @method display
-     * Displays the static part of the vehicle
+     * Displays the static part of the vehicle.
      */
     display() {
         /* movement */
@@ -187,8 +179,7 @@ class MyVehicle extends CGFobject {
     }
 
     /**
-     * @method displayWithShaders
-	 * Displays the part of the vehicle that requires shaders
+	 * Displays the part of the vehicle that requires shaders.
      */
     displayWithShaders() {
         // flag
@@ -208,8 +199,7 @@ class MyVehicle extends CGFobject {
     }
 
     /**
-     * @method displayObject
-     * Displays the objects of the vehicle
+     * Displays the objects of the vehicle.
      */
     displayObject() {
         this.scene.pushMatrix();
