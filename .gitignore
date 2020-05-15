@@ -1,0 +1,12 @@
+## IDE files
+**/.vscode
+
+## Lib files
+#lib/
+
+## Node modules
+node_modules/
+package-lock.json
+
+# Docs
+out/
