@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>blimp/MyFlag.js - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <li class="nav-link nav-home-link"><a href="index.html">Home</a></li><li class="nav-heading">Classes</li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="MyBillboard.html">MyBillboard</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="MyBillboard.html#display">display</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="MyBillboard.html#displayWithShaders">displayWithShaders</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="MyBillboard.html#init">init</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="MyBillboard.html#update">update</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="MyBillboard.html#updateHeight">updateHeight</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="MyCubeMap.html">MyCubeMap</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="MyCubeMap.html#display">display</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="MyCubeMap.html#initAppearance">initAppearance</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="MyCubeMap.html#initBuffers">initBuffers</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="MyCubeMap.html#updateBuffers">updateBuffers</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="MyCylinder.html">MyCylinder</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="MyCylinder.html#initBuffers">initBuffers</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="MyCylinder.html#initSideBuffers">initSideBuffers</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="MyCylinder.html#initTopBottomBuffers">initTopBottomBuffers</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="MyFlag.html">MyFlag</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="MyFlag.html#displayWithShaders">displayWithShaders</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="MyFlag.html#initMaterial">initMaterial</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="MyFlag.html#initMovement">initMovement</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="MyFlag.html#initShader">initShader</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="MyFlag.html#initTextures">initTextures</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="MyFlag.html#update">update</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="MyInterface.html">MyInterface</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="MyInterface.html#init">init</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="MyPlane.html">MyPlane</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="MyPlane.html#initBuffers">initBuffers</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="MyPlane.html#setFillMode">setFillMode</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="MyPlane.html#setLineMode">setLineMode</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="MyScene.html">MyScene</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="MyScene.html#checkKeys">checkKeys</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="MyScene.html#display">display</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="MyScene.html#init">init</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="MyScene.html#initCameras">initCameras</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="MyScene.html#initCubeMap">initCubeMap</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="MyScene.html#initLights">initLights</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="MyScene.html#initSkins">initSkins</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="MyScene.html#initSuppliesSkins">initSuppliesSkins</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="MyScene.html#initTerrains">initTerrains</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="MyScene.html#onCubeMapChanged">onCubeMapChanged</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="MyScene.html#onSkinChanged">onSkinChanged</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="MyScene.html#onSupplySkinChanged">onSupplySkinChanged</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="MyScene.html#onTerrainChanged">onTerrainChanged</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="MyScene.html#resetAll">resetAll</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="MyScene.html#setDefaultAppearance">setDefaultAppearance</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="MyScene.html#update">update</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="MySphere.html">MySphere</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="MySphere.html#display">display</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="MySphere.html#initBuffers">initBuffers</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="MySupply.html">MySupply</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="MySupply.html#display">display</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="MySupply.html#displayFalling">displayFalling</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="MySupply.html#displayLanded">displayLanded</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="MySupply.html#drop">drop</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="MySupply.html#land">land</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="MySupply.html#update">update</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="MySupplyManager.html">MySupplyManager</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="MySupplyManager.html#display">display</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="MySupplyManager.html#drop">drop</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="MySupplyManager.html#init">init</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="MySupplyManager.html#initMaterials">initMaterials</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="MySupplyManager.html#initTextures">initTextures</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="MySupplyManager.html#reset">reset</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="MySupplyManager.html#update">update</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="MyTerrain.html">MyTerrain</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="MyTerrain.html#displayWithShaders">displayWithShaders</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="MyTerrain.html#getHeight">getHeight</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="MyTurbine.html">MyTurbine</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="MyTurbine.html#display">display</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="MyTurbine.html#initMovement">initMovement</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="MyTurbine.html#initObjects">initObjects</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="MyTurbine.html#reset">reset</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="MyTurbine.html#update">update</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="MyUnitCube.html">MyUnitCube</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="MyUnitCube.html#initBuffers">initBuffers</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="MyUnitCube.html#updateBuffers">updateBuffers</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="MyVehicle.html">MyVehicle</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="MyVehicle.html#accelerate">accelerate</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="MyVehicle.html#applyAutoPilot">applyAutoPilot</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="MyVehicle.html#brake">brake</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="MyVehicle.html#display">display</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="MyVehicle.html#displayObject">displayObject</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="MyVehicle.html#displayWithShaders">displayWithShaders</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="MyVehicle.html#initMovement">initMovement</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="MyVehicle.html#initObjects">initObjects</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="MyVehicle.html#initTextures">initTextures</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="MyVehicle.html#reset">reset</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="MyVehicle.html#turn">turn</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="MyVehicle.html#update">update</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="MyWing.html">MyWing</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="MyWing.html#initBuffers">initBuffers</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="MyWingsManager.html">MyWingsManager</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="MyWingsManager.html#display">display</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="MyWingsManager.html#init">init</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="MyWingsManager.html#initMovement">initMovement</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="MyWingsManager.html#initTextures">initTextures</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="MyWingsManager.html#reset">reset</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="MyWingsManager.html#update">update</a></span></li><li class="nav-heading"><a href="global.html">Globals</a></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#SupplyStates">SupplyStates</a></span></li>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">blimp/MyFlag.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+* @class Represents the flag of {@link MyVehicle}.
+*/
+class MyFlag extends CGFobject {
+    /**
+     * Instantiates a new flag instance.
+     * @param {CGFscene} scene  - the scene
+     * @param {integer} divs    - the number of divisions of the plane 
+     */
+    constructor(scene, divs = 100) {
+        super(scene);
+        this.divs = divs;
+
+        this.material = new CGFappearance(this.scene);
+        this.initTextures();
+        this.initMaterial();
+
+        this.plane = new MyPlane(scene, this.divs);
+
+        this.initShader();
+
+        this.initMovement();
+
+        this.timeFactor = 0;
+    }
+
+    /**
+     * Initializes the required textures.
+     */
+    initTextures() {
+        var path = this.scene.skins[this.scene.selectedSkin];
+
+        this.flagTex = new CGFtexture(this.scene, path.concat("blimp/flag.png"));
+        this.flagInvTex = new CGFtexture(this.scene, path.concat("blimp/flag_inv.png"));
+        this.material.setTexture(this.flagTex);
+        this.flagTex.bind(0);
+    }
+
+    /**
+     * Initializes the material.
+     */
+    initMaterial() {
+        this.material.setTextureWrap('REPEAT', 'REPEAT');
+        this.material.setDiffuse(1, 1, 1, 1);
+        this.material.setSpecular(1, 1, 1, 1);
+        this.material.setAmbient(0.8, 0.8, 0.8, 1);
+    }
+
+    /**
+     * Initializes the shader.
+     */
+    initShader() {
+        this.shader = new CGFshader(this.scene.gl, "shaders/flag.vert", "shaders/flag.frag");
+
+        this.shader.setUniformsValues({ texture: 0 });
+        this.shader.setUniformsValues({ timeFactor: 0 });
+    }
+
+    /**
+     * Initializes the movement of the wings, defining constants and relevant variables.
+     */
+    initMovement() {
+        this.anglePerSecond = Math.PI / 8; // in rads
+        this.angle = 0;
+        this.turningValue = 0;
+    }
+
+    /**
+     * Updates the flag in terms of movement and shaders.
+     * @param {integer} t               - the current time 
+     * @param {number} turningValue     - turning multiplier
+     * @param {number} speed            - the speed of the flag
+     * @param {number} angle            - the angle of rotation of the flag
+     * @param {number} speedMultiplier  - speed multiplier
+     */
+    update(t, turningValue, speed, angle, speedMultiplier) {
+        this.timeFactor += (t % (2 * Math.PI));
+        this.shader.setUniformsValues({
+            timeFactor: this.timeFactor * 5,
+            speed: speed,
+            angle: angle * 10,
+            speedMultiplier: speedMultiplier
+        });
+
+        if (Math.abs(speed) &lt; 0.25) return;
+
+        this.turningValue = turningValue;
+
+        var maxAngle = -turningValue * Math.PI / 2;
+        if (Math.abs(maxAngle - this.angle) &lt; Math.PI / 180)
+            return
+
+        var angleAddition = (maxAngle > this.angle) ? (this.anglePerSecond) : (-this.anglePerSecond);
+        this.angle += t * angleAddition;
+    }
+
+	/**
+	 * Displays the flag.
+	 */
+    displayWithShaders() {
+        this.scene.setActiveShader(this.shader);
+
+        this.scene.pushMatrix();
+
+        this.scene.scale(1.5, 0.75, 1);
+        this.scene.translate(-0.5, 0, 0);
+        this.scene.rotate(this.angle, 0, 1, 0);
+        this.scene.translate(0.5, 0, 0);
+
+        this.material.setTexture(this.flagInvTex);
+        this.material.apply();
+        this.scene.gl.frontFace(this.scene.gl.CW);
+        this.plane.display();
+
+        this.material.setTexture(this.flagTex);
+        this.material.apply();
+        this.scene.gl.frontFace(this.scene.gl.CCW);
+        this.plane.display();
+
+        this.scene.popMatrix();
+    }
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.4</a> on Fri May 15 2020 20:07:52 GMT+0000 (Coordinated Universal Time) using the Minami theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>
