@@ -2,7 +2,7 @@
 **/.vscode
 
 ## Lib files
-lib/
+#lib/
 
 ## Node modules
 node_modules/

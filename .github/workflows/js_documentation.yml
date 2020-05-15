@@ -20,7 +20,7 @@ jobs:
       uses: andstor/jsdoc-action@v1
       with:
         source_dir: ./src
-        output_dir: ./out
+        output_dir: .
         recurse: true
         template: minami
         front_page: README.md
@@ -31,4 +31,4 @@ jobs:
         CLEAN: true
         ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
         BRANCH: gh-pages # The branch the action should deploy to.
-        FOLDER: out/ # The folder the action should deploy.
+        FOLDER: . # The folder the action should deploy.
