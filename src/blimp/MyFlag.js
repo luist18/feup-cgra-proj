@@ -3,52 +3,90 @@
 * @constructor
 */
 class MyFlag extends CGFobject {
+    /**
+     * @method constructor
+     * @param {CGFscene} scene  - the scene
+     * @param {integer} divs    - the number of divisions of the plane 
+     */
     constructor(scene, divs = 100) {
         super(scene);
         this.divs = divs;
 
         this.material = new CGFappearance(this.scene);
         this.initTextures();
-        this.material.setTexture(this.flagTex);
-        this.material.setTextureWrap('REPEAT', 'REPEAT');
-        this.material.setDiffuse(1, 1, 1, 1);
-        this.material.setSpecular(1, 1, 1, 1);
-        this.material.setAmbient(0.8, 0.8, 0.8, 1);
+        this.initMaterial();
 
         this.plane = new MyPlane(scene, this.divs);
 
-        this.shader = new CGFshader(this.scene.gl, "shaders/flag.vert", "shaders/flag.frag");
-
-        // The first sampler is the texture and the second is the map
-        this.shader.setUniformsValues({ uSampler: 1 });
-        this.shader.setUniformsValues({ timeFactor: 0 });
+        this.initShader();
 
         this.initMovement();
 
-        this.factor = 0;
+        this.timeFactor = 0;
     }
 
+    /**
+     * @method initTextures
+     * Initializes the required textures
+     */
     initTextures() {
         var path = this.scene.skins[this.scene.selectedSkin];
 
         this.flagTex = new CGFtexture(this.scene, path.concat("blimp/flag.png"));
         this.flagInvTex = new CGFtexture(this.scene, path.concat("blimp/flag_inv.png"));
         this.material.setTexture(this.flagTex);
+        this.flagTex.bind(0);
     }
 
+    /**
+     * @method initMaterial
+     * Initializes the material
+     */
+    initMaterial() {
+        this.material.setTextureWrap('REPEAT', 'REPEAT');
+        this.material.setDiffuse(1, 1, 1, 1);
+        this.material.setSpecular(1, 1, 1, 1);
+        this.material.setAmbient(0.8, 0.8, 0.8, 1);
+    }
+
+    /**
+     * @method initShader
+     * Initializes the shader
+     */
+    initShader() {
+        this.shader = new CGFshader(this.scene.gl, "shaders/flag.vert", "shaders/flag.frag");
+
+        this.shader.setUniformsValues({ texture: 0 });
+        this.shader.setUniformsValues({ timeFactor: 0 });
+    }
+
+    /**
+     * @method initMovement
+     * Initializes the movement of the wings, defining constants and relevant variables
+     */
     initMovement() {
         this.anglePerSecond = Math.PI / 8; // in rads
         this.angle = 0;
         this.turningValue = 0;
     }
 
-    update(t, turningValue, speed, angle, multiplier) {
-        this.factor += (t % (2 * Math.PI));
+    /**
+     * @method update
+     * Updates the flag in terms of movement and shaders
+     * 
+     * @param {integer} t               - the current time 
+     * @param {number} turningValue     - turning multiplier
+     * @param {number} speed            - the speed of the flag
+     * @param {number} angle            - the angle of rotation of the flag
+     * @param {number} speedMultiplier  - speed multiplier
+     */
+    update(t, turningValue, speed, angle, speedMultiplier) {
+        this.timeFactor += (t % (2 * Math.PI));
         this.shader.setUniformsValues({
-            timeFactor: this.factor * 5,
+            timeFactor: this.timeFactor * 5,
             speed: speed,
             angle: angle * 10,
-            speedMultiplier: multiplier
+            speedMultiplier: speedMultiplier
         });
 
         if (Math.abs(speed) < 0.25) return;
@@ -56,13 +94,17 @@ class MyFlag extends CGFobject {
         this.turningValue = turningValue;
 
         var maxAngle = -turningValue * Math.PI / 2;
-        if (Math.abs(maxAngle - this.angle) < Math.PI / 180) // no need to turn
+        if (Math.abs(maxAngle - this.angle) < Math.PI / 180)
             return
 
-        var angleAddition = (maxAngle > this.angle) ? (this.anglePerSecond) : (-this.anglePerSecond); // smooth turning
+        var angleAddition = (maxAngle > this.angle) ? (this.anglePerSecond) : (-this.anglePerSecond);
         this.angle += t * angleAddition;
     }
 
+	/**
+	 * @method displayWithShaders
+	 * Displays the flag
+	 */
     displayWithShaders() {
         this.scene.setActiveShader(this.shader);
 

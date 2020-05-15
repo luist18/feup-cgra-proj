@@ -1,10 +1,23 @@
+/**
+ * Shows the percentage of supplies delivered
+ * @constructor
+ */
 class MyBillboard extends CGFobject {
+	/**
+	 * @method constructor
+	 * @param {CGFscene} scene		- the scene 
+	 * @param {integer} maxSupplies	- the max supplies
+	 */
 	constructor(scene, maxSupplies = 5) {
 		super(scene);
 		this.maxSupplies = maxSupplies;
 		this.init();
 	}
 
+	/**
+	 * @method init
+	 * Initializes the objects, shaders and positions
+	 */
 	init() {
 		this.cube = new MyUnitCube(this.scene);
 		this.counter = new MyPlane(this.scene, 20);
@@ -43,10 +56,21 @@ class MyBillboard extends CGFobject {
 		this.updateHeight();
 	}
 
+	/**
+	 * @method updateHeight
+	 * Updates the height of the billboard given the height of the terrain
+	 */
 	updateHeight() {
 		this.yPos = this.scene.terrain.getHeight(this.xPos, this.zPos);
 	}
 
+	/**
+	 * @method update
+	 * Updates the percentage filler shader
+	 * 
+	 * @param {integer} t	- the current time
+	 * @param {*} supplies	- the number of supplies delivered
+	 */
 	update(t, supplies) {
         var elapsed = t - this.lastTime;
         this.lastTime = t;
@@ -64,6 +88,10 @@ class MyBillboard extends CGFobject {
         this.shader.setUniformsValues({ random: (t / 1000 ) % (2 * Math.PI) });
     }
 
+	/**
+	 * @method display
+	 * Displays the static part of billboard
+	 */
 	display() {
 		this.scene.pushMatrix();
 
@@ -100,6 +128,10 @@ class MyBillboard extends CGFobject {
 		this.scene.popMatrix();
 	}
 
+	/**
+	 * @method displayWithShaders
+	 * Displays the part of the billboard that requires shaders
+	 */
 	displayWithShaders() {
 		this.scene.setActiveShader(this.shader);
 

@@ -1,12 +1,21 @@
 /**
- * It's similar to a kid's home
+ * Represents a wing
+ * @constructor
  */
 class MyWing extends CGFobject {
+    /**
+     * @method constructor
+     * @param {CGFscene} scene 
+     */
     constructor(scene) {
         super(scene);
         this.initBuffers();
     }
 
+    /**
+     * @method initBuffers
+     * Initializes the wing buffers
+     */
     initBuffers() {
         this.vertices = [
             -0.5, 0, 0,     // 0

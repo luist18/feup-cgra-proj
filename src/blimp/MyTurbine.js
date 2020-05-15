@@ -1,22 +1,36 @@
 /**
- * Turbine faced up with the middle between the arms
- * --^--
- *  / \
+ * Represents a faced up turbine
+ * @constructor
  */
 class MyTurbine extends CGFobject {
+    /**
+     * @method constructor
+     * @param {CGFscene} scene  - the scene 
+     * @param {integer} slices  - the number slices of the curved objects 
+     * @param {integer} stacks  - the number of stacks of the curved objects
+     */
     constructor(scene, slices, stacks) {
         super(scene);
 
-        this.init(slices, stacks);
+        this.initObjects(slices, stacks);
         this.initMovement();
     }
 
-    init(slices, stacks) {
+    /**
+     * @method initObjects
+     * Initializes the objects of the turbine
+     * 
+     * @param {integer} slices  - the number slices of the curved objects 
+     * @param {integer} stacks  - the number of stacks of the curved objects
+     */
+    initObjects(slices, stacks) {
         this.holder = new MySphere(this.scene, slices, stacks);
         this.arm = new MySphere(this.scene, slices, stacks);
     }
 
-    // Movement method
+    /**
+     * @method initMovement
+     */
     initMovement() {
         this.angularSpeed = 0;
         this.angle = 0;
@@ -25,9 +39,11 @@ class MyTurbine extends CGFobject {
     }
 
     /**
-     * Updates the movement of the turbine.
-     * @param {*} elapsed   The elapsed time
-     * @param {*} speed     The speed of the vehicle
+     * @method update
+     * Updates the movement of the turbine
+     * 
+     * @param {integer} elapsed - the elapsed time since the last update
+     * @param {integer} speed   - the speed of the vehicle
      */
     update(elapsed, speed) {
         this.angularSpeed = speed;
@@ -36,11 +52,19 @@ class MyTurbine extends CGFobject {
         this.angle %= Math.PI; // the angle doesn't get to high
     }
 
+    /**
+     * @method reset
+     * Resets the position of the turbines
+     */
     reset() {
         this.angularSpeed = 0;
         this.angle = 0;
     }
 
+    /**
+     * @method dispay
+     * Displays the turbine
+     */
     display() {
         this.scene.pushMatrix();
         

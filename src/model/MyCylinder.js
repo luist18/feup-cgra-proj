@@ -1,5 +1,8 @@
+/**
+ * Represents a cylinder
+ * @constructor
+ */
 class MyCylinder extends CGFobject {
-
     /**
      * @method constructor
      * @param  {CGFscene} scene - MyScene object
@@ -12,6 +15,7 @@ class MyCylinder extends CGFobject {
     }
 
     /**
+     * @method initBuffers
      * Inits the vertices, indices, normals and texture coordinates
      */
     initBuffers() {
@@ -29,6 +33,7 @@ class MyCylinder extends CGFobject {
     }
 
     /**
+     * @method initSideBuffers
      * Inits the buffers of the rounded side
      */
     initSideBuffers() {
@@ -66,6 +71,7 @@ class MyCylinder extends CGFobject {
     }
 
     /**
+     * @method initTopBottomBuffers
      * Inits the top and down faces
      */
     initTopBottomBuffers() {

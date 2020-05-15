@@ -8,13 +8,10 @@ uniform mat4 uNMatrix;
 
 varying vec2 vTextureCoord;
 
-uniform sampler2D uSampler;
 uniform float timeFactor;
 uniform float speed;
 uniform float angle;
 uniform float speedMultiplier;
-
-#define M_PI 3.1415926535897932384626433832795
 
 void main() {
 	vec3 offset=vec3(0.0,0.0,0.0);

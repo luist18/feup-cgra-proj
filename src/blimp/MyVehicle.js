@@ -1,14 +1,27 @@
+/**
+ * Represents a blimp vehicle
+ * @constructor
+ */
 class MyVehicle extends CGFobject {
+    /**
+     * @method constructor
+     * @param {CGFscene} scene      - the scene 
+     * @param {number} positionY    - the height/y position of the vehicle
+     */
     constructor(scene, positionY = 10) {
         super(scene);
         this.initTextures();
-        this.init();
+        this.initObjects();
         this.initMovement();
 
         this.positionY = positionY;
     }
 
-    init() {
+    /**
+     * @method initObjects
+     * Initializes the required objects
+     */
+    initObjects() {
         this.balloon = new MySphere(this.scene, 20, 10);
         this.mainCockpit = new MyCylinder(this.scene, 20);
         this.cockpitSide = new MySphere(this.scene, 10, 10);
@@ -19,9 +32,12 @@ class MyVehicle extends CGFobject {
         this.flagHolder = new MyCylinder(this.scene, 8);
 
         this.scale = 1;
-        this.autoPilot = false;
     }
 
+    /**
+     * @method initTextures
+     * Initializes the required textures
+     */
     initTextures() {
         var path = this.scene.skins[this.scene.selectedSkin];
 
@@ -35,49 +51,67 @@ class MyVehicle extends CGFobject {
         this.material.setAmbient(0.8, 0.8, 0.8, 1);
     }
 
-    // Movement method
+    /**
+     * @method initMovement
+     * Initializes the movement of the wings, defining constants and relevant variables
+     */
     initMovement() {
         this.customMovement = false;
 
-        this.speed = 0; // units/second
-        this.acceleration = 0; // not counting friction
-        this.yyangle = 0;
-        this.accelerationMultiplier = 1; // speed factor slider, units/second
+        this.speed = 0;                     // units/second
+        this.acceleration = 0;              // units/second²; not counting friction
+        this.yyangle = 0;                   // radians; the angle the vehicle makes with z axis
+        this.accelerationMultiplier = 1;    // speed factor slider, units/second
 
-        this.turningValue = 0;
+        this.turningValue = 0;              // the turning multiplier
 
-        this.positionX = 0;
-        this.positionZ = 0;
+        this.positionX = 0;                 // the x position
+        this.positionZ = 0;                 // the z position
 
         this.lastTime = 0;
+
+        this.autoPilot = false;
     }
 
+    /**
+     * @method accelerate
+     * @param {number} value
+     */
     accelerate(value) {
-        value *= this.accelerationMultiplier * 5; // default max speed 5 units/second
+        value *= this.accelerationMultiplier * 5
 
         this.acceleration = value;
         this.speed += this.acceleration;
 
-        let maxSpeed = this.accelerationMultiplier * 5; // default max speed 5 units/second
+        // speed limits
+        let maxSpeed = this.accelerationMultiplier * 5;
         if (this.speed > maxSpeed)
             this.speed = maxSpeed;
         if (this.speed < -maxSpeed)
             this.speed = -maxSpeed;
     }
 
+    /**
+     * @method turn
+     * @param {number} value - the turn multiplier
+     */
     turn(value) {
         this.turningValue = value;
     }
 
+    /**
+     * @method break
+     * @param {number} amount   - the break multiplier
+     */
     brake(amount) {
         this.speed += this.speed * -amount;
     }
 
     /**
-     * Makes rotations automatically. :(
-     * @param {*} radius        the radius of the rotation 
-     * @param {*} time          the time the rotation takes
-     * @param {*} timeElapsed   the elapsed time
+     * @method applyAutoPilot 
+     * @param {number} radius       - the radius of the rotation 
+     * @param {integer} time        - the time the rotation takes
+     * @param {integer} timeElapsed - the elapsed time
      */
     applyAutoPilot(radius, time, timeElapsed) {
         this.speed = radius * 2 * Math.PI / time; // perimeter / time <=> 2 * PI * radius / time
@@ -85,6 +119,10 @@ class MyVehicle extends CGFobject {
         this.turningValue = this.apangle / (Math.PI / 2);
     }
 
+    /**
+     * @method reset
+     * Resets the position of the vehicle
+     */
     reset() {
         this.speed = 0;
         this.acceleration = 0;
@@ -96,6 +134,12 @@ class MyVehicle extends CGFobject {
         this.wings.reset();
     }
 
+    /**
+     * @method update
+     * Updates the movement of the vehicle
+     * 
+     * @param {integer} t   - the current time in milliseconds
+     */
     update(t) {
         var elapsed = t - this.lastTime;
         this.lastTime = t;
@@ -119,12 +163,17 @@ class MyVehicle extends CGFobject {
             this.friction = this.speed * -0.009;
             this.speed += this.friction;
         }
+
         this.positionX += this.speed * Math.sin(this.yyangle) * elapsed;
         this.positionZ += this.speed * Math.cos(this.yyangle) * elapsed;
 
         this.turningValue = 0;
     }
 
+    /**
+     * @method display
+     * Displays the static part of the vehicle
+     */
     display() {
         /* movement */
         this.scene.pushMatrix();
@@ -137,6 +186,10 @@ class MyVehicle extends CGFobject {
         this.scene.popMatrix();
     }
 
+    /**
+     * @method displayWithShaders
+	 * Displays the part of the vehicle that requires shaders
+     */
     displayWithShaders() {
         // flag
         this.scene.pushMatrix();
@@ -154,6 +207,10 @@ class MyVehicle extends CGFobject {
         this.scene.popMatrix();
     }
 
+    /**
+     * @method displayObject
+     * Displays the objects of the vehicle
+     */
     displayObject() {
         this.scene.pushMatrix();
         this.scene.scale(this.scale, this.scale, this.scale);

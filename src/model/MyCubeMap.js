@@ -1,9 +1,13 @@
+/**
+ * Represents a cube that is only seen by the inside
+ * @constructor
+ */
 class MyCubeMap extends CGFobject {
     /**
      * @constructor
-     * @param {*} scene     the scene in which the cube map will be shown 
-     * @param {*} side      the length of a side of the cube
-     * @param {*} texture   the cubemap texture
+     * @param {*} scene     - the scene in which the cube map will be shown 
+     * @param {*} side      - the length of a side of the cube
+     * @param {*} texture   - the cubemap texture
      */
     constructor(scene, side, texture) {
         super(scene);
@@ -11,16 +15,27 @@ class MyCubeMap extends CGFobject {
         this.texture = texture;
         this.halfSide = side / 2;
 
+        this.initAppearance();
         this.initBuffers();
     }
 
-    initBuffers() {
+    /**
+     * @method initAppearance
+     * Initializes the appearance of the cube
+     */
+    initAppearance() {
         this.appearance = new CGFappearance(this.scene);
         this.appearance.setAmbient(1, 1, 1, 1);
         this.appearance.setEmission(1, 1, 1, 1);
         this.appearance.setTexture(this.texture);
         this.appearance.setTextureWrap('CLAMP_TO_EDGE', 'CLAMP_TO_EDGE');
+    }
 
+    /**
+     * @method initBuffers
+     * Initializes the cube buffers
+     */
+    initBuffers() {
         this.vertices = [];
         this.indices = [];
         this.texCoords = [];
@@ -107,12 +122,19 @@ class MyCubeMap extends CGFobject {
         this.initGLBuffers();
     }
 
+    /**
+     * @method updateBuffers
+     * Reinitializes buffers 
+     */
     updateBuffers() {
-        // reinitialize buffers
         this.initBuffers();
         this.initNormalVizBuffers();
     }
 
+    /**
+     * @method display
+     * Displays the cube
+     */
     display() {
         this.appearance.apply();
         this.scene.pushMatrix();
