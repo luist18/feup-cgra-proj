@@ -28,9 +28,6 @@ class MyInterface extends CGFinterface {
         // Terrain
         this.gui.add(this.scene, 'selectedTerrain', this.scene.terrainList).name('Terrain').onChange(this.scene.onTerrainChanged.bind(this.scene));
 
-        // Dropbox of cube map
-        this.gui.add(this.scene, 'selectedCubeMap', this.scene.cubeMapList).name('Cube map').onChange(this.scene.onCubeMapChanged.bind(this.scene));
-
         // Skin
         this.gui.add(this.scene, 'selectedSkin', this.scene.skinList).name('Skin').onChange(this.scene.onSkinChanged.bind(this.scene));
         

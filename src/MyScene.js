@@ -34,8 +34,8 @@ class MyScene extends CGFscene {
         this.enableTextures(true);
 
         this.initSuppliesSkins();
-        this.initCubeMap();
         this.initTerrains();
+        this.initCubeMap();
 
         this.axis = new CGFaxis(this);
         this.vehicle = new MyVehicle(this);
@@ -118,19 +118,13 @@ class MyScene extends CGFscene {
      */
     initCubeMap() {
         this.cubeMaps = [
-            '../resources/givenedited.png',
-            '../resources/cubemapgiven.png'
+            new CGFtexture(this, '../resources/textures/cubemap/lake1.png'),
+            new CGFtexture(this, '../resources/textures/cubemap/lake2.png'),
+            new CGFtexture(this, '../resources/textures/cubemap/canyon.png'),
+            new CGFtexture(this, '../resources/textures/cubemap/given.png')
         ];
 
-        // cube map interface variables
-        this.cubeMapList = {
-            'Fields (given)': 0,
-            'Sky (given)': 1
-        };
-
-        this.selectedCubeMap = 0;
-
-        this.cubeMap = new MyCubeMap(this, 50, new CGFtexture(this, this.cubeMaps[this.selectedCubeMap]));
+        this.cubeMap = new MyCubeMap(this, 50, this.cubeMaps[this.selectedTerrain]);
     }
 
     /**
@@ -204,17 +198,10 @@ class MyScene extends CGFscene {
     onTerrainChanged() {
         // document.getElementById('heightmap').src = this.heightMaps[this.selectedTerrain];
         this.terrain.material.setTexture(this.terrainsTex[this.selectedTerrain]);
-
+        this.cubeMap.setTexture(this.cubeMaps[this.selectedTerrain]);
+    
         this.supplyManager.reset();
         this.billboard.updateHeight();
-    }
-
-    /**
-     * Event called when a cube map is changed in the interface.
-     */
-    onCubeMapChanged() {
-        this.cubeMap.texture = new CGFtexture(this, this.cubeMaps[this.selectedCubeMap]);
-        this.cubeMap.updateBuffers();
     }
 
     /**
