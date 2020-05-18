@@ -127,13 +127,18 @@ class MyCubeMap extends CGFobject {
         this.initNormalVizBuffers();
     }
 
+    setTexture(texture) {
+        this.texture = texture;
+        this.initAppearance();
+    }
+
     /**
      * Displays the cube.
      */
     display() {
         this.appearance.apply();
         this.scene.pushMatrix();
-        this.scene.translate(0, 10, 0);
+        this.scene.translate(0, 24.9, 0);
         super.display();
         this.scene.popMatrix();
         this.scene.setDefaultAppearance();
