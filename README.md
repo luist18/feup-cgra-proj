@@ -3,11 +3,11 @@
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/ctrlMarcio/feup-cgra-proj/Documentation?label=documentation%20%F0%9F%93%95&logo=github)
 ![GitHub](https://img.shields.io/github/license/ctrlMarcio/feup-cgra-proj?color=blue)
 
-This repository comprises the project of the Computer Graphics course unit project. The goal was to create a supply delivery simulation using concepts learned in the course unit and WebGL.
-
 [**Click here to play**](https://ctrlmarcio.github.io/feup-cgra-proj/src)
 
-## Project description
+This repository comprises the project of the Computer Graphics course unit project. The goal was to create a supply delivery simulation using concepts learned in the course unit and WebGL.
+
+[![Website](https://img.shields.io/website?label=CLICK%20HERE%20TO&style=for-the-badge&up_message=PLAY&url=https%3A%2F%2Fctrlmarcio.github.io%2Ffeup-cgra-proj%2Fsrc%2F)](https://ctrlmarcio.github.io/feup-cgra-proj/src)
 
 The application consists of a supply delivery simulation made by a vehicle, in this case, a blimp. In order to support the concept the scene has to contain a surrounding landscape (cube map), a terrain, a vehicle and a billboard.
 

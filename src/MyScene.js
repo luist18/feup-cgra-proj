@@ -39,7 +39,7 @@ class MyScene extends CGFscene {
 
         this.axis = new CGFaxis(this);
         this.vehicle = new MyVehicle(this);
-        this.supplyManager = new MySupplyManager(this, 100);
+        this.supplyManager = new MySupplyManager(this);
         this.billboard = new MyBillboard(this, this.supplyManager.numberOfSupplies);
 
         // Interface
