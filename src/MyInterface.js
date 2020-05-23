@@ -34,6 +34,9 @@ class MyInterface extends CGFinterface {
         // Supply skin
         this.gui.add(this.scene, 'selectedSupplySkin', this.scene.supplySkinList).name('Supply skin').onChange(this.scene.onSupplySkinChanged.bind(this.scene));
 
+        // Supply skin
+        this.gui.add(this.scene, 'selectedCamera', this.scene.cameraList).name('Camera').onChange(this.scene.onCameraChanged.bind(this.scene));
+
         this.gui.add(this.scene, 'volume', 0.0, 100.0).name('Volume');
 
         // a folder for grouping parameters related to the vehicle

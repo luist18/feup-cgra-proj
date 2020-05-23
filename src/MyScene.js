@@ -66,7 +66,25 @@ class MyScene extends CGFscene {
      * Initializes the scene cameras.
      */
     initCameras() {
-        this.camera = new CGFcamera(0.7, 0.1, 500, vec3.fromValues(26, 20, 26), vec3.fromValues(0, 5, 0));
+        this.selectedCamera = 0;
+
+        this.cameraList = {
+            'Default (Right)': 0,
+            'Left': 1,
+            'Left Back': 2,
+            'Right Back': 3,
+            'Top': 4,
+            'Third person': 5
+        };
+
+        this.cameras = [new CGFcamera(0.7, 0.1, 500, vec3.fromValues(26, 20, 26), vec3.fromValues(0, 5, 0)),
+            new CGFcamera(0.7, 0.1, 500, vec3.fromValues(-26, 20, 26), vec3.fromValues(0, 5, 0)),
+            new CGFcamera(0.7, 0.1, 500, vec3.fromValues(-26, 20, -26), vec3.fromValues(0, 5, 0)),
+            new CGFcamera(0.7, 0.1, 500, vec3.fromValues(26, 20, -26), vec3.fromValues(0, 5, 0)),
+            new CGFcamera(0.7, 0.1, 500, vec3.fromValues(0, 50, 1), vec3.fromValues(0, 0, 0))
+        ];
+
+        this.camera = this.cameras[this.selectedCamera];
     }
 
     /**
@@ -199,7 +217,7 @@ class MyScene extends CGFscene {
         // document.getElementById('heightmap').src = this.heightMaps[this.selectedTerrain];
         this.terrain.material.setTexture(this.terrainsTex[this.selectedTerrain]);
         this.cubeMap.setTexture(this.cubeMaps[this.selectedTerrain]);
-    
+
         this.supplyManager.reset();
         this.billboard.updateHeight();
     }
@@ -216,9 +234,16 @@ class MyScene extends CGFscene {
     /**
      * Event called when a supply skin is changed in the interface.
      */
-    onSupplySkinChanged(){
+    onSupplySkinChanged() {
         this.supplyManager.initTextures();
         this.supplyManager.reset();
+    }
+
+    /**
+     * Event called when the camera is changed in the inteface.
+     */
+    onCameraChanged() {
+        this.camera = this.cameras[this.selectedCamera];
     }
 
     /**
