@@ -130,6 +130,7 @@ class MySupply extends CGFobject {
 
         this.scene.translate(this.positionX, this.positionY, this.positionZ);
         this.scene.scale(this.scaleFactor, this.scaleFactor, this.scaleFactor);
+        this.scene.rotate(this.yyangle, 0, 1, 0);
 
         if (this.state == SupplyStates.FALLING)
             this.displayFalling();

@@ -14,6 +14,8 @@ class MyVehicle extends CGFobject {
         this.initMovement();
 
         this.positionY = positionY;
+        this.camera = new CGFcamera(0.7, 0.1, 500, vec3.fromValues(this.positionX, this.positionY, this.positionZ), vec3.fromValues(0, 5, 0));
+        this.scene.cameras.push(this.camera);
     }
 
     /**
@@ -161,6 +163,9 @@ class MyVehicle extends CGFobject {
         this.positionZ += this.speed * Math.cos(this.yyangle) * elapsed;
 
         this.turningValue = 0;
+
+        this.camera.setPosition(vec3.fromValues(this.positionX - Math.sin(this.yyangle) * 20, this.positionY + 8, this.positionZ - Math.cos(this.yyangle) * 20));
+        this.camera.setTarget(vec3.fromValues(this.positionX + Math.sin(this.yyangle) * 15, this.positionY - 8, this.positionZ + Math.cos(this.yyangle) * 15))
     }
 
     /**
