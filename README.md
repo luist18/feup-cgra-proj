@@ -28,11 +28,6 @@ WebCGF (Web Computer Graphics @ FEUP) is a library developed by teachers of the 
 
 You can download WebCGF and its documentation [here](https://paginas.fe.up.pt/~ruirodrig/pub/sw/webcgf/docs/#).
 
-## Version
-
-### v0.1
-Todo
-
 ## Documentation
 
 The project documentation is generated with [jsdoc](https://github.com/jsdoc/jsdoc) and can be accessed [here](https://ctrlmarcio.github.io/feup-cgra-proj/).
